@@ -9,15 +9,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *| user site
 *|
 */
-// class Agency extends Admin	
-class Agency extends CI_Controller	
+class Agency extends Admin	
 {
 	
 	public function __construct()
 	{
 		parent::__construct();
 
-		//$this->load->model('model_app_user');
+		$this->load->model('model_app_user');
 		$this->load->model('model_agency');
 	}
 

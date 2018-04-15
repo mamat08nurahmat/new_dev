@@ -1,10 +1,40 @@
 <?php
-class Model_app extends CI_Model{
-    function __construct(){
-    parent::__construct();
-    }
+defined('BASEPATH') OR exit('No direct script access allowed');
 
+
+class Model_app extends MY_Model {
+
+    private $primary_key    = 'UserID';
+    private $table_name     = 'AppUser';
+    // private $field_search    = array('email', 'username', 'full_name');
+
+    public function __construct()
+    {   
+        $config = array(
+            'primary_key'   => $this->primary_key,
+            'table_name'    => $this->table_name,
+            // 'field_search'   => $this->field_search,
+         );
+
+        parent::__construct($config);
+    }
     //  ================= AUTOMATIC CODE ==================
+// public function incrementalHash($len = 5){
+// //  $charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+//     $charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+//   $base = strlen($charset);
+//   $result = '';
+
+//   $now = explode(' ', microtime())[1];
+//   while ($now >= $base){
+//     $i = $now % $base;
+//     $result = $charset[$i] . $result;
+//     $now /= $base;
+//   }
+//   return substr($result, -5);
+// }	
+	
+	
 
     //    KODE PENJUALAN
     public function getKodePenjualan()
@@ -102,30 +132,30 @@ class Model_app extends CI_Model{
         return $stok;
     }
 
-    public function getAllData($table)
-    {
-        return $this->db->get($table)->result();
-    }
-    public function getSelectedData($table,$data)
-    {
-        return $this->db->get_where($table, $data);
-    }
-    function updateData($table,$data,$field_key)
-    {
-        $this->db->update($table,$data,$field_key);
-    }
-    function deleteData($table,$data)
-    {
-        $this->db->delete($table,$data);
-    }
-    function insertData($table,$data)
-    {
-        $this->db->insert($table,$data);
-    }
-    function manualQuery($q)
-    {
-        return $this->db->query($q);
-    }
+    // public function getAllData($table)
+    // {
+    //     return $this->db->get($table)->result();
+    // }
+    // public function getSelectedData($table,$data)
+    // {
+    //     return $this->db->get_where($table, $data);
+    // }
+    // function updateData($table,$data,$field_key)
+    // {
+    //     $this->db->update($table,$data,$field_key);
+    // }
+    // function deleteData($table,$data)
+    // {
+    //     $this->db->delete($table,$data);
+    // }
+    // function insertData($table,$data)
+    // {
+    //  return   $this->db->insert($table,$data);
+    // }
+    // function manualQuery($q)
+    // {
+    //     return $this->db->query($q);
+    // }
 
     function getProdukJual(){
         return $this->db->query ("SELECT * from produk where stok > 0")->result();
@@ -165,60 +195,116 @@ class Model_app extends CI_Model{
                 ")->result();
     }
 
-//     function login($email, $password) {
-//         //create query to connect user login database
-//         $this->db->select('*');
-//         $this->db->from('users');
-//         $this->db->where('email', $email);
-//         $this->db->where('password', MD5($password));
-// //        $this->db->limit(1);
-
-//         //get query and processing
-//         $query = $this->db->get();
-//         if($query->num_rows() == 1) {
-//             return $query->result(); //if data is true
-//         } else {
-//             return false; //if data is wrong
-//         }
-//     }
-
-
-
-
-
-
-
     function login($email, $password) {
         //create query to connect user login database
-/*
         $this->db->select('*');
-        $this->db->from('AppUser');
-        $this->db->where('EmailAddress', $email);
-        //$this->db->where('password', MD5($password));
-        $this->db->where('Password', $password);
-//        $this->db->limit(1);
+        $this->db->from('users');
+        $this->db->where('email', $email);
+        $this->db->where('password', MD5($password));
+        $this->db->limit(1);
 
         //get query and processing
         $query = $this->db->get();
-*/        
-
-        $query = $this->db->query("
-
-SELECT * FROM AppUser WHERE EmailAddress = '$email' AND password = '$password'
-
-
-            ");        
-//var_dump($q);die();
-//        return $query->result();
         if($query->num_rows() == 1) {
             return $query->result(); //if data is true
         } else {
             return false; //if data is wrong
         }
-/*
-*/
-
     }
+
+
+//getNewSalesCode
+public function getNewSalesCode(){
+    
+    $now1 = explode(' ', microtime());
+$now= $now1[1] ;
+//print_r($now);die();  
+    // $charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    $charset = "ABCDEFGHJKLMNPQRTVWXYZ0123456789";
+  $base = strlen($charset);
+  $result = '';
+
+  while ($now >= $base){
+    $i = $now % $base;
+    $result = $charset[$i] . $result;
+    $now /= $base;
+  }
+  
+//  return substr($result, -3);
+    $hash = substr($result, -3);
+    $cek = $this->db->query("SELECT EmployeeNewCode FROM Employee  ")->result();    
+
+    foreach($cek as $kode){
+    
+    $kode_ada []= $kode->EmployeeNewCode;
+    //echo $kode_ada;
+    //echo"<br>";
+}
+
+//print_r($kode_ada);die();
+
+if (in_array($hash, $kode_ada)){
+$new_code = $hash =$this->incrementalHash();          
+  //echo "Match found";
+}else{
+$new_code =$hash;     
+  //echo "Match not found";
+  }
+
+
+return $new_code;
+    
+}
+
+
+
+
+//getNewSalesCodeCode
+public function getNewSalesCenterCode(){
+    
+    $now1 = explode(' ', microtime());
+$now= $now1[1] ;
+//print_r($now);die();  
+    // $charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    $charset = "ABCDEFGHJKLMNPRTVWXYZ0123456789";
+  $base = strlen($charset);
+  $result = '';
+
+  while ($now >= $base){
+    $i = $now % $base;
+    $result = $charset[$i] . $result;
+    $now /= $base;
+  }
+  
+//  return substr($result, -3);
+    $hash = substr($result, -2);
+    $cek = $this->db->query("SELECT SalesCenterCode FROM AgencySalesCenter  ")->result();    
+
+    foreach($cek as $kode){
+    
+    $kode_ada []= $kode->SalesCenterCode;
+    //echo $kode_ada;
+    //echo"<br>";
+}
+
+//print_r($kode_ada);die();
+
+if (in_array($hash, $kode_ada)){
+$new_code = $hash =$this->getNewSalesCenterCode();          
+  //echo "Match found";
+}else{
+$new_code =$hash;     
+  //echo "Match not found";
+  }
+
+
+return $new_code;
+    
+}
+
+
+
+
 
 
 

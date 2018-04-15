@@ -33,9 +33,8 @@
 
 //session user group
     
-//$AppUserGroup = 1;    
-  $AppUserGroup = $_SESSION['UserGroupID'];    
-  
+$AppUserGroup = 1;    
+  // $AppUserGroup = $_SESSION['UserGroupID'];    
 $map = $this->db->query("SELECT id_group, id_menu FROM menu_mapping_group WHERE id_group='$AppUserGroup'")->result();
 $id_menu = $map[0]->id_menu;
 //$id_menu = explode(',', $id_menu); //array
