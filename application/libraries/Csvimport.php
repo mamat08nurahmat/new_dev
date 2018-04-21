@@ -19,7 +19,7 @@ class Csvimport {
     private $filepath = FALSE;
     private $column_headers = FALSE;
     private $initial_line = 0;
-    private $delimiter = ","; ///????????????????????????????
+    private $delimiter = "|"; //XXXXXXXXXXXX/????????????????????????????
     private $detect_line_endings = FALSE;
    /**
      * Function that parses a CSV file and returns results
@@ -36,7 +36,8 @@ class Csvimport {
     public function get_array($filepath=FALSE, $column_headers=FALSE, $detect_line_endings=FALSE, $initial_line=FALSE, $delimiter=FALSE)
     {
         // Raise memory limit (for big files)
-        ini_set('memory_limit', '20M');
+        ini_set('memory_limit', '256M');
+        // ini_set('memory_limit', '20M');
         
         // File path
         if(! $filepath)

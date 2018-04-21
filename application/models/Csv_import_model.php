@@ -8,6 +8,17 @@ class Csv_import_model extends CI_Model
 		return $query;
 	}
 
+
+
+	function get_BatchID()
+	{
+	
+		$query = $this->db->query('SELECT MAX(BatchID)+1 as BatchID FROM SystemUpload');
+$BatchID=$query->result();		
+
+		return $BatchID[0]->BatchID;
+	}
+
 	function insert($data)
 	{
 		$this->db->insert_batch('tbl_user', $data);
