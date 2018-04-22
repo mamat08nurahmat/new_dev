@@ -2,8 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-// class Model_agency extends MY_Model {
-class Model_agency extends CI_Model {
+class Model_agency extends MY_Model {
 
 	private $primary_key 	= 'AgencyID';
 	private $table_name 	= 'Agency';

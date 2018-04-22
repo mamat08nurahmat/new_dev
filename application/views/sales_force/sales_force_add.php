@@ -159,20 +159,20 @@ $this->load->view('template/sidebar');
 
 <!-- PERSONAL DATA -->
   <div class="tab"><h1> Personal Data:</h1>
-    <p><input name="nama_lengkap" id="nama_lengkap" placeholder="Nama Lengkap..." oninput="this.className = ''" ></p>
-    <p><input name="nama_panggil" id="nama_panggil" placeholder="Nama Panggil..." oninput="this.className = ''" ></p>
+    <p><input name="nama_lengkap" id="nama_lengkap" value="ABCD" placeholder="Nama Lengkap..." oninput="this.className = ''" ></p>
+    <p><input value="ABCD" name="nama_panggil" id="nama_panggil" placeholder="Nama Panggil..." oninput="this.className = ''" ></p>
     <p><input name="no_ktp" id="no_ktp" value="<?=$no_ktp?>" readonly></p>
-    <p><input name="no_npwp" id="no_npwp" placeholder="No NPWP..." oninput="this.className = ''" ></p>    
-    <p><input name="tempat_lahir" id="tempat_lahir" placeholder="Tempat Lahir..." oninput="this.className = ''" ></p>
+    <p><input value="1234567" name="no_npwp" id="no_npwp" placeholder="No NPWP..." oninput="this.className = ''" ></p>    
+    <p><input value="jakarta" name="tempat_lahir" id="tempat_lahir" placeholder="Tempat Lahir..." oninput="this.className = ''" ></p>
     <p>Tanggal Lahir</p>
-    <p><input type='date' name="tanggal_lahir" id="tanggal_lahir"  oninput="this.className = ''" ></p>
-    <p><input type="number" name="tinggi_badan" id="tinggi_badan" placeholder="Tinggi badan..." oninput="this.className = ''" ></p>
-    <p><input type="number" name="berat_badan" id="berat_badan" placeholder="Berat Badan..." oninput="this.className = ''" ></p>    
+    <p><input type='text' value="1234567" name="tanggal_lahir" id="tanggal_lahir"  oninput="this.className = ''" ></p>
+    <p><input  value="123" type="number" name="tinggi_badan" id="tinggi_badan" placeholder="Tinggi badan..." oninput="this.className = ''" ></p>
+    <p><input type="number" name="berat_badan" id="berat_badan" value="123" placeholder="Berat Badan..." oninput="this.className = ''" ></p>    
 
     <p>
     <select name="jenis_kelamin" id="jenis_kelamin" >
-    <option value="">-JENIS KELAMIN-</option>
     <option value="M">LAKI-LAKI</option>
+    <option value="">-JENIS KELAMIN-</option>
     <option value="F">PEREMPUAN</option>
     </select>
     </p>  
@@ -180,8 +180,8 @@ $this->load->view('template/sidebar');
  
     <p>
     <select name="status" id="status" oninput="this.className = ''" >
-    <option value="">- STATUS-</option>
     <option value="lajang">LAJANG</option>
+    <option value="">- STATUS-</option>
     <option value="menikah">MENIKAH</option>
     <option value="bercerai">BERCERAI</option>
     </select>
@@ -189,8 +189,8 @@ $this->load->view('template/sidebar');
     
     <p>
     <select name="status" id="status" onchange="this.className = ''" >
-    <option value="">-PILIH AGAMA-</option>
     <option value="islam">ISLAM</option>
+    <option value="">-PILIH AGAMA-</option>
     <option value="kristen">KRISTEN</option>
     <option value="budha">BUDHA</option>
     <option value="hindu">HINDU</option>
@@ -198,9 +198,9 @@ $this->load->view('template/sidebar');
     </select>
     </p>  
 
-    <p><input name="ibu_kandung" id="ibu_kandung" placeholder="Nama Ibu Kandung..." oninput="this.className = ''" ></p>  
+    <p><input  value="ABCD" name="ibu_kandung" id="ibu_kandung" placeholder="Nama Ibu Kandung..." oninput="this.className = ''" ></p>  
     
-    <p><input type="email" name="email" id="email" placeholder="Email..." oninput="this.className = ''" ></p>  
+    <p><input value="ABCD@gmail.com" type="email" name="email" id="email" placeholder="Email..." oninput="this.className = ''" ></p>  
     <p><input name="no_telpon" id="no_telpon" value="12345" placeholder="No No Telpon..." oninput="this.className = ''" ></p>  
     <p><input name="no_hp1" id="no_hp1" value="11111" placeholder="No Handphone 1..." oninput="this.className = ''" ></p>  
     <p><input name="no_hp2" id="no_hp2" value="55555" placeholder="No Handphone 2..." oninput="this.className = ''" ></p>  
@@ -231,8 +231,8 @@ $this->load->view('template/sidebar');
 
 <!-- ALAMAT TINGGAL -->
   <div class="tab"><h1>Alamat Tinggal:</h1>
-    <p><textarea name="alamat_tinggal_1" id="alamat_tinggal_1" rows="6"></textarea></p>
-    <p><input placeholder="Kode POS..." oninput="this.className = ''" name="kode_pos_1" id="kode_pos_1" ></p>
+    <p><textarea name="alamat_tinggal_1" id="alamat_tinggal_1" rows="6">xxxxxxxxxxxxx</textarea></p>
+    <p><input value="17413" placeholder="Kode POS..." oninput="this.className = ''" name="kode_pos_1" id="kode_pos_1" ></p>
 
 <div id="result_kode_pos_1"></div>
 
@@ -244,11 +244,11 @@ $this->load->view('template/sidebar');
     <p><input placeholder="Kelurahan/Desa..." oninput="this.className = ''" name="kelurahan_1" id="kelurahan_1" ></p>
  -->
 
-    <p><input placeholder="Lama Tinggal(Tahun)..." oninput="this.className = ''" name="lama_tinggal_1" id="lama_tinggal_1" ></p>    
+    <p><input  value="20" placeholder="Lama Tinggal(Tahun)..." oninput="this.className = ''" name="lama_tinggal_1" id="lama_tinggal_1" ></p>    
     <p>
     <select name="status_tinggal" id="status" oninput="this.className = ''" >
-    <option value="">-PILIH TINGGAL-</option>
     <option value="orang_tua">ORANG TUA</option>
+    <option value="">-PILIH TINGGAL-</option>
     <option value="sendiri">SENDIRI</option>
     <option value="sewa">SEWA</option>
     </select>
@@ -256,8 +256,8 @@ $this->load->view('template/sidebar');
     
     <p>
     <select name="kendaraan" id="kendaraan" oninput="this.className = ''" >
-    <option value="">-PILIH KENDARAAN-</option>
     <option value="mobil">MOBIL</option>
+    <option value="">-PILIH KENDARAAN-</option>
     <option value="motor">MOTOR</option>
     <option value="kendaraan_umum">KENDARAAN UMUM</option>
     </select>
@@ -315,11 +315,11 @@ Alamat Tinggal sesuai KTP ? :
     </thead>
     <tbody>
       <tr>
-        <td><input type="text" class="form-control name_list" name="perusahaan[]"/></td>
-        <td><input type="text" class="form-control name_list" name="posisi[]"/></td>
-        <td><input type="date" class="form-control name_list" name="tanggal_masuk[]"/></td>
-        <td><input type="date" class="form-control name_list" name="tanggal_resign[]"/></td>
-        <td><input type="text" class="form-control name_list" name="keterangan[]"/></td>
+        <td><input value="ABCD" type="text" class="form-control name_list" name="perusahaan[]"/></td>
+        <td><input value="ABCD" type="text" class="form-control name_list" name="posisi[]"/></td>
+        <td><input value="1234567" type="text" class="form-control name_list" name="tanggal_masuk[]"/></td>
+        <td><input type="text" value="1234567" class="form-control name_list" name="tanggal_resign[]"/></td>
+        <td><input type="text" value="123124" class="form-control name_list" name="keterangan[]"/></td>
         
         <td><button type="button" name="add_2" id="add_2" class="btn btn-success">+</button></td>
       </tr>
@@ -352,12 +352,12 @@ Alamat Tinggal sesuai KTP ? :
     </thead>
     <tbody>
       <tr>
-        <td><input type="text" class="form-control name_list" name="jenjang_pendidikan[]"/></td>
-        <td><input type="text" class="form-control name_list" name="nama_sekolah[]"/></td>
-        <td><input type="text" class="form-control name_list" name="kota[]"/></td>
-        <td><input type="text" class="form-control name_list" name="program_studi[]"/></td>
-        <td><input type="text" class="form-control name_list" name="ipk[]"/></td>
-        <td><input type="text" class="form-control name_list" name="tahun_ijazah[]"/></td> 
+        <td><input value="ABCD" type="text" class="form-control name_list" name="jenjang_pendidikan[]"/></td>
+        <td><input value="ABCD" type="text" class="form-control name_list" name="nama_sekolah[]"/></td>
+        <td><input value="ABCD" type="text" class="form-control name_list" name="kota[]"/></td>
+        <td><input value="ABCD" type="text" class="form-control name_list" name="program_studi[]"/></td>
+        <td><input value="ABCD" type="text" class="form-control name_list" name="ipk[]"/></td>
+        <td><input value="ABCD" type="text" class="form-control name_list" name="tahun_ijazah[]"/></td> 
         
         <td><button type="button" name="add" id="add" class="btn btn-success">+</button></td>
       </tr>
@@ -371,14 +371,15 @@ Alamat Tinggal sesuai KTP ? :
 
 <!-- EMERGENCY CONTACT -->
   <div class="tab"><h1>Emergency Contact:</h1>
-    <p><input placeholder="Nama Emergency" oninput="this.className = ''" name="nama_emergency" id="nama_emergency"></p>
+    <p><input value="ABCD" placeholder="Nama Emergency" oninput="this.className = ''" name="nama_emergency" id="nama_emergency"></p>
     <p><label>Alamat Emergency</label></p>
     <p>
-    <textarea name="alamat_emergency" id="alamat_emergency" row="6"></textarea></p>
+    <textarea name="alamat_emergency" id="alamat_emergency" row="6">xxxxxxxxxxxx</textarea></p>
     <p>
     <select name="hubungan_emergency" id="hubungan_emergency" oninput="this.className = ''" >
-    <option value="">-PILIH HUBUNGAN-</option>
     <option value="adik">ADIK</option>
+
+    <option value="">-PILIH HUBUNGAN-</option>
     <option value="kakak">KAKAK</option>
     <option value="ibu">IBU</option>
     <option value="ayah">AYAH</option>
@@ -388,7 +389,7 @@ Alamat Tinggal sesuai KTP ? :
     <option value="nenek">NENEK</option>
     </select>
     </p>
-    <p><input placeholder="No Handphone Emergency" oninput="this.className = ''" name="no_hp_emergency" id="no_hp_emergency">
+    <p><input value="090909" placeholder="No Handphone Emergency" oninput="this.className = ''" name="no_hp_emergency" id="no_hp_emergency">
     </p>
 <div id="warning" style="display: none;>
   
@@ -716,7 +717,8 @@ function get_kode_pos_2(){
 
 
   $(document).ready(function(){
-
+//tes dummy    
+get_kode_pos_1();
 
 $("#kode_pos_1").keyup(function(){
 

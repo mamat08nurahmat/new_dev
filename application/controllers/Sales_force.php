@@ -8,13 +8,94 @@ class Sales_force extends CI_Controller {
         parent::__construct();
         // Your own constructor code
 //        $this->load->model('model_auth');
-        $this->load->model('sales_force_model');
+ //       $this->load->model('sales_force_model');
     }
 
+
+
+  public function insert_dummy_employee_(){
+
+//auto_increment
+$employee_id = $this->db->query('select (MAX(EmployeeID)+1) as increment from Employee_')->result();
+$increment_employee_id = $employee_id[0]->increment;
+
+
+    $data_employee = array(
+//    'id_posisi'     =>$this->input->post('id_posisi'),
+
+//get auto increment
+//$employee_id
+
+ 'EmployeeID' => $increment_employee_id,
+ 'ParentEmployeeID' => "99" ,
+ 'EmployeeName' => 'ZZZZZZ' ,
+ // 'EmployeeOldCode' => "99" ,
+ // 'EmployeeNewCode' => "99" ,
+ // 'UserGroupID' => "99" ,
+ // 'EmployeeStatus' => "99" ,
+ // 'EmployeeGrade' => "99" ,
+ // 'EmployeeBirthPlace' => "99" ,
+ // 'EmployeeBirthDate' => "99" ,
+ // 'MothersMaidenName' => "99" ,
+ // 'IdentityType' => "99" ,
+ // 'IdentityNumber' => "99" ,
+ // 'IdentityFilePath' => "99" ,
+ // 'IdentityFileName' => "99" ,
+ // 'Sex' => "99" ,
+ // 'Religion' => "99" ,
+ // 'NPWP' => "99" ,
+ // 'FixedPhoneNumber' => "99" ,
+ // 'PhoneNumber' => "99" ,
+ // 'PhoneNumber2' => "99" ,
+ // 'EmergencyName' => "99" ,
+ // 'EmergencyStatus' => "99" ,
+ // 'EmergencyNumber' => "99" ,
+ // 'EmergencyAddress' => "99" ,
+ // 'Province' => "99" ,
+ // 'Kecamatan' => "99" ,
+ // 'Kabupaten' => "99" ,
+ // 'Kelurahan' => "99" ,
+ // 'PostalCode' => "99" ,
+ // 'StreetAddress' => "99" ,
+ // 'EmailAddress' => "99" ,
+ // 'MaritalStatus' => "99" ,
+ // 'Height' => "99" ,
+ // 'Weight' => "99" ,
+ // 'PhotoFilePath' => "99" ,
+ // 'PhotoFileName' => "99" ,
+ // 'AgencyID' => "99" ,
+ // 'SalesCenterID' => "99" ,
+ // 'InterviewApprovalID' => "99" ,
+ // 'InterviewLevel' => "99" ,
+ // 'InterviewStatus' => "99" ,
+ // 'HiringApprovalID'=> "99" ,
+ 'HiringLevel' => "1" ,
+ // 'HiringStatus' => "99" ,
+ // 'ApprovalID' => "99" ,
+ // 'ApprovalLevel' => "99" ,
+ // 'ApprovalStatus' => "99" ,
+ //'IsDiscontinued' => false , //terminate
+ // 'IsDedicated' => "99" ,
+ // 'DedicatedRemark' => "99" ,
+ // 'ActiveDate' => "99" ,
+ // 'EndDate' => "99" ,
+ // 'EndReason' => "99" ,
+ // 'CreatedDate' => "99" ,
+// 'CreatedBy' => $_SESSION['UserID'] ,
+
+);
+
+$cek1 = $this->db->insert('Employee_',$data_employee);
+
+print_r($cek1);
+
+  }
 
 //dev=======
 public function index_dev(){
 
+
+print_r($_SESSION);die();
 
 // UserGroupID
 $id_agency = $_SESSION['AgencyID'];
@@ -231,9 +312,14 @@ $query_sales_center = $this->db->query("SELECT SalesCenterID,SalesCenterName FRO
 	}
 
 
-	public function	add_save_dev(){
 
+
+	public function	add_save_dev(){
+//$UserID =$_SESSION['UserID'] ;
+$UserID ='12345' ;
 //var_dump($_POST);die();  
+
+
 
 $employee_id = $this->db->query('select (MAX(EmployeeID)+1) as increment from Employee_')->result();
 $increment_employee_id = $employee_id[0]->increment;
@@ -396,6 +482,143 @@ Array
 )
 */
 
+//upload====================
+    // $config['upload_path']          = './uploads/';
+    // $config['allowed_types']        = 'pdf|jpg|png';
+    // $config['max_size']             = 100000;
+    // //$config['file_name']             = $nmfile;
+    // //$config['max_width']            = 1024;
+    // //$config['max_height']           = 768;
+    // $this->load->library('upload', $config);
+    // // upload gambar 1
+    //     $this->upload->do_upload('photo');
+    //     $result1 = $this->upload->data ();
+    // $photo = $result1['file_name'];
+    //     // upload gambar 2
+    //     $this->upload->do_upload('scan_ktp');
+    //     $result2 = $this->upload->data();
+    // $ktp = $result2['file_name'];
+    //     // upload gambar 3
+    //     $this->upload->do_upload('file_komit');
+    //     $result3 = $this->upload->data();
+    // $file_komit = $result3['file_name'];
+    //  // upload gambar 4
+    //     $this->upload->do_upload('ijazah');
+    //     $result4 = $this->upload->data();
+    // $ijazah = $result4['file_name'];
+    //     // menyimpan hasil upload
+    //     $result = array(
+    //       'photo'=>$result1,
+    //       'ktp'=>$result2,
+    //       'do_dont'=>$result3,
+    //       'ijazah'=>$result4);
+//=========================
+// $new_name = time().$_FILES["userfiles"]['name'];
+// $config['file_name'] = $new_name;
+// UPLOAD PHOTO
+      $config['upload_path'] = './uploads/';
+      $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf';
+// $new_name = time().$_FILES["photo"]['name'];
+      // $PhotoFileName = "PHOTO_".$increment_employee_id."_".$_FILES["photo"]['name'];
+      // $config['file_name'] = $PhotoFileName;
+    $config['encrypt_name'] = TRUE;
+      $this->load->library('upload', $config);
+      // if(!$this->upload->do_upload())
+      // {
+      //   echo $this->upload->display_errors();
+      // }
+      // else
+      // {
+        $this->upload->do_upload('photo');
+        $data = $this->upload->data();
+        $PhotoFileName = $data["file_name"];
+
+        $config1['image_library'] = 'gd2';
+        $config1['source_image'] = './uploads/'.$PhotoFileName;
+        $config1['create_thumb'] = FALSE;
+        $config1['maintain_ratio'] = FALSE;
+        $config1['quality'] = '60%';
+        $config1['width'] = 200;
+        $config1['height'] = 200;
+
+
+        $config1['new_image'] = './uploads/'.$PhotoFileName;
+        // $config['new_image'] = './uploads/'.$data["file_name"];
+        $this->load->library('image_lib', $config1);
+        $this->image_lib->resize();
+        //no unik
+        // $PhotoFileName = $data["file_name"];
+        // $PhotoFileName = "PHOTO_".$increment_employee_id;
+        // }
+//??????????????????????????
+
+//       $config2['upload_path'] = './uploads/';
+//       $config2['allowed_types'] = 'jpg|jpeg|png|gif|pdf';
+// // $new_name = time().$_FILES["photo"]['name'];
+//       $KTPFileName = "KTP_".$increment_employee_id."_".$_FILES["scan_ktp"]['name'];
+//       $config2['file_name'] = $PhotoFileName;
+
+//       $this->load->library('upload', $config2);
+      // if(!$this->upload->do_upload())
+      // {
+      //   echo $this->upload->display_errors();
+      // }
+      // else
+      // {
+        $this->upload->do_upload('scan_ktp');
+        $data2 = $this->upload->data();        
+        $KTPFileName = $data2["file_name"];
+
+        $this->upload->do_upload('file_komit');
+        $data3 = $this->upload->data();        
+        $KomitFileName = $data3["file_name"];
+
+        $this->upload->do_upload('ijazah');
+        $data4 = $this->upload->data();
+        $IjazahFileName = $data4["file_name"];
+
+// UPLOAD SCAN KTP
+//       $config2['upload_path'] = './uploads/';
+//       $config2['allowed_types'] = 'jpg|jpeg|png|gif|pdf';
+//       $KTPFileName = "KTP_".$increment_employee_id."_".$_FILES["scan_ktp"]['name'];
+//       $config2['file_name'] = $KTPFileName;
+//       $this->load->library('upload', $config2);
+//       // if(!$this->upload->do_upload())
+//       // {
+//       //   echo $this->upload->display_errors();
+//       // }
+//       // else
+//       // {
+
+
+//         $this->upload->do_upload('scan_ktp');
+
+//         $data2 = $this->upload->data();
+
+//         $config2['image_library'] = 'gd2';
+//         $config2['source_image'] = './uploads/'.$data2["file_name"];
+//         $config2['create_thumb'] = FALSE;
+//         $config2['maintain_ratio'] = FALSE;
+//         $config2['quality'] = '60%';
+// //        $config2['width'] = 200;
+// //        $config2['height'] = 200;
+
+//         // $KTPFileName = "KTP_".$increment_employee_id;
+
+//         $config2['new_image'] = './uploads/'.$KTPFileName;
+//         // $config2['new_image'] = './uploads/'.$data2["file_name"];
+//         $this->load->library('image_lib', $config2);
+//         $this->image_lib->resize();
+//         //no unik
+//         // $PhotoFileName = $data["file_name"];
+//         // }
+
+
+
+
+
+
+
 		$data_employee = array(
 //		'id_posisi'			=>$this->input->post('id_posisi'),
 
@@ -403,8 +626,8 @@ Array
 //$employee_id
 
  'EmployeeID' => $increment_employee_id ,
- 'ParentEmployeeID' => "99" ,
- 'EmployeeName' => "MATT" ,
+ //'ParentEmployeeID' => "99" ,
+ 'EmployeeName' => $this->input->post('nama_lengkap'),
  // 'EmployeeOldCode' => "99" ,
  // 'EmployeeNewCode' => "99" ,
  // 'UserGroupID' => "99" ,
@@ -416,7 +639,7 @@ Array
  // 'IdentityType' => "99" ,
  // 'IdentityNumber' => "99" ,
  // 'IdentityFilePath' => "99" ,
- // 'IdentityFileName' => "99" ,
+ 'IdentityFileName' => $KTPFileName ,
  // 'Sex' => "99" ,
  // 'Religion' => "99" ,
  // 'NPWP' => "99" ,
@@ -438,14 +661,14 @@ Array
  // 'Height' => "99" ,
  // 'Weight' => "99" ,
  // 'PhotoFilePath' => "99" ,
- // 'PhotoFileName' => "99" ,
+ 'PhotoFileName' => $PhotoFileName ,
  // 'AgencyID' => "99" ,
  // 'SalesCenterID' => "99" ,
  // 'InterviewApprovalID' => "99" ,
  // 'InterviewLevel' => "99" ,
  // 'InterviewStatus' => "99" ,
  // 'HiringApprovalID'=> "99" ,
- // 'HiringLevel' => "99" ,
+ 'HiringLevel' => "1" , //
  // 'HiringStatus' => "99" ,
  // 'ApprovalID' => "99" ,
  // 'ApprovalLevel' => "99" ,
@@ -456,8 +679,8 @@ Array
  // 'ActiveDate' => "99" ,
  // 'EndDate' => "99" ,
  // 'EndReason' => "99" ,
- // 'CreatedDate' => "99" ,
- // 'CreatedBy' => "99" ,
+ 'CreatedDate' => date("Y-m-d\TH:i:s") ,
+  'CreatedBy' => $UserID,
 
 );
 
@@ -509,6 +732,7 @@ $cek2 = $this->db->insert('Employee_tes',$data_employee_detail);
 
 if ($cek1==1 && $cek2==1 ) {
 
+
 echo "<script>alert('Suksess');</script>";
 //dev??
             redirect('sales_force/index_dev', 'refresh');             
@@ -520,6 +744,76 @@ echo "<script>alert('GAGAL');</script>";
 
 
 	}
+
+
+
+ function multiple_upload(){
+
+  print_r($_FILES);die();
+/*
+
+Array
+(
+    [photo] => Array
+        (
+            [name] => Hydrangeas.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\PHP\tmp\php8B77.tmp
+            [error] => 0
+            [size] => 595284
+        )
+
+    [scan_ktp] => Array
+        (
+            [name] => Tulips.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\PHP\tmp\php8DE8.tmp
+            [error] => 0
+            [size] => 620888
+        )
+
+    [file_komit] => Array
+        (
+            [name] => Lighthouse.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\PHP\tmp\php901B.tmp
+            [error] => 0
+            [size] => 561276
+        )
+
+    [ijazah] => Array
+        (
+            [name] => Tulips.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\PHP\tmp\php923E.tmp
+            [error] => 0
+            [size] => 620888
+        )
+
+)
+
+*/
+
+         $config['upload_path']   = './uploads/'; 
+         //$config['allowed_types'] = 'gif|jpg|png'; 
+         //$config['max_size']      = 100; 
+         //$config['max_width']     = 1024; 
+         //$config['max_height']    = 768;  
+         $this->load->library('upload', $config);
+         // script upload file pertama
+         $this->upload->do_upload('photo');
+         $file1 = $this->upload->data();
+         echo "<pre>";
+         print_r($file1);
+         echo "</pre>";
+         
+         // script uplaod file kedua
+         $this->upload->do_upload('scan_ktp');
+         $file2 = $this->upload->data();
+         echo "<pre>";
+         print_r($file2);
+         echo "</pre>";
+    }
 
 	public function add_save_devx(){
 		print_r($_POST);die();
