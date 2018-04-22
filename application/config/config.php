@@ -395,7 +395,7 @@ $config['cookie_prefix']	= '';
  $config['cookie_path']		= '/';
 // $config['cookie_domain']	= '/';
 //$config['cookie_path']		= 'http://slntools.com/new/';
-$config['cookie_domain']	= 'http://slntools.com/';
+$config['cookie_domain']	= 'http://slntools.com/new_dev';
 $config['cookie_secure']	= FALSE;
 $config['cookie_httponly'] 	= FALSE;
 

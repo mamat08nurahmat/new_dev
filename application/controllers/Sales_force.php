@@ -95,6 +95,8 @@ print_r($cek1);
 public function index_dev(){
 
 
+print_r($_SESSION);die();
+
 // UserGroupID
 $id_agency = $_SESSION['AgencyID'];
 $id_user_group = $_SESSION['UserGroupID'];
