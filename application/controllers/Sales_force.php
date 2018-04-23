@@ -1,14 +1,30 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-// class Sales_force extends Admin {
-class Sales_force extends CI_Controller {
+class Sales_force extends Admin {
+// class Sales_force extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
         // Your own constructor code
 //        $this->load->model('model_auth');
  //       $this->load->model('sales_force_model');
+
+
+// //admin agency 42
+//        $sess_array = array(
+//       'UserID'      => '12345',
+//       'UserGroupID' => '42',
+//       'UserName'    =>'admin agency 123',
+//       'AreaGroupID' => '99',
+//       'AreaID'      => '6', //bandung
+//       'AgencyID'    => '99',
+//       'EmployeeID'  => '99',
+//       'Login_Status'=> true,  
+
+//       );              //set session with value from database
+//                 $this->session->set_userdata($sess_array);
+        
     }
 
 

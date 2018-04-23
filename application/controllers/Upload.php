@@ -226,7 +226,7 @@ $lokasi_file = 'csv_upload/'.$BatchID.'.csv';
 $db_system ='System'.$Aplikasi ;
 
 //cek batch sudah ada
-$batch_ada = $this->db->query("SELECT *  FROM $db_system WHERE BatchID = $BatchID ")->num_rows();
+$batch_ada = $this->db->query("SELECT distinct BatchID  FROM $db_system WHERE BatchID = $BatchID ")->num_rows();
 
 // print_r($batch_ada);die();
 //cek batch ada?
@@ -282,7 +282,7 @@ if ($Aplikasi=='CCOS') {
 // 'OpenDate'			=>	$row["Open Date"],
 'SourceCode'		=>	$row["SourceCode"],
 'CustomerNumber'	=>	$row["Customer Number"],
-'CustomerName'		=>	$row["CustomerName"], //!!!!!caracter petik ''/' 
+// 'CustomerName'		=>	$row["CustomerName"], //!!!!!caracter petik ''/' 
 // 'CustomerName'		=>	'xxxxxxxxxxx',   //????????
 // 'CustomerBirthDate'	=>	$row["Customer DOB"],
 'ORG'				=>	$row["ORG"],
@@ -314,7 +314,7 @@ $db_system = 'System'.$Aplikasi;
 
 //return jumlah data masuk
 $RowDataSucceed =	$this->db->insert_batch($db_system, $data);		
-// print_r($RowDataSucceed);
+// print_r($RowDataSucceed);die();
 
 //UPDATE
 // [BatchID]
