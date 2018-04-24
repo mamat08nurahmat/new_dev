@@ -11,19 +11,19 @@ class Sales_force extends Admin {
  //       $this->load->model('sales_force_model');
 
 
-// //admin agency 42
-//        $sess_array = array(
-//       'UserID'      => '12345',
-//       'UserGroupID' => '42',
-//       'UserName'    =>'admin agency 123',
-//       'AreaGroupID' => '99',
-//       'AreaID'      => '6', //bandung
-//       'AgencyID'    => '99',
-//       'EmployeeID'  => '99',
-//       'Login_Status'=> true,  
+//admin agency 42
+       $sess_array = array(
+      'UserID'      => '12345',
+      'UserGroupID' => '42',
+      'UserName'    =>'admin agency 123',
+      'AreaGroupID' => '99',
+      'AreaID'      => '6', //bandung
+      'AgencyID'    => '99',
+      'EmployeeID'  => '99',
+      'Login_Status'=> true,  
 
-//       );              //set session with value from database
-//                 $this->session->set_userdata($sess_array);
+      );              //set session with value from database
+                $this->session->set_userdata($sess_array);
         
     }
 
@@ -111,7 +111,7 @@ print_r($cek1);
 public function index_dev(){
 
 
-print_r($_SESSION);die();
+// print_r($_SESSION);die();
 
 // UserGroupID
 $id_agency = $_SESSION['AgencyID'];

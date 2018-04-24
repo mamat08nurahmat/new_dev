@@ -7,6 +7,21 @@ class Upload extends CI_Controller {
 		parent::__construct();
 		$this->load->model('csv_import_model');
 		$this->load->library('csvimport');
+
+//admin agency 42
+       $sess_array = array(
+      'UserID'      => '12345',
+      'UserGroupID' => '42',
+      'UserName'    =>'Uploader 123',
+      'AreaGroupID' => '99',
+      'AreaID'      => '6', //bandung
+      'AgencyID'    => '99',
+      'EmployeeID'  => '99',
+      'Login_Status'=> true,  
+
+      );              //set session with value from database
+                $this->session->set_userdata($sess_array);
+
 	}
 
 	function index()
@@ -259,11 +274,11 @@ if ($Aplikasi=='CCOS') {
 
 'BatchID'			=>	$BatchID,
 'RowID'				=>	$no++,
-//'DecisionDate'		=>	$row["Decision Date"],
+'DecisionDate'		=>	$this->format_tanggal($row["Decision Date"]),
 'SourceCode'		=>	$row["SourceCode"],
-// 'CustomerName'		=>	$cus_name,
+// // 'CustomerName'		=>	$cus_name,
 'CustomerName'		=>	$row["CustomerName"],
-'ORG'				=>	$row["ORG"],
+// 'ORG'				=>	$row["ORG"], //??????????????
 'Logo'				=>	$row["Logo"],
 'EmpReffCode'		=>	$row["EmpReffCode"],
 'Status'			=>	$row["Status"],
@@ -279,12 +294,12 @@ if ($Aplikasi=='CCOS') {
 
 'BatchID'			=>	$BatchID,
 'RowID'				=>	$no++,
-// 'OpenDate'			=>	$row["Open Date"],
+'OpenDate'			=>	$this->format_tanggal($row["Open Date"]),
 'SourceCode'		=>	$row["SourceCode"],
 'CustomerNumber'	=>	$row["Customer Number"],
-// 'CustomerName'		=>	$row["CustomerName"], //!!!!!caracter petik ''/' 
+'CustomerName'		=>	$row["CustomerName"], //!!!!!caracter petik ''/' 
 // 'CustomerName'		=>	'xxxxxxxxxxx',   //????????
-// 'CustomerBirthDate'	=>	$row["Customer DOB"],
+'CustomerBirthDate'	=>	$this->format_tanggal($row["Customer DOB"]),
 'ORG'				=>	$row["ORG"],
 'Logo'				=>	$row["Logo"],
 'EmpReffCode'		=>	$row["EmpReffCode"],
@@ -388,5 +403,61 @@ if ($cek_update==1) {
 		$this->load->view('read_csv');
 
 		}
+
+
+
+
+	function tes_tanggal(){
+
+
+// $date = '31-12-2019';
+
+$date ='01032018';
+print_r($this->format_tanggal($date));
+
+$newformat = $this->format_tanggal($date);
+var_dump($newformat);
+
+	}
+
+
+	function substr(){
+
+$date ='01032018';
+
+$d = substr($date,0,2);
+$m = substr($date,2,2);
+$y = substr($date,4,4);
+echo $date."<br>";
+echo $d."<br>";
+echo $m."<br>";
+echo $y."<br>";
+
+$new_date=$d."-".$m."-".$y;
+
+echo "new_date".$new_date;
+
+	}
+
+	function format_tanggal($date){
+$d = substr($date,0,2);
+$m = substr($date,2,2);
+$y = substr($date,4,4);
+$new_date=$d."-".$m."-".$y;
+$time = strtotime($new_date);
+
+$newformat = date('Y/m/d',$time);
+return $newformat;
+
+// echo $newformat;
+// echo "<br>";
+// echo date("Y/m/d");
+// echo "<br>";
+
+// $date=date_create("31-01-2018");
+// echo date_format($date,"Y/m/d H:i:s");
+
+
+	}		
 
 }	
