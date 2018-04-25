@@ -114,6 +114,7 @@ public function index_dev(){
 // print_r($_SESSION);die();
 
 // UserGroupID
+$id_agency = $_SESSION['UserID'];
 $id_agency = $_SESSION['AgencyID'];
 $id_user_group = $_SESSION['UserGroupID'];
 //dummy		
@@ -141,11 +142,11 @@ if ($id_user_group==1) {
 	a.no_ktp as no_ktp,
 	a.tgl as tgl,
 	a.ket as ket
-	FROM Employee a
+	FROM Employee_ a
 	left JOIN AgencySalesCenter b ON a.SalesCenterID = b.SalesCenterID 		
 	left JOIN posisi c ON a.id_posisi = c.id_posisi
 	left JOIN Agency d ON a.AgencyID = d.AgencyID
-	$where 
+	
 	ORDER BY tgl DESC
 		
 		")->result();

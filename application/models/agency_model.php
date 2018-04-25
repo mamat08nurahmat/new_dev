@@ -1,190 +1,111 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); 
+<?php
 
-class Agency_model extends CI_Model {     
-var $table = 'Agency';        
-var $order = array('id' => 'desc'); // default order 
- 
-    public function __construct()
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
+class Agency_model extends CI_Model
+{
+
+    public $table = 'AgencySalesCenter';
+    public $id = 'AgencyID';
+    public $order = 'DESC';
+
+    function __construct()
     {
         parent::__construct();
-        $this->load->database();
-		#$this->load->helper(array('form', 'url'));
-    }
-	 
-
-    public function insert_agency($data){
-
-   $this->db->insert('Agency',$data);
-   $insert_id = $this->db->insert_id();
-
-   return  $insert_id;
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('AgencyID,AgencyName,StreetAddress,VillageAddress,SubDistrictAddress,PostalCode,CityAddress,PhoneNumber,FaxNumber,EmailAddress,Status,ActiveDate,EndDate,IsActive,UserType');
+        $this->datatables->from('agency');
+        //add this line for join
+        //$this->datatables->join('table2', 'agency.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('agency/read/$1'),'Read')." | ".anchor(site_url('agency/update/$1'),'Update')." | ".anchor(site_url('agency/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'AgencyID');
+        return $this->datatables->generate();
+    }
 
-    private function _get_datatables_query()
+    // get all
+    function get_all()
     {
-         
-        $this->db->from($this->table);
- 
-        $i = 0;
-     
-        foreach ($this->column_search as $item) // loop column 
-        {
-            if($_POST['search']['value']) // if datatable send POST for search
-            {
-                 
-                if($i===0) // first loop
-                {
-                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
-                    $this->db->like($item, $_POST['search']['value']);
-                }
-                else
-                {
-                    $this->db->or_like($item, $_POST['search']['value']);
-                }
- 
-                if(count($this->column_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
-            }
-            $i++;
-        }
-         
-        if(isset($_POST['order'])) // here order processing
-        {
-            $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
-        } 
-        else if(isset($this->order))
-        {
-            $order = $this->order;
-            $this->db->order_by(key($order), $order[key($order)]);
-        }
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
     }
- 
-    function get_datatables()
+
+    // get data by id
+    function get_by_id($id)
     {
-        $this->_get_datatables_query();
-        if($_POST['length'] != -1)
-        $this->db->limit($_POST['length'], $_POST['start']);
-        $query = $this->db->get();
-        return $query->result();
+        $this->db->where($this->id, $id);
+        return $this->db->get($this->table)->row();
     }
- 
-    function count_filtered()
-    {
-        $this->_get_datatables_query();
-        $query = $this->db->get();
-        return $query->num_rows();
-    }
- 
-    public function count_all()
-    {
-        $this->db->from($this->table);
+    
+    // get total rows
+    function total_rows($q = NULL) {
+        $this->db->like('AgencyID', $q);
+	$this->db->or_like('AgencyName', $q);
+	$this->db->or_like('StreetAddress', $q);
+	$this->db->or_like('VillageAddress', $q);
+	$this->db->or_like('SubDistrictAddress', $q);
+	$this->db->or_like('PostalCode', $q);
+	$this->db->or_like('CityAddress', $q);
+	$this->db->or_like('PhoneNumber', $q);
+	$this->db->or_like('FaxNumber', $q);
+	$this->db->or_like('EmailAddress', $q);
+	$this->db->or_like('Status', $q);
+	$this->db->or_like('ActiveDate', $q);
+	$this->db->or_like('EndDate', $q);
+	$this->db->or_like('IsActive', $q);
+	$this->db->or_like('UserType', $q);
+	$this->db->from($this->table);
         return $this->db->count_all_results();
     }
- 
-    public function get_by_id($id)
-    {
-        $this->db->from($this->table);
-        $this->db->where('id',$id);
-        $query = $this->db->get();
- 
-        return $query->row();
-    }
- 
-    public function save($data)
-    {
-        return $this->db->insert($this->table, $data);
-        //return $this->db->insert_id();
+
+    // get data with limit and search
+    function get_limit_data($limit, $start = 0, $q = NULL) {
+        $this->db->order_by($this->id, $this->order);
+        $this->db->like('AgencyID', $q);
+	$this->db->or_like('AgencyName', $q);
+	$this->db->or_like('StreetAddress', $q);
+	$this->db->or_like('VillageAddress', $q);
+	$this->db->or_like('SubDistrictAddress', $q);
+	$this->db->or_like('PostalCode', $q);
+	$this->db->or_like('CityAddress', $q);
+	$this->db->or_like('PhoneNumber', $q);
+	$this->db->or_like('FaxNumber', $q);
+	$this->db->or_like('EmailAddress', $q);
+	$this->db->or_like('Status', $q);
+	$this->db->or_like('ActiveDate', $q);
+	$this->db->or_like('EndDate', $q);
+	$this->db->or_like('IsActive', $q);
+	$this->db->or_like('UserType', $q);
+	$this->db->limit($limit, $start);
+        return $this->db->get($this->table)->result();
     }
 
-    public function save_get_id($data)
+    // insert data
+    function insert($data)
     {
-        $this->db->insert('Employee', $data);
-		$insert_id = $this->db->insert_id();
-        return $insert_id ;
+        $this->db->insert($this->table, $data);
     }
-	
-    public function update($where, $data)
+
+    // update data
+    function update($id, $data)
     {
-        $this->db->update($this->table, $data, $where);
-        return $this->db->affected_rows();
+        $this->db->where($this->id, $id);
+        $this->db->update($this->table, $data);
     }
- 
-    public function delete_by_id($id)
+
+    // delete data
+    function delete($id)
     {
-        $this->db->where('id', $id);
+        $this->db->where($this->id, $id);
         $this->db->delete($this->table);
     }
- 
- 
-    public function get_by_ktp($no_ktp)
-    {
-        $this->db->from('Employee');
-        $this->db->where('no_ktp',$no_ktp);
-        $query = $this->db->get();
- 
-        return $query->result();
-    }
-    public function get_id_by_ktp($no_ktp)
-    {
-        $this->db->select('id');
-        $this->db->from('Employee');
-        $this->db->where('no_ktp',$no_ktp);
-        $query = $this->db->get();
- 
-        return $query->result();
-    }
 
-	
-	    public function hapusdata($no_ktp)
-    {
-        $this->db->where('no_ktp', $no_ktp);
-        $this->db->delete('Employee');
-	return $this->db->affected_rows();
-		
-    }
-//getNewSalesCode
-public function getNewSalesCode(){
-	
-	$now1 = explode(' ', microtime());
-$now= $now1[1] ;
-//print_r($now);die();  
-    $charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  $base = strlen($charset);
-  $result = '';
-
-  while ($now >= $base){
-    $i = $now % $base;
-    $result = $charset[$i] . $result;
-    $now /= $base;
-  }
-  
-//  return substr($result, -3);
-	$hash = substr($result, -3);
-	$cek = $this->db->query("SELECT EmployeeNewCode FROM Employee  ")->result();	
-
-	foreach($cek as $kode){
-	
-	$kode_ada []= $kode->EmployeeNewCode;
-	//echo $kode_ada;
-	//echo"<br>";
 }
 
-//print_r($kode_ada);die();
-
-if (in_array($hash, $kode_ada)){
-$new_code = $hash =$this->incrementalHash();		  
-  //echo "Match found";
-}else{
-$new_code =$hash;	  
-  //echo "Match not found";
-  }
-
-
-return $new_code;
-	
-}
-
-	
-	
-}
+/* End of file Agency_model.php */
+/* Location: ./application/models/Agency_model.php */
+/* Please DO NOT modify this information : */
+/* Generated by Harviacode Codeigniter CRUD Generator 2018-04-24 13:35:45 */
+/* http://harviacode.com */
