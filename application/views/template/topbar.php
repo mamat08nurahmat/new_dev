@@ -4,7 +4,7 @@
     <div class="wrapper">
 
         <header class="main-header">
-            <a href="#" class="logo"><b>MONETS</b></a>
+            <a href="#" class="logo"><b>Admin</b>LTE</a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
@@ -20,7 +20,7 @@
                         <li class="dropdown messages-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-envelope-o"></i>
-                                <span class="label label-success"></span>
+                                <span class="label label-success">4</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="header">You have 4 messages</li>
@@ -34,7 +34,7 @@
                                                 </div>
                                                 <h4>
                                                     Support Team
-                                                    <small><i class="fa fa-clock-o"></i></small>
+                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
                                                 </h4>
                                                 <p>Why not buy a new awesome theme?</p>
                                             </a>
@@ -48,16 +48,16 @@
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
-                                <span class="label label-warning"><?//=$query_notif[0]->total;?></span>
+                                <span class="label label-warning">10</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">You have <?//=$query_notif[0]->total;?> notifications</li>
+                                <li class="header">You have 10 notifications</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
                                         <li>
-                                            <a href="<?php echo site_url('approval/approve_rsm')?>"">
-                                                <i class="fa fa-users text-aqua"></i><?//=$query_notif[0]->total;?> new Approval today
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
                                             </a>
                                         </li>
                                     </ul>
@@ -69,7 +69,7 @@
                         <li class="dropdown tasks-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-flag-o"></i>
-                                <span class="label label-danger"></span>
+                                <span class="label label-danger">9</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="header">You have 9 tasks</li>
@@ -100,14 +100,14 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="<?php echo base_url('assets/AdminLTE-2.0.5/dist/img/user2-160x160.jpg') ?>" class="user-image" alt="User Image"/>
-                                <span class="hidden-xs">Admin</span>
+                                <span class="hidden-xs">Alexander Pierce</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
                                     <img src="<?php echo base_url('assets/AdminLTE-2.0.5/dist/img/user2-160x160.jpg') ?>" class="img-circle" alt="User Image" />
                                     <p>
-                                        Admin - Web Developer
+                                        Alexander Pierce - Web Developer
                                         <small>Member since Nov. 2012</small>
                                     </p>
                                 </li>

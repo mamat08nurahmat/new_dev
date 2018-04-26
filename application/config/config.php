@@ -17,14 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | environments.
 |
 */
-$config['base_url'] = 'http://slntools.com/new_dev/';
-/*
-$root  = "http://".$_SERVER['HTTP_HOST'];
-$root .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
-$config['base_url']    = $root;
-*/
-
-
+$config['base_url'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +30,6 @@ $config['base_url']    = $root;
 |
 */
 $config['index_page'] = 'index.php';
-//$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -313,7 +305,7 @@ $config['cache_query_string'] = FALSE;
 | http://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '124h4514';
+$config['encryption_key'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -364,14 +356,9 @@ $config['encryption_key'] = '124h4514';
 |
 */
 $config['sess_driver'] = 'files';
-//$config['sess_driver'] = 'database';
-
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
-
 $config['sess_save_path'] = NULL;
-// $config['sess_save_path'] = 'ci_sessions';
-
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
@@ -392,10 +379,8 @@ $config['sess_regenerate_destroy'] = FALSE;
 |
 */
 $config['cookie_prefix']	= '';
- $config['cookie_path']		= '/';
-// $config['cookie_domain']	= '/';
-//$config['cookie_path']		= 'http://slntools.com/new/';
-$config['cookie_domain']	= 'http://slntools.com/new_dev';
+$config['cookie_domain']	= '';
+$config['cookie_path']		= '/';
 $config['cookie_secure']	= FALSE;
 $config['cookie_httponly'] 	= FALSE;
 
