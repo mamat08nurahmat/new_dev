@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 //$config['base_url'] = 'http://localhost:81/crud_generator/';
-$config['base_url'] = 'http://slntools.com/new/';
+$config['base_url'] = 'http://slntools.com/new_dev/';
 
 /*
 |--------------------------------------------------------------------------
