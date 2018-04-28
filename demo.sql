@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 28 Apr 2018 pada 20.30
--- Versi Server: 5.6.21
+-- Generation Time: Jan 04, 2016 at 05:01 AM
+-- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `groups`
+-- Table structure for table `groups`
 --
 
 CREATE TABLE IF NOT EXISTS `groups` (
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `groups` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `groups`
+-- Dumping data for table `groups`
 --
 
 INSERT INTO `groups` (`id`, `name`, `description`) VALUES
@@ -43,7 +43,7 @@ INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jurusan`
+-- Table structure for table `jurusan`
 --
 
 CREATE TABLE IF NOT EXISTS `jurusan` (
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `jurusan` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `jurusan`
+-- Dumping data for table `jurusan`
 --
 
 INSERT INTO `jurusan` (`id_jurusan`, `jurusan`) VALUES
@@ -64,7 +64,7 @@ INSERT INTO `jurusan` (`id_jurusan`, `jurusan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `login_attempts`
+-- Table structure for table `login_attempts`
 --
 
 CREATE TABLE IF NOT EXISTS `login_attempts` (
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `login_attempts` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `menu`
+-- Table structure for table `menu`
 --
 
 CREATE TABLE IF NOT EXISTS `menu` (
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `menu`
+-- Dumping data for table `menu`
 --
 
 INSERT INTO `menu` (`id`, `name`, `link`, `icon`, `is_active`, `is_parent`) VALUES
@@ -101,27 +101,7 @@ INSERT INTO `menu` (`id`, `name`, `link`, `icon`, `is_active`, `is_parent`) VALU
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `persons`
---
-
-CREATE TABLE IF NOT EXISTS `persons` (
-`ID` int(11) NOT NULL,
-  `LastName` varchar(255) NOT NULL,
-  `FirstName` varchar(255) DEFAULT NULL,
-  `Age` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `persons`
---
-
-INSERT INTO `persons` (`ID`, `LastName`, `FirstName`, `Age`) VALUES
-(2, 'cccc', 'ccc', 77);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `siswa`
+-- Table structure for table `siswa`
 --
 
 CREATE TABLE IF NOT EXISTS `siswa` (
@@ -131,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `siswa` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `siswa`
+-- Dumping data for table `siswa`
 --
 
 INSERT INTO `siswa` (`id`, `nama`, `id_jurusan`) VALUES
@@ -142,33 +122,7 @@ INSERT INTO `siswa` (`id`, `nama`, `id_jurusan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `system_upload`
---
-
-CREATE TABLE IF NOT EXISTS `system_upload` (
-`ID` int(11) NOT NULL,
-  `BatchID` int(11) NOT NULL,
-  `UploadDate` datetime DEFAULT NULL,
-  `UploadBy` int(11) DEFAULT NULL,
-  `UploadRemark` varchar(255) DEFAULT NULL,
-  `ApplicationSource` varchar(50) DEFAULT NULL,
-  `ProcessMonth` int(11) DEFAULT NULL,
-  `ProcessYear` int(11) DEFAULT NULL,
-  `FilePath` varchar(255) DEFAULT NULL,
-  `VirtualPath` varchar(255) DEFAULT NULL,
-  `FileSize` varchar(255) DEFAULT NULL,
-  `ReportPath` varchar(255) DEFAULT NULL,
-  `RowDataCount` int(11) DEFAULT NULL,
-  `RowDataSucceed` int(11) DEFAULT NULL,
-  `RowDataFailed` int(11) DEFAULT NULL,
-  `ApprovalID` int(11) DEFAULT NULL,
-  `StatusUpload` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
@@ -192,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
@@ -201,7 +155,7 @@ INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users_groups`
+-- Table structure for table `users_groups`
 --
 
 CREATE TABLE IF NOT EXISTS `users_groups` (
@@ -211,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `users_groups`
+-- Dumping data for table `users_groups`
 --
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
@@ -247,22 +201,10 @@ ALTER TABLE `menu`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `persons`
---
-ALTER TABLE `persons`
- ADD PRIMARY KEY (`ID`);
-
---
 -- Indexes for table `siswa`
 --
 ALTER TABLE `siswa`
  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `system_upload`
---
-ALTER TABLE `system_upload`
- ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `users`
@@ -301,20 +243,10 @@ MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 ALTER TABLE `menu`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
--- AUTO_INCREMENT for table `persons`
---
-ALTER TABLE `persons`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
 -- AUTO_INCREMENT for table `siswa`
 --
 ALTER TABLE `siswa`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `system_upload`
---
-ALTER TABLE `system_upload`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --
@@ -326,11 +258,11 @@ MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 ALTER TABLE `users_groups`
 MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `users_groups`
+-- Constraints for table `users_groups`
 --
 ALTER TABLE `users_groups`
 ADD CONSTRAINT `fk_users_groups_groups1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
