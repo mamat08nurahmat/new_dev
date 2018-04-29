@@ -12,6 +12,10 @@ class System_upload extends CI_Controller
         parent::__construct();
         $this->load->model('System_upload_model');
         $this->load->library('form_validation');
+
+		$this->load->library('csvimport');
+
+
     }
 
     public function index()
@@ -58,7 +62,9 @@ class System_upload extends CI_Controller
     public function create() 
     {
 //batch increment
-$BatchID = 456;
+$BatchID = $this->System_upload_model->get_BatchID();
+// print_r($BatchID);die();
+// $BatchID = 8888;
 
         $data = array(
             'button' => 'Create',
@@ -151,15 +157,23 @@ $BatchID = 456;
 
 
 ////do_upload return data file upload
-$data_upload = $this->_do_upload($this->input->post('BatchID',TRUE));
+$data_upload = $this->_do_upload($this->input->post('BatchID',TRUE),$this->input->post('ApplicationSource',TRUE));
 
+//
+//Baca CSV file
+//hitung rows nya
 
+$fp = file($_FILES['FilePath']['tmp_name']);
+$jumlah_rows =  count($fp)-1; //tifak termasuk header
+
+//dummy dari session user id login
+$id_user_login='12345';
 
 // print_r($data_upload['file_name']);die();
             $data = array(
 		'BatchID' =>  $this->input->post('BatchID',TRUE),
 		'UploadDate' => $this->input->post('UploadDate',TRUE),
-		// 'UploadBy' => $this->input->post('UploadBy',TRUE),
+		'UploadBy' => $id_user_login,
 		'UploadRemark' => $this->input->post('UploadRemark',TRUE),
 		'ApplicationSource' => $this->input->post('ApplicationSource',TRUE),
 		'ProcessMonth' => $this->input->post('ProcessMonth',TRUE),
@@ -167,8 +181,8 @@ $data_upload = $this->_do_upload($this->input->post('BatchID',TRUE));
 		'FilePath' => $data_upload['file_name'],
 		'VirtualPath' => $data_upload['client_name'],
 		'FileSize' => $data_upload['file_size'],
-		// 'ReportPath' => $this->input->post('ReportPath',TRUE),
-		// 'RowDataCount' => $this->input->post('RowDataCount',TRUE),
+		'ReportPath' => '-',
+		'RowDataCount' => $jumlah_rows,
 //update data 		
 		// 'RowDataSucceed' => $this->input->post('RowDataSucceed',TRUE),
 		// 'RowDataFailed' => $this->input->post('RowDataFailed',TRUE),
@@ -185,7 +199,7 @@ $data_upload = $this->_do_upload($this->input->post('BatchID',TRUE));
     }
 
 
-	private function _do_upload($batch)
+	private function _do_upload($batch,$ApplicationSource)
 	{
 		$config['upload_path']          = 'uploads/';
         $config['allowed_types']        = 'csv';
@@ -196,7 +210,7 @@ $data_upload = $this->_do_upload($this->input->post('BatchID',TRUE));
         $config['max_height']           = 1000; // set max height allowed
         $config['file_name']            = round(microtime(true) * 1000); //just milisecond timestamp fot unique name
 */		
-        $config['file_name']            = $batch; //ambil batchID Upload
+        $config['file_name']            = $batch.'_'.$ApplicationSource; //ambil batchID Upload
 
         $this->load->library('upload', $config);
 
@@ -210,6 +224,187 @@ $data_upload = $this->_do_upload($this->input->post('BatchID',TRUE));
 		}
 		return $this->upload->data();
 	}
+
+
+
+//dev=====
+    public function approve($BatchID,$ApplicationSource) 
+    {
+error_reporting(E_ALL & ~E_NOTICE); //????????????????
+
+
+//dummy session 
+$sessionID ='12345';
+// stdClass Object
+// (
+//     [ID] => 14
+//     [BatchID] => 456
+//     [UploadDate] => 2018-04-28 00:00:00.000
+//     [UploadBy] => 
+//     [UploadRemark] => tes
+//     [ApplicationSource] => CardLink
+//     [ProcessMonth] => 1
+//     [ProcessYear] => 2018
+//     [FilePath] => 456.csv
+//     [VirtualPath] => 123.csv
+//     [FileSize] => 0.13
+//     [ReportPath] => 
+//     [RowDataCount] => 
+//     [RowDataSucceed] => 
+//     [RowDataFailed] => 
+//     [ApprovalID] => 
+//     [StatusUpload] => terupload
+// )
+		$lokasi_file = 'uploads/'.$BatchID.'_'.$ApplicationSource.'.csv';
+		$file_data = $this->csvimport->get_array($lokasi_file);
+
+//print_r($file_data);
+$db_system ='System'.$ApplicationSource ;
+
+//cek batch sudah ada
+$batch_ada = $this->db->query("SELECT distinct BatchID  FROM $db_system WHERE BatchID = $BatchID ")->num_rows();
+
+// print_r($batch_ada);die();
+
+//cek batch ada?
+if ($batch_ada==1) {
+
+//batch sudah ada------
+	echo "<script>alert('BATCH SUDAH DIAPPROVE');</script>";
+
+	redirect('system_upload'); 
+//================
+} else {
+//================
+$no=1;
+foreach($file_data as $row){
+
+// $date1 = strtotime($row["Decision Date"]);
+// // $date1=date_create($row["Decision Date"]);
+// $decision_date1 =  date($date1,"Y/m/d");
+
+
+
+		//------------------------------------
+		if ($ApplicationSource=='CCOS') {
+		//=====================CCOS=================================
+				 	$data[] = array(
+
+		// $cus_name = str_replace("'","-",$row["CustomerName"]);
+		// $cus_name = str_replace("RO'UF", 'KAMPRET', $row["CustomerName"]);
+
+		'BatchID'			=>	$BatchID,
+		'RowID'				=>	$no++,
+		'DecisionDate'		=>	$this->format_tanggal($row["Decision Date"]),
+		'SourceCode'		=>	$row["SourceCode"],
+		// // 'CustomerName'		=>	$cus_name,
+		'CustomerName'		=>	$row["CustomerName"],
+		// 'ORG'				=>	$row["ORG"], //??????????????
+		'Logo'				=>	$row["Logo"],
+		'EmpReffCode'		=>	$row["EmpReffCode"],
+		'Status'			=>	$row["Status"],
+		'DeclineCode'		=>	$row["Decline Code"],
+		'ApplicationType'	=>	$row["Jenis App"]
+				 	);
+		//============================================================
+
+		}elseif($ApplicationSource=='CardLink'){
+
+		  //=====================CardLink=================================
+		 	$data[] = array(
+
+		'BatchID'			=>	$BatchID,
+		'RowID'				=>	$no++,
+		'OpenDate'			=>	$this->format_tanggal($row["Open Date"]),
+		'SourceCode'		=>	$row["SourceCode"],
+		'CustomerNumber'	=>	$row["Customer Number"],
+		'CustomerName'		=>	$row["CustomerName"], //!!!!!caracter petik ''/' 
+		// 'CustomerName'		=>	'xxxxxxxxxxx',   //????????
+		'CustomerBirthDate'	=>	$this->format_tanggal($row["Customer DOB"]),
+		'ORG'				=>	$row["ORG"],
+		'Logo'				=>	$row["Logo"],
+		'EmpReffCode'		=>	$row["EmpReffCode"],
+		'BlockCard'			=>	$row["Block"],
+		'ApplicationType'	=>	$row["Jenis App"]
+
+		 	);
+//============================================================
+
+		}else{
+ //=====================CardVendor================================= //=====================CardVendor=================================
+
+		}
+
+
+}///end forecach
+//=================INSERT TABEL SystemCCOS / SystemCardLink / SystemCardVendor =====================================
+$db_system = 'System'.$ApplicationSource;
+
+//return jumlah data masuk
+$RowDataSucceed =	$this->db->insert_batch($db_system, $data);	
+
+
+//================UPDATE TABEL System_Upload===================
+
+$row = $this->System_upload_model->get_by_id($BatchID);
+// print_r($row->RowDataCount);die();
+$RowDataCount = $row->RowDataCount;
+$RowDataFailed = $RowDataSucceed-$RowDataCount;
+
+$data_update = array(
+	'RowDataSucceed' => $RowDataSucceed,
+	'RowDataFailed' => $RowDataFailed,
+
+	'ApprovalID' => $sessionID, 
+	'StatusUpload' => 'Approved', 
+
+);
+$key = array('BatchID' =>$BatchID , );
+$cek_update = $this->db->update('System_Upload',$data_update,$key);
+
+
+
+//--------------------
+//batch diapprove dan diinsert ditabel systemCCOS / systemCardLink / systemCardVendor-----
+	echo "<script>alert('DATA DIAPPROVE');</script>";
+
+	redirect('system_upload'); 
+
+}//if batch tidak ada di $db_system ='System'.$ApplicationSource ;
+//==========================================
+/*
+
+        if ($row) {
+            $data = array(
+                'button' => 'Update',
+                'action' => site_url('system_upload/update_action'),
+		'ID' => set_value('ID', $row->ID),
+		'BatchID' => set_value('BatchID', $row->BatchID),
+		'UploadDate' => set_value('UploadDate', $row->UploadDate),
+		'UploadBy' => set_value('UploadBy', $row->UploadBy),
+		'UploadRemark' => set_value('UploadRemark', $row->UploadRemark),
+		'ApplicationSource' => set_value('ApplicationSource', $row->ApplicationSource),
+		'ProcessMonth' => set_value('ProcessMonth', $row->ProcessMonth),
+		'ProcessYear' => set_value('ProcessYear', $row->ProcessYear),
+		'FilePath' => set_value('FilePath', $row->FilePath),
+		'VirtualPath' => set_value('VirtualPath', $row->VirtualPath),
+		'FileSize' => set_value('FileSize', $row->FileSize),
+		'ReportPath' => set_value('ReportPath', $row->ReportPath),
+		'RowDataCount' => set_value('RowDataCount', $row->RowDataCount),
+		'RowDataSucceed' => set_value('RowDataSucceed', $row->RowDataSucceed),
+		'RowDataFailed' => set_value('RowDataFailed', $row->RowDataFailed),
+		'ApprovalID' => set_value('ApprovalID', $row->ApprovalID),
+		'StatusUpload' => set_value('StatusUpload', $row->StatusUpload),
+	    );
+            $this->template->load('template','system_upload_form', $data);
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url('system_upload'));
+        }
+*/
+    }
+
+
 
     
     public function update($id) 
@@ -395,6 +590,32 @@ $data_upload = $this->_do_upload($this->input->post('BatchID',TRUE));
         
         $this->load->view('system_upload_doc',$data);
     }
+
+//fungsi format tanggal dari data file upload
+	function format_tanggal($date){
+$d = substr($date,0,2);
+$m = substr($date,2,2);
+$y = substr($date,4,4);
+$new_date=$d."-".$m."-".$y;
+$time = strtotime($new_date);
+
+$newformat = date('Y/m/d',$time);
+return $newformat;
+
+// echo $newformat;
+// echo "<br>";
+// echo date("Y/m/d");
+// echo "<br>";
+
+// $date=date_create("31-01-2018");
+// echo date_format($date,"Y/m/d H:i:s");
+
+
+	}		
+
+
+
+
 
 }
 

@@ -14,11 +14,12 @@
         <table class="table table-bordered table-striped" id="mytable">
             <thead>
                 <tr>
-                    <th width="80px">No</th>
+           <th width="50px">No</th>
 		    <th>BatchID</th>
 		    <th>UploadDate</th>
 <!-- 		    <th>UploadBy</th>
- -->		    <th>UploadRemark</th>
+ 			<th>UploadRemark</th>
+ -->		    
 		    <th>ApplicationSource</th>
 		    <th>FilePath</th>
 <!-- 		    <th>ProcessMonth</th>
@@ -30,8 +31,9 @@
 		    <th>RowDataSucceed</th>
 		    <th>RowDataFailed</th>
 		    <th>ApprovalID</th>
+ -->
 		    <th>StatusUpload</th>
- -->		    <th>Action</th>
+ 		    <th>Action</th>
                 </tr>
             </thead>
 	    <tbody>
@@ -41,11 +43,13 @@
             {
                 ?>
                 <tr>
-		    <td><?php echo ++$start ?></td>
-		    <td><?php echo $system_upload->BatchID ?></td>
+		<td><?php echo ++$start ?></td>
+<!-- 		    
+ -->
+ 		    <td><?php echo $system_upload->BatchID ?></td>
 		    <td><?php echo $system_upload->UploadDate ?></td>
 		    <!-- <td><?php echo $system_upload->UploadBy ?></td> -->
-		    <td><?php echo $system_upload->UploadRemark ?></td>
+		    <!-- <td><?php echo $system_upload->UploadRemark ?></td> -->
 		    <td><?php echo $system_upload->ApplicationSource ?></td>
 		    <td><?php echo $system_upload->FilePath ?></td>
 <!-- 		    <td><?php echo $system_upload->ProcessMonth ?></td>
@@ -60,11 +64,23 @@
  -->		    <td><?php echo $system_upload->StatusUpload ?></td>
 		    <td style="text-align:center" width="140px">
 			<?php 
-			echo anchor(site_url('system_upload/read/'.$system_upload->ID),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-danger btn-sm')); 
+			echo '<div class="btn-group">';
+			echo anchor(site_url('system_upload/read/'.$system_upload->BatchID),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-info btn-sm')); 
 			echo '  '; 
+/*
 			echo anchor(site_url('system_upload/update/'.$system_upload->ID),'<i class="fa fa-pencil-square-o"></i>',array('title'=>'edit','class'=>'btn btn-danger btn-sm')); 
 			echo '  '; 
 			echo anchor(site_url('system_upload/delete/'.$system_upload->ID),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
+*/
+			if ($system_upload->StatusUpload=='terupload') {
+				# code...
+			echo anchor(site_url('system_upload/approve/'.$system_upload->BatchID.'/'.$system_upload->ApplicationSource),'Approve <i class="fa fa-pencil-square-o"></i>',array('title'=>'Approve','class'=>'btn btn-primary btn-sm')); 
+			}
+
+			echo '  '; 
+
+
+			echo "</div>";
 			?>
 		    </td>
 	        </tr>

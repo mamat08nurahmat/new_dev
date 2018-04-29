@@ -15,6 +15,17 @@ class System_upload_model extends CI_Model
         parent::__construct();
     }
 
+
+    function get_BatchID()
+    {
+    //BatchID??????  == ID
+        $query = $this->db->query('SELECT MAX(ID)+1 as BatchID FROM System_upload');
+$BatchID=$query->result();      
+
+        return $BatchID[0]->BatchID;
+    }
+
+
     // get all
     function get_all()
     {
