@@ -258,7 +258,8 @@ $sessionID ='12345';
 		$lokasi_file = 'uploads/'.$BatchID.'_'.$ApplicationSource.'.csv';
 		$file_data = $this->csvimport->get_array($lokasi_file);
 
-//print_r($file_data);
+// print_r($file_data);die();
+
 $db_system ='System'.$ApplicationSource ;
 
 //cek batch sudah ada
@@ -330,8 +331,167 @@ foreach($file_data as $row){
 		 	);
 //============================================================
 
+		}elseif($ApplicationSource=='CardVendor'){
+//=====CardVendor
+//kartu yang diinpun vendor			
+
+$time1 = strtotime($row["Tanggal_Survey"]);
+$newformat1 = date('Y/m/d',$time1);		   
+$time2 = strtotime($row["DOB"]);
+$newformat2 = date('Y/m/d',$time2);		   
+
+$row = $this->System_upload_model->get_by_id($BatchID);
+// print_r($row->RowDataCount);die();
+$ProcessMonth = $row->ProcessMonth;
+$ProcessYear = $row->ProcessYear;
+/*
+[0] => Array
+        (
+            [Tanggal_Survey] => 4/10/2018
+            [Surveyor] => 6162101685
+            [No_Aplikasi] => 0
+            [Product] => Kartu Kredit
+            [Source_Code] => G00APA0MCWCP200300K1C00
+            [Channel_Aplikasi] => Direct Sales
+            [Coverage_Area] => JAKARTA UTARA
+            [Sales_Code] => PA0
+            [Nama_Aplikan] => SUZANNA FEBRIANY
+            [No_Identitas] => 3175036802700001
+            [DOB] => 2/28/1970
+            [Jenis_Kelamin] => LAKI - LAKI
+            [No_HP] => 08111022870
+            [Jenis_Perusahaan] => SWASTA
+            [Nama_Perusahaan] => PT LESTARINDI JAYA MANDIRI
+            [Jabatan] => MANAGER HRD
+            [Penghasilan] => 260000000
+            [Lama_Bekerja] => 5 TAHUN
+            [Status_Karyawan] => KARYAWAN
+            [Alamat_Kantor] => JL BISMA RAYA BLOK A 56 SUNTER AGUNG
+            [Kecamatan] => JAKARTA UTARA
+            [Kota] => JAKARTA
+            [No_Telp_Kantor] => 021 65308333
+        )
+
+*/
+
+
+		 	$data[] = array(
+		    'BatchID' =>	$BatchID,
+		   ' RowID' =>	$no++,
+			// 'Tanggal_Survey' => $newformat1 ,
+   //          'Surveyor' => $row["Surveyor"],
+            // 'No_Aplikasi' => $row["No_Aplikasi"],
+            // 'Product' => $row["Product"],
+            // 'Source_Code' => $row["Source_Code"],
+            // 'Channel_Aplikasi' => $row["Channel_Aplikasi"],
+            // 'Coverage_Area' => $row["Coverage_Area"],
+            // 'Sales_Code' => $row["Sales_Code"],
+            // 'Nama_Aplikan' => $row["Nama_Aplikan"],
+            'No_Identitas' => '1234578',
+
+            // 'DOB' => $newformat2,
+            // 'Jenis_Kelamin' => $row["Jenis_Kelamin"],
+            // 'No_HP' => $row["No_HP"],
+            // 'Jenis_Perusahaan' => $row["Jenis_Perusahaan"],
+            // 'Nama_Perusahaan' => $row["Nama_Perusahaan"],
+            // 'Jabatan' => $row["Jabatan"],
+            // 'Penghasilan' => $row["Penghasilan"],
+            // 'Lama_Bekerja' => $row["Lama_Bekerja"],
+            // 'Status_Karyawan' => $row["Status_Karyawan"],
+            // 'Alamat_Kantor' => $row["Alamat_Kantor"],
+            // 'Kecamatan' => $row["Kecamatan"],
+            // 'Kota' => $row["Kota"],
+            // 'No_Telp_Kantor' => $row["No_Telp_Kantor"],
+
+            'ProcessMonth' => $ProcessMonth,
+            'ProcessYear' => $processyear,
+
+
+            );
+ //=====================CardVendor=================================
+
+
+
+
+
 		}else{
- //=====================CardVendor================================= //=====================CardVendor=================================
+
+//=============CardVendorSystem===========
+//===kartu vendor yangada di system=====			
+/*
+ [Tanggal_Survey] => 4/10/2018
+            [Surveyor] => 6162101685
+            [No_Aplikasi] => 0
+            [Product] => Kartu Kredit
+            [Source_Code] => G00APA0MCWCP200300K1C00
+            [Channel_Aplikasi] => Direct Sales
+            [Coverage_Area] => JAKARTA UTARA
+            [Sales_Code] => PA0
+            [Nama_Aplikan] => SUZANNA FEBRIANY
+            [No_Identitas] => 3175036802700001
+            [DOB] => 2/28/1970
+            [Jenis_Kelamin] => LAKI - LAKI
+            [No_HP] => 08111022870
+            [Jenis_Perusahaan] => SWASTA
+            [Nama_Perusahaan] => PT LESTARINDI JAYA MANDIRI
+            [Jabatan] => MANAGER HRD
+            [Penghasilan] => 260000000
+            [Lama_Bekerja] => 5 TAHUN
+            [Status_Karyawan] => KARYAWAN
+            [Alamat_Kantor] => JL BISMA RAYA BLOK A 56 SUNTER AGUNG
+            [Kecamatan] => JAKARTA UTARA
+            [Kota] => JAKARTA
+            [No_Telp_Kantor] => 021 65308333
+*/			
+ //=====================CardVendorSystem================================= 
+
+$time1 = strtotime($row["Tanggal_Survey"]);
+$newformat1 = date('Y/m/d',$time1);		   
+$time2 = strtotime($row["DOB"]);
+$newformat2 = date('Y/m/d',$time2);		   
+
+$row = $this->System_upload_model->get_by_id($BatchID);
+// print_r($row->RowDataCount);die();
+$ProcessMonth = $row->ProcessMonth;
+$ProcessYear = $row->ProcessYear;
+
+
+
+		 	$data[] = array(
+		    'BatchID' =>	$BatchID,
+		   ' RowID' =>	$no++,
+			'Tanggal_Survey' => $newformat1 ,
+            'Surveyor' => $row["Surveyor"],
+            'No_Aplikasi' => $row["No_Aplikasi"],
+            'Product' => $row["Product"],
+            'Source_Code' => $row["Source_Code"],
+            'Channel_Aplikasi' => $row["Channel_Aplikasi"],
+            'Coverage_Area' => $row["Coverage_Area"],
+            'Sales_Code' => $row["Sales_Code"],
+            'Nama_Aplikan' => $row["Nama_Aplikan"],
+            'No_Identitas' => $row["No_Identitas"],
+
+            'DOB' => $newformat2,
+            'Jenis_Kelamin' => $row["Jenis_Kelamin"],
+            'No_HP' => $row["No_HP"],
+            'Jenis_Perusahaan' => $row["Jenis_Perusahaan"],
+            'Nama_Perusahaan' => $row["Nama_Perusahaan"],
+            'Jabatan' => $row["Jabatan"],
+            'Penghasilan' => $row["Penghasilan"],
+            'Lama_Bekerja' => $row["Lama_Bekerja"],
+            'Status_Karyawan' => $row["Status_Karyawan"],
+            'Alamat_Kantor' => $row["Alamat_Kantor"],
+            'Kecamatan' => $row["Kecamatan"],
+            'Kota' => $row["Kota"],
+            'No_Telp_Kantor' => $row["No_Telp_Kantor"],
+
+            'ProcessMonth' => $ProcessMonth,
+            'ProcessYear' => $processyear,
+
+
+            );
+
+ //=====================CardVendorSystem=================================
 
 		}
 
