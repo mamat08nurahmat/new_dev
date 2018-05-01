@@ -581,11 +581,53 @@ $cek_update = $this->db->update('System_Upload',$data_update,$key);
 
 
 //===============GENERATE======================
+    public function get_decision_date($No_Identitas,$month,$year){
+// echo $decision_date;
+$decision_date = $this->db->query("SELECT DecisionDate FROM SystemCCOS Where No_Identitas='$No_Identitas' AND ProcessMonth='$month' AND ProcessYear='$year' ")->result();
+
+
+
+// return $decision_date[0]->DecisionDate;
+$time_decision_date = strtotime($decision_date[0]->DecisionDate);
+
+$d=strtotime("-6 Months");
+$enam_bulan_lalu =  date("Y-m-d h:i:sa", $d) ;
+$time_enam_bulan_lalu = strtotime($enam_bulan_lalu);
+
+
+// $selisih_bulan = date('Y/m/d',$time1);        
+if ($time_enam_bulan_lalu>$time_decision_date) {
+    # code...
+$cek = $this->db->query("UPDATE SystemCardVendor SET Status_Kartu='Lebih 6 Bulan' WHERE No_Identitas='$No_Identitas' AND ProcessMonth='$month' AND ProcessYear='$year'");
+
+
+$arrayreturn = array('CEK' =>$cek ,'Status_Kartu' =>'Lebih 6 Bulan' , );
+
+    return $arrayreturn;
+} else {
+    # code...
+$cek = $this->db->query("UPDATE SystemCardVendor SET Status_Kartu='Kurang 6 Bulan' WHERE No_Identitas='$No_Identitas' AND ProcessMonth='$month' AND ProcessYear='$year'");
+
+
+$arrayreturn = array('CEK' =>$cek ,'Status_Kartu' =>'Kurang 6 Bulan' , );
+
+    return $arrayreturn;
+}
+
+
+
+
+    }
+
     public	function generate($month,$year){
 
 // print_r($month);
 // print_r('<br>');
 // print_r($year);
+
+// $decision_date = $this->get_decision_date('3172024507880002',$month,$year);
+// print_r($decision_date);die();
+
 
 $card_vendor = $this->db->query("
 
@@ -597,12 +639,12 @@ $card_vendor = $this->db->query("
 
 	")->result();
 
+//incomming / CCOS
+$system_ccos = $this->db->query("
 
-$card_vendor_system = $this->db->query("
 
 
-
- SELECT distinct a.* from  SystemCardVendorSystem a
+ SELECT distinct a.* from  SystemCCOS a
  WHERE   a.processMonth='$month' AND a.ProcessYear='$year'
 
     ")->result();
@@ -610,14 +652,15 @@ $card_vendor_system = $this->db->query("
 // print_r($card_vendor_system[0]->No_Identitas);die();
 // $No_Identitas_system = array("3172024507880002", "3171026511920001", "3276050705810012");
 
-foreach ($card_vendor_system as $system) {
-    $No_Identitas_system[]= $system->No_Identitas;
+foreach ($system_ccos as $system) {
+    $No_Identitas_ccos[]= $system->No_Identitas;
 
-    // $tanggal_jadi_kartu[]= $system->????;    
+    $tanggal_jadi_kartu[]= $system->DecisionDate;    
 }
 
 
 // print_r($No_Identitas_system);die();
+// print_r($tanggal_jadi_kartu);die();
 
 
 $length = count($card_vendor);
@@ -630,24 +673,47 @@ for ($i = 0; $i < $length; $i++) {
 
 
 
-if (in_array($card_vendor[$i]->No_Identitas, $No_Identitas_system))
+if (in_array($card_vendor[$i]->No_Identitas, $No_Identitas_ccos))
   {
-  echo "Match found";
-  print '<br>';
-  }
-else
-  {
-  echo "Match not found";
+
+// print_r($card_vendor[$i]->No_Identitas);    
+  echo $card_vendor[$i]->No_Identitas." Ada Kartu di CCOS";
   print '<br>';
 
+$decision_date = $this->get_decision_date($card_vendor[$i]->No_Identitas,$month,$year);
+//dev
+print_r($decision_date);
+
+
+
+// $this->get_decision_date($card_vendor[$i]->No_Identitas);
+
+//tampil DecisionDate
+
+
+
   // if (condition) {
-  //   //tanggal jadi kartu > 6 bulan
+  //     # code...
   // } else {
   //     # code...
   // }
   
 
-  // }
+  }
+else
+  {
+  echo $card_vendor[$i]->No_Identitas."Tidak ada kartu di CCOS";
+  print '<br>';
+  $cv = $card_vendor[$i]->No_Identitas;
+  // var_dump($card_vendor[$i]->No_Identitas);
+$cek = $this->db->query("UPDATE SystemCardVendor SET Status_Kartu='Tidak Ada Kartu' WHERE No_Identitas='$cv' AND ProcessMonth='$month' AND ProcessYear='$year'");
+
+print_r($cek);
+// $arrayreturn = array('CEK' =>$cek ,'Status_Kartu' =>'Tidak Ada Kartu' , );
+
+// print_r($arrayreturn);
+
+  }
 /*
 
 */
@@ -889,6 +955,103 @@ return $newformat;
 	}		
 
 
+   public function excel_card_vendor($BatchID)
+    {
+
+// print_r($this->System_upload_model->get_all_card_vendor($BatchID));die();
+
+
+        $this->load->helper('exportexcel');
+        $namaFile = "card_vendor.xls";
+        $judul = "Card_Vendor";
+        $tablehead = 0;
+        $tablebody = 1;
+        $nourut = 1;
+        //penulisan header
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header("Content-Disposition: attachment;filename=" . $namaFile . "");
+        header("Content-Transfer-Encoding: binary ");
+
+        xlsBOF();
+
+        $kolomhead = 0;
+        xlsWriteLabel($tablehead, $kolomhead++, "No");
+        xlsWriteLabel($tablehead, $kolomhead++, "BatchID");
+        xlsWriteLabel($tablehead, $kolomhead++, "RowID");
+        xlsWriteLabel($tablehead, $kolomhead++, "Tanggal_Survey");
+        xlsWriteLabel($tablehead, $kolomhead++, "Surveyor");
+        xlsWriteLabel($tablehead, $kolomhead++, "No_Aplikasi");
+        xlsWriteLabel($tablehead, $kolomhead++, "Product");
+        xlsWriteLabel($tablehead, $kolomhead++, "Source_Code");
+        xlsWriteLabel($tablehead, $kolomhead++, "Channel_Aplikasi");
+        xlsWriteLabel($tablehead, $kolomhead++, "Coverage_Area");
+        xlsWriteLabel($tablehead, $kolomhead++, "Sales_Code");
+        xlsWriteLabel($tablehead, $kolomhead++, "Nama_Aplikan");
+        xlsWriteLabel($tablehead, $kolomhead++, "No_Identitas");
+        xlsWriteLabel($tablehead, $kolomhead++, "DOB");
+        xlsWriteLabel($tablehead, $kolomhead++, "Jenis_Kelamin");
+        xlsWriteLabel($tablehead, $kolomhead++, "No_HP");
+        xlsWriteLabel($tablehead, $kolomhead++, "Jenis_Perusahaan");
+        xlsWriteLabel($tablehead, $kolomhead++, "Nama_Perusahaan");
+        xlsWriteLabel($tablehead, $kolomhead++, "Jabatan");
+        xlsWriteLabel($tablehead, $kolomhead++, "Penghasilan");
+        xlsWriteLabel($tablehead, $kolomhead++, "Lama_Bekerja");
+        xlsWriteLabel($tablehead, $kolomhead++, "Status_Karyawan");
+        xlsWriteLabel($tablehead, $kolomhead++, "Alamat_Kantor");
+        xlsWriteLabel($tablehead, $kolomhead++, "Kecamatan");
+        xlsWriteLabel($tablehead, $kolomhead++, "Kota");
+        xlsWriteLabel($tablehead, $kolomhead++, "No_Telp_Kantor");
+        xlsWriteLabel($tablehead, $kolomhead++, "ProcessMonth");
+        xlsWriteLabel($tablehead, $kolomhead++, "ProcessYear");
+        xlsWriteLabel($tablehead, $kolomhead++, "Status_Kartu");
+
+    foreach ($this->System_upload_model->get_all_card_vendor($BatchID) as $data) {
+            $kolombody = 0;
+
+            //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
+            xlsWriteNumber($tablebody, $kolombody++, $nourut);
+            xlsWriteNumber($tablebody, $kolombody++, $data->BatchID);
+            xlsWriteNumber($tablebody, $kolombody++, $data->RowID);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Tanggal_Survey);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Surveyor);
+            xlsWriteNumber($tablebody, $kolombody++, $data->No_Aplikasi);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Product);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Source_Code);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Channel_Aplikasi);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Coverage_Area);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Sales_Code);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Nama_Aplikan);
+            xlsWriteNumber($tablebody, $kolombody++, $data->No_Identitas);
+            xlsWriteNumber($tablebody, $kolombody++, $data->DOB);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Jenis_Kelamin);
+            xlsWriteNumber($tablebody, $kolombody++, $data->No_HP);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Jenis_Perusahaan);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Nama_Perusahaan);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Jabatan);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Penghasilan);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Lama_Bekerja);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Status_Karyawan);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Alamat_Kantor);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Kecamatan);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Kota);
+            xlsWriteNumber($tablebody, $kolombody++, $data->No_Telp_Kantor);
+            xlsWriteNumber($tablebody, $kolombody++, $data->ProcessMonth);
+            xlsWriteNumber($tablebody, $kolombody++, $data->ProcessYear);
+            xlsWriteNumber($tablebody, $kolombody++, $data->Status_Kartu);
+
+        $tablebody++;
+            $nourut++;
+        }
+
+        xlsEOF();
+        exit();
+    }
+ 
 
 
 

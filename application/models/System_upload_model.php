@@ -26,12 +26,23 @@ $BatchID=$query->result();
     }
 
 
+
+    function get_all_card_vendor($BatchID)
+    {
+        $this->db->order_by('RowID', 'ASC');
+        $this->db->where('BatchID', $BatchID);        
+        return $this->db->get('SystemCardVendor')->result();
+    }
+
+
+
     // get all
     function get_all()
     {
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }
+
 
     // get data by id
     function get_by_id($id)

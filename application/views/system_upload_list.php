@@ -67,6 +67,10 @@
 			echo '<div class="btn-group">';
 			echo anchor(site_url('system_upload/read/'.$system_upload->BatchID),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-info btn-sm')); 
 			echo '  '; 
+
+
+
+
 /*
 			echo anchor(site_url('system_upload/update/'.$system_upload->ID),'<i class="fa fa-pencil-square-o"></i>',array('title'=>'edit','class'=>'btn btn-danger btn-sm')); 
 			echo '  '; 
@@ -83,6 +87,12 @@
 			if ($system_upload->StatusUpload=='Approved' && $system_upload->ApplicationSource=='CardVendor'  ) {
 				# code...
 			echo anchor(site_url('system_upload/generate/'.$system_upload->ProcessMonth.'/'.$system_upload->ProcessYear),'Generate <i class="fa fa-pencil-gear-o"></i>',array('title'=>'Approve','class'=>'btn btn-danger btn-sm')); 
+
+
+//dev next
+			echo anchor(site_url('system_upload/excel_card_vendor/'.$system_upload->BatchID),'<i class="fa fa-file-excel-o"></i>',array('title'=>'Approve','class'=>'btn btn-primary btn-sm')); 
+
+
 			}
 
 
