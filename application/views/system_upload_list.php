@@ -72,10 +72,25 @@
 			echo '  '; 
 			echo anchor(site_url('system_upload/delete/'.$system_upload->ID),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
 */
-			if ($system_upload->StatusUpload=='terupload') {
+			if ($system_upload->StatusUpload=='Terupload') {
 				# code...
 			echo anchor(site_url('system_upload/approve/'.$system_upload->BatchID.'/'.$system_upload->ApplicationSource),'Approve <i class="fa fa-pencil-square-o"></i>',array('title'=>'Approve','class'=>'btn btn-primary btn-sm')); 
 			}
+
+
+
+
+			if ($system_upload->StatusUpload=='Approved' && $system_upload->ApplicationSource=='CardVendor'  ) {
+				# code...
+			echo anchor(site_url('system_upload/generate/'.$system_upload->ProcessMonth.'/'.$system_upload->ProcessYear),'Generate <i class="fa fa-pencil-gear-o"></i>',array('title'=>'Approve','class'=>'btn btn-danger btn-sm')); 
+			}
+
+
+
+			// if ($system_upload->RowDataCount==$system_upload->RowDataSucceed && $system_upload->StatusUpload=='Approved'  ) {
+			// 	# code...
+			// echo anchor(site_url('system_upload/generate/'.$system_upload->ProcessMonth.'/'.$system_upload->ProcessYear),'Clen Upload <i class="fa fa-pencil-gear-o"></i>',array('title'=>'Approve','class'=>'btn btn-danger btn-sm')); 
+			// }
 
 			echo '  '; 
 

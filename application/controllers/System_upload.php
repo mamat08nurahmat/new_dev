@@ -21,7 +21,7 @@ class System_upload extends CI_Controller
     public function index()
     {
         $system_upload = $this->System_upload_model->get_all();
-
+//print_r($)
         $data = array(
             'system_upload_data' => $system_upload
         );
@@ -187,7 +187,7 @@ $id_user_login='12345';
 		// 'RowDataSucceed' => $this->input->post('RowDataSucceed',TRUE),
 		// 'RowDataFailed' => $this->input->post('RowDataFailed',TRUE),
 		// 'ApprovalID' => $this->input->post('ApprovalID',TRUE),
-		'StatusUpload' => 'terupload',
+		'StatusUpload' => 'Terupload',
 	    );
 
             $this->System_upload_model->insert($data);
@@ -228,6 +228,21 @@ $id_user_login='12345';
 
 
 //dev=====
+    public function clean($BatchID,$ApplicationSource) 
+    {
+$db_system = 'System'.$ApplicationSource;
+
+//return jumlah data masuk
+$batch_delete =	$this->db->query("DELETE FROM $db_system WHERE BatchID='$BatchID'");
+$batch_update =	$this->db->query("UPDATE System_upload SET StatusUpload='Terupload'  WHERE BatchID='$BatchID'");
+
+print_r($batch_delete);
+print_r('<br>');
+print_r($batch_delete);die();
+
+	}
+
+
     public function approve($BatchID,$ApplicationSource) 
     {
 error_reporting(E_ALL & ~E_NOTICE); //????????????????
@@ -253,7 +268,7 @@ $sessionID ='12345';
 //     [RowDataSucceed] => 
 //     [RowDataFailed] => 
 //     [ApprovalID] => 
-//     [StatusUpload] => terupload
+//     [StatusUpload] => Terupload
 // )
 		$lokasi_file = 'uploads/'.$BatchID.'_'.$ApplicationSource.'.csv';
 		$file_data = $this->csvimport->get_array($lokasi_file);
@@ -340,10 +355,10 @@ $newformat1 = date('Y/m/d',$time1);
 $time2 = strtotime($row["DOB"]);
 $newformat2 = date('Y/m/d',$time2);		   
 
-$row = $this->System_upload_model->get_by_id($BatchID);
+$row2 = $this->System_upload_model->get_by_id($BatchID);
 // print_r($row->RowDataCount);die();
-$ProcessMonth = $row->ProcessMonth;
-$ProcessYear = $row->ProcessYear;
+$ProcessMonth = $row2->ProcessMonth;
+$ProcessYear = $row2->ProcessYear;
 /*
 [0] => Array
         (
@@ -378,33 +393,33 @@ $ProcessYear = $row->ProcessYear;
 		 	$data[] = array(
 		    'BatchID' =>	$BatchID,
 		   ' RowID' =>	$no++,
-			// 'Tanggal_Survey' => $newformat1 ,
-   //          'Surveyor' => $row["Surveyor"],
-            // 'No_Aplikasi' => $row["No_Aplikasi"],
-            // 'Product' => $row["Product"],
-            // 'Source_Code' => $row["Source_Code"],
-            // 'Channel_Aplikasi' => $row["Channel_Aplikasi"],
-            // 'Coverage_Area' => $row["Coverage_Area"],
-            // 'Sales_Code' => $row["Sales_Code"],
-            // 'Nama_Aplikan' => $row["Nama_Aplikan"],
-            'No_Identitas' => '1234578',
+			'Tanggal_Survey' => $newformat1 ,
+            'Surveyor' => $row["Surveyor"],
+            'No_Aplikasi' => $row["No_Aplikasi"],
+            'Product' => $row["Product"],
+            'Source_Code' => $row["Source_Code"],
+            'Channel_Aplikasi' => $row["Channel_Aplikasi"],
+            'Coverage_Area' => $row["Coverage_Area"],
+            'Sales_Code' => $row["Sales_Code"],
+            'Nama_Aplikan' => $row["Nama_Aplikan"],
+            'No_Identitas' => $row["No_Identitas"],
 
-            // 'DOB' => $newformat2,
-            // 'Jenis_Kelamin' => $row["Jenis_Kelamin"],
-            // 'No_HP' => $row["No_HP"],
-            // 'Jenis_Perusahaan' => $row["Jenis_Perusahaan"],
-            // 'Nama_Perusahaan' => $row["Nama_Perusahaan"],
-            // 'Jabatan' => $row["Jabatan"],
-            // 'Penghasilan' => $row["Penghasilan"],
-            // 'Lama_Bekerja' => $row["Lama_Bekerja"],
-            // 'Status_Karyawan' => $row["Status_Karyawan"],
-            // 'Alamat_Kantor' => $row["Alamat_Kantor"],
-            // 'Kecamatan' => $row["Kecamatan"],
-            // 'Kota' => $row["Kota"],
-            // 'No_Telp_Kantor' => $row["No_Telp_Kantor"],
+            'DOB' => $newformat2,
+            'Jenis_Kelamin' => $row["Jenis_Kelamin"],
+            'No_HP' => $row["No_HP"],
+            'Jenis_Perusahaan' => $row["Jenis_Perusahaan"],
+            'Nama_Perusahaan' => $row["Nama_Perusahaan"],
+            'Jabatan' => $row["Jabatan"],
+            'Penghasilan' => $row["Penghasilan"],
+            'Lama_Bekerja' => $row["Lama_Bekerja"],
+            'Status_Karyawan' => $row["Status_Karyawan"],
+            'Alamat_Kantor' => $row["Alamat_Kantor"],
+            'Kecamatan' => $row["Kecamatan"],
+            'Kota' => $row["Kota"],
+            'No_Telp_Kantor' => $row["No_Telp_Kantor"],
 
             'ProcessMonth' => $ProcessMonth,
-            'ProcessYear' => $processyear,
+            'ProcessYear' => $ProcessYear,
 
 
             );
@@ -450,10 +465,10 @@ $newformat1 = date('Y/m/d',$time1);
 $time2 = strtotime($row["DOB"]);
 $newformat2 = date('Y/m/d',$time2);		   
 
-$row = $this->System_upload_model->get_by_id($BatchID);
+$row2 = $this->System_upload_model->get_by_id($BatchID);
 // print_r($row->RowDataCount);die();
-$ProcessMonth = $row->ProcessMonth;
-$ProcessYear = $row->ProcessYear;
+$ProcessMonth = $row2->ProcessMonth;
+$ProcessYear = $row2->ProcessYear;
 
 
 
@@ -486,7 +501,7 @@ $ProcessYear = $row->ProcessYear;
             'No_Telp_Kantor' => $row["No_Telp_Kantor"],
 
             'ProcessMonth' => $ProcessMonth,
-            'ProcessYear' => $processyear,
+            'ProcessYear' => $ProcessYear,
 
 
             );
@@ -565,7 +580,107 @@ $cek_update = $this->db->update('System_Upload',$data_update,$key);
     }
 
 
+//===============GENERATE======================
+    public	function generate($month,$year){
 
+// print_r($month);
+// print_r('<br>');
+// print_r($year);
+
+$card_vendor = $this->db->query("
+
+
+
+ SELECT distinct a.* from  SystemCardVendor a
+
+ WHERE   a.processMonth='$month' AND a.ProcessYear='$year'
+
+	")->result();
+
+
+$card_vendor_system = $this->db->query("
+
+
+
+ SELECT distinct a.* from  SystemCardVendorSystem a
+ WHERE   a.processMonth='$month' AND a.ProcessYear='$year'
+
+    ")->result();
+
+// print_r($card_vendor_system[0]->No_Identitas);die();
+// $No_Identitas_system = array("3172024507880002", "3171026511920001", "3276050705810012");
+
+foreach ($card_vendor_system as $system) {
+    $No_Identitas_system[]= $system->No_Identitas;
+
+    // $tanggal_jadi_kartu[]= $system->????;    
+}
+
+
+// print_r($No_Identitas_system);die();
+
+
+$length = count($card_vendor);
+for ($i = 0; $i < $length; $i++) {
+    
+  // print $card_vendor[$i]->No_Identitas;
+  // print '<br>';
+
+
+
+
+
+if (in_array($card_vendor[$i]->No_Identitas, $No_Identitas_system))
+  {
+  echo "Match found";
+  print '<br>';
+  }
+else
+  {
+  echo "Match not found";
+  print '<br>';
+
+  // if (condition) {
+  //   //tanggal jadi kartu > 6 bulan
+  // } else {
+  //     # code...
+  // }
+  
+
+  // }
+/*
+
+*/
+
+}
+
+
+    }
+//===============GENERATE======================
+
+function php_in_array(){
+
+$people = array("Peter", "Joe", "Glenn", "Cleveland");
+
+print_r($people);die();
+
+if (in_array("Glenn", $people))
+  {
+  echo "Match found";
+  }
+else
+  {
+  echo "Match not found";
+  }
+
+}
+
+
+//=============
+function get_generate_id($No_Identitas,$BatchID){
+print_r($No_Identitas);die();
+}
+//============
     
     public function update($id) 
     {
