@@ -17,11 +17,14 @@
                     <th width="80px">No</th>
 		    <th>ParentEmployeeID</th>
 		    <th>EmployeeName</th>
+<!--
 		    <th>EmployeeOldCode</th>
 		    <th>EmployeeNewCode</th>
 		    <th>UserGroupID</th>
+-->			
 		    <th>EmployeeStatus</th>
 		    <th>EmployeeGrade</th>
+<!--
 		    <th>EmployeeBirthPlace</th>
 		    <th>EmployeeBirthDate</th>
 		    <th>MothersMaidenName</th>
@@ -48,8 +51,10 @@
 		    <th>Weight</th>
 		    <th>PhotoFilePath</th>
 		    <th>PhotoFileName</th>
+-->			
 		    <th>AgencyID</th>
 		    <th>SalesCenterID</th>
+<!--
 		    <th>InterviewApprovalID</th>
 		    <th>InterviewLevel</th>
 		    <th>InterviewStatus</th>
@@ -59,7 +64,9 @@
 		    <th>ApprovalID</th>
 		    <th>ApprovalLevel</th>
 		    <th>ApprovalStatus</th>
+-->			
 		    <th>IsDiscontinued</th>
+<!--
 		    <th>IsDedicated</th>
 		    <th>DedicatedRemark</th>
 		    <th>ActiveDate</th>
@@ -67,6 +74,7 @@
 		    <th>EndReason</th>
 		    <th>CreatedDate</th>
 		    <th>CreatedBy</th>
+-->			
 		    <th>Action</th>
                 </tr>
             </thead>
@@ -80,11 +88,15 @@
 		    <td><?php echo ++$start ?></td>
 		    <td><?php echo $employee->ParentEmployeeID ?></td>
 		    <td><?php echo $employee->EmployeeName ?></td>
+<!--
 		    <td><?php echo $employee->EmployeeOldCode ?></td>
+			
 		    <td><?php echo $employee->EmployeeNewCode ?></td>
 		    <td><?php echo $employee->UserGroupID ?></td>
+-->			
 		    <td><?php echo $employee->EmployeeStatus ?></td>
 		    <td><?php echo $employee->EmployeeGrade ?></td>
+<!--
 		    <td><?php echo $employee->EmployeeBirthPlace ?></td>
 		    <td><?php echo $employee->EmployeeBirthDate ?></td>
 		    <td><?php echo $employee->MothersMaidenName ?></td>
@@ -111,8 +123,10 @@
 		    <td><?php echo $employee->Weight ?></td>
 		    <td><?php echo $employee->PhotoFilePath ?></td>
 		    <td><?php echo $employee->PhotoFileName ?></td>
+-->						
 		    <td><?php echo $employee->AgencyID ?></td>
 		    <td><?php echo $employee->SalesCenterID ?></td>
+<!--
 		    <td><?php echo $employee->InterviewApprovalID ?></td>
 		    <td><?php echo $employee->InterviewLevel ?></td>
 		    <td><?php echo $employee->InterviewStatus ?></td>
@@ -122,7 +136,9 @@
 		    <td><?php echo $employee->ApprovalID ?></td>
 		    <td><?php echo $employee->ApprovalLevel ?></td>
 		    <td><?php echo $employee->ApprovalStatus ?></td>
+-->						
 		    <td><?php echo $employee->IsDiscontinued ?></td>
+<!--
 		    <td><?php echo $employee->IsDedicated ?></td>
 		    <td><?php echo $employee->DedicatedRemark ?></td>
 		    <td><?php echo $employee->ActiveDate ?></td>
@@ -130,6 +146,7 @@
 		    <td><?php echo $employee->EndReason ?></td>
 		    <td><?php echo $employee->CreatedDate ?></td>
 		    <td><?php echo $employee->CreatedBy ?></td>
+-->						
 		    <td style="text-align:center" width="140px">
 			<?php 
 			echo anchor(site_url('employee/read/'.$employee->EmployeeID),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-danger btn-sm')); 
