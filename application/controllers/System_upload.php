@@ -1,4 +1,12 @@
-<?php
+,TRUE),
+		'UploadRemark' => $this->input->post('UploadRemark',TRUE),
+		'ApplicationSource' => $this->input->post('ApplicationSource',TRUE),
+		'ProcessMonth' => $this->input->post('ProcessMonth',TRUE),
+		'ProcessYear' => $this->input->post('ProcessYear',TRUE),
+		'FilePath' => $this->input->post('FilePath',TRUE),
+		'VirtualPath' => $this->input->post('VirtualPath',TRUE),
+		'FileSize' => $this->input->post('FileSize',TRUE),
+		'ReportPath' => $this->input->post('ReportPath',TRUE),<?php
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -13,7 +21,7 @@ class System_upload extends CI_Controller
         $this->load->model('System_upload_model');
         $this->load->library('form_validation');
 
-		$this->load->library('csvimport');
+        $this->load->library('csvimport');
 
 
     }
@@ -29,29 +37,46 @@ class System_upload extends CI_Controller
         $this->template->load('template','system_upload_list', $data);
     }
 
+
+
+    public function vendor()
+    {
+//session UserID nex dev
+
+//next by UserID
+        // $system_upload = $this->System_upload_model->get_all();
+        $system_upload = $this->db->query("SELECT * FROM System_upload  WHERE ApplicationSource='CardVendor' ORDER BY BatchID ASC")->result();
+//print_r($)
+        $data = array(
+            'system_upload_data' => $system_upload
+        );
+
+        $this->template->load('template','system_upload_list', $data);
+    }
+
     public function read($id) 
     {
         $row = $this->System_upload_model->get_by_id($id);
         if ($row) {
             $data = array(
-		'ID' => $row->ID,
-		'BatchID' => $row->BatchID,
-		'UploadDate' => $row->UploadDate,
-		'UploadBy' => $row->UploadBy,
-		'UploadRemark' => $row->UploadRemark,
-		'ApplicationSource' => $row->ApplicationSource,
-		'ProcessMonth' => $row->ProcessMonth,
-		'ProcessYear' => $row->ProcessYear,
-		'FilePath' => $row->FilePath,
-		'VirtualPath' => $row->VirtualPath,
-		'FileSize' => $row->FileSize,
-		'ReportPath' => $row->ReportPath,
-		'RowDataCount' => $row->RowDataCount,
-		'RowDataSucceed' => $row->RowDataSucceed,
-		'RowDataFailed' => $row->RowDataFailed,
-		'ApprovalID' => $row->ApprovalID,
-		'StatusUpload' => $row->StatusUpload,
-	    );
+        'ID' => $row->ID,
+        'BatchID' => $row->BatchID,
+        'UploadDate' => $row->UploadDate,
+        'UploadBy' => $row->UploadBy,
+        'UploadRemark' => $row->UploadRemark,
+        'ApplicationSource' => $row->ApplicationSource,
+        'ProcessMonth' => $row->ProcessMonth,
+        'ProcessYear' => $row->ProcessYear,
+        'FilePath' => $row->FilePath,
+        'VirtualPath' => $row->VirtualPath,
+        'FileSize' => $row->FileSize,
+        'ReportPath' => $row->ReportPath,
+        'RowDataCount' => $row->RowDataCount,
+        'RowDataSucceed' => $row->RowDataSucceed,
+        'RowDataFailed' => $row->RowDataFailed,
+        'ApprovalID' => $row->ApprovalID,
+        'StatusUpload' => $row->StatusUpload,
+        );
             $this->template->load('template','system_upload_read', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
@@ -69,24 +94,24 @@ $BatchID = $this->System_upload_model->get_BatchID();
         $data = array(
             'button' => 'Create',
             'action' => site_url('system_upload/create_action'),
-	    'ID' => set_value('ID'),
-	    'BatchID' => $BatchID,
-	    'UploadDate' => date('Y-m-d'),
-	    'UploadBy' => set_value('UploadBy'),
-	    'UploadRemark' => set_value('UploadRemark'),
-	    'ApplicationSource' => set_value('ApplicationSource'),
-	    'ProcessMonth' => set_value('ProcessMonth'),
-	    'ProcessYear' => set_value('ProcessYear'),
-	    'FilePath' => set_value('FilePath'),
-	    'VirtualPath' => set_value('VirtualPath'),
-	    'FileSize' => set_value('FileSize'),
-	    'ReportPath' => set_value('ReportPath'),
-	    'RowDataCount' => set_value('RowDataCount'),
-	    'RowDataSucceed' => set_value('RowDataSucceed'),
-	    'RowDataFailed' => set_value('RowDataFailed'),
-	    'ApprovalID' => set_value('ApprovalID'),
-	    'StatusUpload' => set_value('StatusUpload'),
-	);
+        'ID' => set_value('ID'),
+        'BatchID' => $BatchID,
+        'UploadDate' => date('Y-m-d'),
+        'UploadBy' => set_value('UploadBy'),
+        'UploadRemark' => set_value('UploadRemark'),
+        'ApplicationSource' => set_value('ApplicationSource'),
+        'ProcessMonth' => set_value('ProcessMonth'),
+        'ProcessYear' => set_value('ProcessYear'),
+        'FilePath' => set_value('FilePath'),
+        'VirtualPath' => set_value('VirtualPath'),
+        'FileSize' => set_value('FileSize'),
+        'ReportPath' => set_value('ReportPath'),
+        'RowDataCount' => set_value('RowDataCount'),
+        'RowDataSucceed' => set_value('RowDataSucceed'),
+        'RowDataFailed' => set_value('RowDataFailed'),
+        'ApprovalID' => set_value('ApprovalID'),
+        'StatusUpload' => set_value('StatusUpload'),
+    );
         $this->template->load('template','system_upload_form', $data);
     }
     
@@ -99,29 +124,29 @@ $BatchID = $this->System_upload_model->get_BatchID();
             $this->create();
         } else {
             $data = array(
-		'BatchID' => $this->input->post('BatchID',TRUE),
-		'UploadDate' => $this->input->post('UploadDate',TRUE),
-		'UploadBy' => $this->input->post('UploadBy',TRUE),
-		'UploadRemark' => $this->input->post('UploadRemark',TRUE),
-		'ApplicationSource' => $this->input->post('ApplicationSource',TRUE),
-		'ProcessMonth' => $this->input->post('ProcessMonth',TRUE),
-		'ProcessYear' => $this->input->post('ProcessYear',TRUE),
-		'FilePath' => $this->input->post('FilePath',TRUE),
-		'VirtualPath' => $this->input->post('VirtualPath',TRUE),
-		'FileSize' => $this->input->post('FileSize',TRUE),
-		'ReportPath' => $this->input->post('ReportPath',TRUE),
-		'RowDataCount' => $this->input->post('RowDataCount',TRUE),
-		'RowDataSucceed' => $this->input->post('RowDataSucceed',TRUE),
-		'RowDataFailed' => $this->input->post('RowDataFailed',TRUE),
-		'ApprovalID' => $this->input->post('ApprovalID',TRUE),
-		'StatusUpload' => $this->input->post('StatusUpload',TRUE),
-	    );
+        'BatchID' => $this->input->post('BatchID',TRUE),
+        'UploadDate' => $this->input->post('UploadDate',TRUE),
+        'UploadBy' => $this->input->post('UploadBy',TRUE),
+        'UploadRemark' => $this->input->post('UploadRemark',TRUE),
+        'ApplicationSource' => $this->input->post('ApplicationSource',TRUE),
+        'ProcessMonth' => $this->input->post('ProcessMonth',TRUE),
+        'ProcessYear' => $this->input->post('ProcessYear',TRUE),
+        'FilePath' => $this->input->post('FilePath',TRUE),
+        'VirtualPath' => $this->input->post('VirtualPath',TRUE),
+        'FileSize' => $this->input->post('FileSize',TRUE),
+        'ReportPath' => $this->input->post('ReportPath',TRUE),
+        'RowDataCount' => $this->input->post('RowDataCount',TRUE),
+        'RowDataSucceed' => $this->input->post('RowDataSucceed',TRUE),
+        'RowDataFailed' => $this->input->post('RowDataFailed',TRUE),
+        'ApprovalID' => $this->input->post('ApprovalID',TRUE),
+        'StatusUpload' => $this->input->post('StatusUpload',TRUE),
+        );
 
             $this->System_upload_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('system_upload'));
         }
-*/    	
+*/      
 
 //tes dummy 
 // [FilePath] => Array
@@ -171,24 +196,24 @@ $id_user_login='12345';
 
 // print_r($data_upload['file_name']);die();
             $data = array(
-		'BatchID' =>  $this->input->post('BatchID',TRUE),
-		'UploadDate' => $this->input->post('UploadDate',TRUE),
-		'UploadBy' => $id_user_login,
-		'UploadRemark' => $this->input->post('UploadRemark',TRUE),
-		'ApplicationSource' => $this->input->post('ApplicationSource',TRUE),
-		'ProcessMonth' => $this->input->post('ProcessMonth',TRUE),
-		'ProcessYear' => $this->input->post('ProcessYear',TRUE),
-		'FilePath' => $data_upload['file_name'],
-		'VirtualPath' => $data_upload['client_name'],
-		'FileSize' => $data_upload['file_size'],
-		'ReportPath' => '-',
-		'RowDataCount' => $jumlah_rows,
-//update data 		
-		// 'RowDataSucceed' => $this->input->post('RowDataSucceed',TRUE),
-		// 'RowDataFailed' => $this->input->post('RowDataFailed',TRUE),
-		// 'ApprovalID' => $this->input->post('ApprovalID',TRUE),
-		'StatusUpload' => 'Terupload',
-	    );
+        'BatchID' =>  $this->input->post('BatchID',TRUE),
+        'UploadDate' => $this->input->post('UploadDate',TRUE),
+        'UploadBy' => $id_user_login,
+        'UploadRemark' => $this->input->post('UploadRemark',TRUE),
+        'ApplicationSource' => $this->input->post('ApplicationSource',TRUE),
+        'ProcessMonth' => $this->input->post('ProcessMonth',TRUE),
+        'ProcessYear' => $this->input->post('ProcessYear',TRUE),
+        'FilePath' => $data_upload['file_name'],
+        'VirtualPath' => $data_upload['client_name'],
+        'FileSize' => $data_upload['file_size'],
+        'ReportPath' => '-',
+        'RowDataCount' => $jumlah_rows,
+//update data       
+        // 'RowDataSucceed' => $this->input->post('RowDataSucceed',TRUE),
+        // 'RowDataFailed' => $this->input->post('RowDataFailed',TRUE),
+        // 'ApprovalID' => $this->input->post('ApprovalID',TRUE),
+        'StatusUpload' => 'Terupload',
+        );
 
             $this->System_upload_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
@@ -199,9 +224,9 @@ $id_user_login='12345';
     }
 
 
-	private function _do_upload($batch,$ApplicationSource)
-	{
-		$config['upload_path']          = 'uploads/';
+    private function _do_upload($batch,$ApplicationSource)
+    {
+        $config['upload_path']          = 'uploads/';
         $config['allowed_types']        = 'csv';
 /*
         $config['allowed_types']        = 'gif|jpg|png';
@@ -209,7 +234,7 @@ $id_user_login='12345';
         $config['max_width']            = 1000; // set max width image allowed
         $config['max_height']           = 1000; // set max height allowed
         $config['file_name']            = round(microtime(true) * 1000); //just milisecond timestamp fot unique name
-*/		
+*/      
         $config['file_name']            = $batch.'_'.$ApplicationSource; //ambil batchID Upload
 
         $this->load->library('upload', $config);
@@ -217,13 +242,13 @@ $id_user_login='12345';
         if(!$this->upload->do_upload('FilePath')) //upload and validate
         {
             $data['inputerror'][] = 'FilePath';
-			$data['error_string'][] = 'Upload error: '.$this->upload->display_errors('',''); //show ajax error
-			$data['status'] = FALSE;
-			echo json_encode($data);
-			exit();
-		}
-		return $this->upload->data();
-	}
+            $data['error_string'][] = 'Upload error: '.$this->upload->display_errors('',''); //show ajax error
+            $data['status'] = FALSE;
+            echo json_encode($data);
+            exit();
+        }
+        return $this->upload->data();
+    }
 
 
 
@@ -233,20 +258,24 @@ $id_user_login='12345';
 $db_system = 'System'.$ApplicationSource;
 
 //return jumlah data masuk
-$batch_delete =	$this->db->query("DELETE FROM $db_system WHERE BatchID='$BatchID'");
-$batch_update =	$this->db->query("UPDATE System_upload SET StatusUpload='Terupload'  WHERE BatchID='$BatchID'");
+$batch_delete = $this->db->query("DELETE FROM $db_system WHERE BatchID='$BatchID'");
+$batch_update = $this->db->query("UPDATE System_upload SET StatusUpload='Terupload'  WHERE BatchID='$BatchID'");
 
 print_r($batch_delete);
 print_r('<br>');
 print_r($batch_delete);die();
 
-	}
+    }
 
 
     public function approve($BatchID,$ApplicationSource) 
     {
 error_reporting(E_ALL & ~E_NOTICE); //????????????????
 
+$row2 = $this->System_upload_model->get_by_id($BatchID);
+// print_r($row->RowDataCount);die();
+$ProcessMonth = $row2->ProcessMonth;
+$ProcessYear = $row2->ProcessYear;
 
 //dummy session 
 $sessionID ='12345';
@@ -270,8 +299,8 @@ $sessionID ='12345';
 //     [ApprovalID] => 
 //     [StatusUpload] => Terupload
 // )
-		$lokasi_file = 'uploads/'.$BatchID.'_'.$ApplicationSource.'.csv';
-		$file_data = $this->csvimport->get_array($lokasi_file);
+        $lokasi_file = 'uploads/'.$BatchID.'_'.$ApplicationSource.'.csv';
+        $file_data = $this->csvimport->get_array($lokasi_file);
 
 // print_r($file_data);die();
 
@@ -286,9 +315,9 @@ $batch_ada = $this->db->query("SELECT distinct BatchID  FROM $db_system WHERE Ba
 if ($batch_ada==1) {
 
 //batch sudah ada------
-	echo "<script>alert('BATCH SUDAH DIAPPROVE');</script>";
+    echo "<script>alert('BATCH SUDAH DIAPPROVE');</script>";
 
-	redirect('system_upload'); 
+    redirect('system_upload'); 
 //================
 } else {
 //================
@@ -301,64 +330,65 @@ foreach($file_data as $row){
 
 
 
-		//------------------------------------
-		if ($ApplicationSource=='CCOS') {
-		//=====================CCOS=================================
-				 	$data[] = array(
+        //------------------------------------
+        if ($ApplicationSource=='CCOS') {
+        //=====================CCOS=================================
+                    $data[] = array(
 
-		// $cus_name = str_replace("'","-",$row["CustomerName"]);
-		// $cus_name = str_replace("RO'UF", 'KAMPRET', $row["CustomerName"]);
+        // $cus_name = str_replace("'","-",$row["CustomerName"]);
+        // $cus_name = str_replace("RO'UF", 'KAMPRET', $row["CustomerName"]);
 
-		'BatchID'			=>	$BatchID,
-		'RowID'				=>	$no++,
-		'DecisionDate'		=>	$this->format_tanggal($row["Decision Date"]),
-		'SourceCode'		=>	$row["SourceCode"],
-		// // 'CustomerName'		=>	$cus_name,
-		'CustomerName'		=>	$row["CustomerName"],
-		// 'ORG'				=>	$row["ORG"], //??????????????
-		'Logo'				=>	$row["Logo"],
-		'EmpReffCode'		=>	$row["EmpReffCode"],
-		'Status'			=>	$row["Status"],
-		'DeclineCode'		=>	$row["Decline Code"],
-		'ApplicationType'	=>	$row["Jenis App"]
-				 	);
-		//============================================================
+        'BatchID'           =>  $BatchID,
+        'RowID'             =>  $no++,
+        'DecisionDate'      =>  $this->format_tanggal($row["Decision Date"]),
+        'SourceCode'        =>  $row["SourceCode"],
+        // // 'CustomerName'        =>  $cus_name,
+        'CustomerName'      =>  $row["CustomerName"],
+        // 'ORG'                =>  $row["ORG"], //??????????????
+        'Logo'              =>  $row["Logo"],
+        'EmpReffCode'       =>  $row["EmpReffCode"],
+        'Status'            =>  $row["Status"],
+        'DeclineCode'       =>  $row["Decline Code"],
+        'ApplicationType'   =>  $row["Jenis App"],
+        'ProcessMonth' => $ProcessMonth,
+        'ProcessYear' => $ProcessYear,
 
-		}elseif($ApplicationSource=='CardLink'){
+        'No_Identitas'      =>  $row["No_Identitas"]
+                    );
+        //============================================================
 
-		  //=====================CardLink=================================
-		 	$data[] = array(
+        }elseif($ApplicationSource=='CardLink'){
 
-		'BatchID'			=>	$BatchID,
-		'RowID'				=>	$no++,
-		'OpenDate'			=>	$this->format_tanggal($row["Open Date"]),
-		'SourceCode'		=>	$row["SourceCode"],
-		'CustomerNumber'	=>	$row["Customer Number"],
-		'CustomerName'		=>	$row["CustomerName"], //!!!!!caracter petik ''/' 
-		// 'CustomerName'		=>	'xxxxxxxxxxx',   //????????
-		'CustomerBirthDate'	=>	$this->format_tanggal($row["Customer DOB"]),
-		'ORG'				=>	$row["ORG"],
-		'Logo'				=>	$row["Logo"],
-		'EmpReffCode'		=>	$row["EmpReffCode"],
-		'BlockCard'			=>	$row["Block"],
-		'ApplicationType'	=>	$row["Jenis App"]
+          //=====================CardLink=================================
+            $data[] = array(
 
-		 	);
+        'BatchID'           =>  $BatchID,
+        'RowID'             =>  $no++,
+        'OpenDate'          =>  $this->format_tanggal($row["Open Date"]),
+        'SourceCode'        =>  $row["SourceCode"],
+        'CustomerNumber'    =>  $row["Customer Number"],
+        'CustomerName'      =>  $row["CustomerName"], //!!!!!caracter petik ''/' 
+        // 'CustomerName'       =>  'xxxxxxxxxxx',   //????????
+        'CustomerBirthDate' =>  $this->format_tanggal($row["Customer DOB"]),
+        'ORG'               =>  $row["ORG"],
+        'Logo'              =>  $row["Logo"],
+        'EmpReffCode'       =>  $row["EmpReffCode"],
+        'BlockCard'         =>  $row["Block"],
+        'ApplicationType'   =>  $row["Jenis App"]
+
+            );
 //============================================================
 
-		}elseif($ApplicationSource=='CardVendor'){
+        }elseif($ApplicationSource=='CardVendor'){
 //=====CardVendor
-//kartu yang diinpun vendor			
+//kartu yang diinpun vendor         
 
 $time1 = strtotime($row["Tanggal_Survey"]);
-$newformat1 = date('Y/m/d',$time1);		   
+$newformat1 = date('Y/m/d',$time1);        
 $time2 = strtotime($row["DOB"]);
-$newformat2 = date('Y/m/d',$time2);		   
+$newformat2 = date('Y/m/d',$time2);        
 
-$row2 = $this->System_upload_model->get_by_id($BatchID);
-// print_r($row->RowDataCount);die();
-$ProcessMonth = $row2->ProcessMonth;
-$ProcessYear = $row2->ProcessYear;
+
 /*
 [0] => Array
         (
@@ -390,10 +420,10 @@ $ProcessYear = $row2->ProcessYear;
 */
 
 
-		 	$data[] = array(
-		    'BatchID' =>	$BatchID,
-		   ' RowID' =>	$no++,
-			'Tanggal_Survey' => $newformat1 ,
+            $data[] = array(
+            'BatchID' =>    $BatchID,
+           ' RowID' =>  $no++,
+            'Tanggal_Survey' => $newformat1 ,
             'Surveyor' => $row["Surveyor"],
             'No_Aplikasi' => $row["No_Aplikasi"],
             'Product' => $row["Product"],
@@ -429,10 +459,10 @@ $ProcessYear = $row2->ProcessYear;
 
 
 
-		}else{
+        }else{
 
 //=============CardVendorSystem===========
-//===kartu vendor yangada di system=====			
+//===kartu vendor yangada di system=====            
 /*
  [Tanggal_Survey] => 4/10/2018
             [Surveyor] => 6162101685
@@ -457,13 +487,13 @@ $ProcessYear = $row2->ProcessYear;
             [Kecamatan] => JAKARTA UTARA
             [Kota] => JAKARTA
             [No_Telp_Kantor] => 021 65308333
-*/			
+*/          
  //=====================CardVendorSystem================================= 
 
 $time1 = strtotime($row["Tanggal_Survey"]);
-$newformat1 = date('Y/m/d',$time1);		   
+$newformat1 = date('Y/m/d',$time1);        
 $time2 = strtotime($row["DOB"]);
-$newformat2 = date('Y/m/d',$time2);		   
+$newformat2 = date('Y/m/d',$time2);        
 
 $row2 = $this->System_upload_model->get_by_id($BatchID);
 // print_r($row->RowDataCount);die();
@@ -472,10 +502,10 @@ $ProcessYear = $row2->ProcessYear;
 
 
 
-		 	$data[] = array(
-		    'BatchID' =>	$BatchID,
-		   ' RowID' =>	$no++,
-			'Tanggal_Survey' => $newformat1 ,
+            $data[] = array(
+            'BatchID' =>    $BatchID,
+           ' RowID' =>  $no++,
+            'Tanggal_Survey' => $newformat1 ,
             'Surveyor' => $row["Surveyor"],
             'No_Aplikasi' => $row["No_Aplikasi"],
             'Product' => $row["Product"],
@@ -508,7 +538,7 @@ $ProcessYear = $row2->ProcessYear;
 
  //=====================CardVendorSystem=================================
 
-		}
+        }
 
 
 }///end forecach
@@ -516,7 +546,7 @@ $ProcessYear = $row2->ProcessYear;
 $db_system = 'System'.$ApplicationSource;
 
 //return jumlah data masuk
-$RowDataSucceed =	$this->db->insert_batch($db_system, $data);	
+$RowDataSucceed =   $this->db->insert_batch($db_system, $data); 
 
 
 //================UPDATE TABEL System_Upload===================
@@ -527,11 +557,11 @@ $RowDataCount = $row->RowDataCount;
 $RowDataFailed = $RowDataSucceed-$RowDataCount;
 
 $data_update = array(
-	'RowDataSucceed' => $RowDataSucceed,
-	'RowDataFailed' => $RowDataFailed,
+    'RowDataSucceed' => $RowDataSucceed,
+    'RowDataFailed' => $RowDataFailed,
 
-	'ApprovalID' => $sessionID, 
-	'StatusUpload' => 'Approved', 
+    'ApprovalID' => $sessionID, 
+    'StatusUpload' => 'Approved', 
 
 );
 $key = array('BatchID' =>$BatchID , );
@@ -541,9 +571,9 @@ $cek_update = $this->db->update('System_Upload',$data_update,$key);
 
 //--------------------
 //batch diapprove dan diinsert ditabel systemCCOS / systemCardLink / systemCardVendor-----
-	echo "<script>alert('DATA DIAPPROVE');</script>";
+    echo "<script>alert('DATA DIAPPROVE');</script>";
 
-	redirect('system_upload'); 
+    redirect('system_upload'); 
 
 }//if batch tidak ada di $db_system ='System'.$ApplicationSource ;
 //==========================================
@@ -553,24 +583,24 @@ $cek_update = $this->db->update('System_Upload',$data_update,$key);
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('system_upload/update_action'),
-		'ID' => set_value('ID', $row->ID),
-		'BatchID' => set_value('BatchID', $row->BatchID),
-		'UploadDate' => set_value('UploadDate', $row->UploadDate),
-		'UploadBy' => set_value('UploadBy', $row->UploadBy),
-		'UploadRemark' => set_value('UploadRemark', $row->UploadRemark),
-		'ApplicationSource' => set_value('ApplicationSource', $row->ApplicationSource),
-		'ProcessMonth' => set_value('ProcessMonth', $row->ProcessMonth),
-		'ProcessYear' => set_value('ProcessYear', $row->ProcessYear),
-		'FilePath' => set_value('FilePath', $row->FilePath),
-		'VirtualPath' => set_value('VirtualPath', $row->VirtualPath),
-		'FileSize' => set_value('FileSize', $row->FileSize),
-		'ReportPath' => set_value('ReportPath', $row->ReportPath),
-		'RowDataCount' => set_value('RowDataCount', $row->RowDataCount),
-		'RowDataSucceed' => set_value('RowDataSucceed', $row->RowDataSucceed),
-		'RowDataFailed' => set_value('RowDataFailed', $row->RowDataFailed),
-		'ApprovalID' => set_value('ApprovalID', $row->ApprovalID),
-		'StatusUpload' => set_value('StatusUpload', $row->StatusUpload),
-	    );
+        'ID' => set_value('ID', $row->ID),
+        'BatchID' => set_value('BatchID', $row->BatchID),
+        'UploadDate' => set_value('UploadDate', $row->UploadDate),
+        'UploadBy' => set_value('UploadBy', $row->UploadBy),
+        'UploadRemark' => set_value('UploadRemark', $row->UploadRemark),
+        'ApplicationSource' => set_value('ApplicationSource', $row->ApplicationSource),
+        'ProcessMonth' => set_value('ProcessMonth', $row->ProcessMonth),
+        'ProcessYear' => set_value('ProcessYear', $row->ProcessYear),
+        'FilePath' => set_value('FilePath', $row->FilePath),
+        'VirtualPath' => set_value('VirtualPath', $row->VirtualPath),
+        'FileSize' => set_value('FileSize', $row->FileSize),
+        'ReportPath' => set_value('ReportPath', $row->ReportPath),
+        'RowDataCount' => set_value('RowDataCount', $row->RowDataCount),
+        'RowDataSucceed' => set_value('RowDataSucceed', $row->RowDataSucceed),
+        'RowDataFailed' => set_value('RowDataFailed', $row->RowDataFailed),
+        'ApprovalID' => set_value('ApprovalID', $row->ApprovalID),
+        'StatusUpload' => set_value('StatusUpload', $row->StatusUpload),
+        );
             $this->template->load('template','system_upload_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
@@ -619,7 +649,204 @@ $arrayreturn = array('CEK' =>$cek ,'Status_Kartu' =>'Kurang 6 Bulan' , );
 
     }
 
-    public	function generate($month,$year){
+
+    public function part_generate(){
+$month='1';
+$year='2018';
+
+$card_vendor = $this->db->query("
+
+
+
+ SELECT distinct a.* from  SystemCardVendor a
+
+ WHERE   a.processMonth='$month' AND a.ProcessYear='$year'
+
+    ")->result();
+
+//incomming / CCOS
+$system_ccos = $this->db->query("
+
+
+
+ SELECT distinct a.* from  SystemCCOS a
+ WHERE   a.processMonth='$month' AND a.ProcessYear='$year'
+
+    ")->result();
+// No_Identitas_ccos
+// print_r($card_vendor_system[0]->No_Identitas);die();
+// $No_Identitas_system = array("3172024507880002", "3171026511920001", "3276050705810012");
+foreach ($system_ccos as $system) {
+    $No_Identitas_ccos[]= $system->No_Identitas;
+
+    $tanggal_jadi_kartu[]= $system->DecisionDate;    
+}
+//array dari foreach query
+// $No_Identitas_ccos = $arrayName[] = array(
+//  '11111111111',
+//  '222222222222',
+//  '3333333333333',
+//  '4444444444444',
+//  '55555555555555',
+//  '11111111111',
+//  '2222222222222',
+//  '333333333333333',
+//  '4444444444444','55555555555555'
+// );
+
+
+// print_r($No_Identitas_ccos);die();
+// $length_No_Identitas_ccos = 105258;
+
+$length_No_Identitas_ccos = count($No_Identitas_ccos);
+$row_part_ccos =  ceil($length_No_Identitas_ccos/250)+1;
+
+
+// print_r($row_part_ccos);die();
+// print_r($total_row_ccos);
+// print_r('<br>');
+// print_r($row_part_ccos);die();
+//ambil row <=5000
+
+$system_ccos_part = $this->db->query("
+ SELECT distinct TOP 250  a.* from  SystemCCOS a
+ WHERE   a.processMonth='1' AND a.ProcessYear='2018' AND Part IS NULL AND Is_generate IS NULL
+    ")->result();           
+foreach ($system_ccos_part as $system_part) {
+    $No_Identitas_ccos_part[]= $system_part->No_Identitas;
+
+    $tanggal_jadi_kartu[]= $system_part->DecisionDate;    
+}
+
+
+//=========
+// print_r($card_vendor);die();
+$length = count($card_vendor);
+
+for ($x = 1; $x < $row_part_ccos; $x++) {
+
+print_r("<br>"."part ke ".$x."<br>");
+print_r("=================================================="."<br>");       
+//-----------------
+
+
+
+// print_r($length);die();
+for ($i = 0; $i < $length; $i++) {
+
+// print_r("<br>"."loop ke - ".$i."-".$card_vendor[$i]->No_Identitas."<br>");
+// 
+
+if (in_array($card_vendor[$i]->No_Identitas, $No_Identitas_ccos_part))
+  {
+
+print_r("<br>"."loop ke - ".$i."-".$card_vendor[$i]->No_Identitas."<br>");
+print_r("<br>"."part ke - ".$x."<br>");
+print_r("ADA di CCOS <br><br>");    
+//=====================ADA DI CCOS===============================
+// print_r($card_vendor[$i]->No_Identitas);    
+
+$decision_date = $this->db->query("SELECT DecisionDate FROM SystemCCOS Where No_Identitas='".$card_vendor[$i]->No_Identitas."' AND ProcessMonth='$month' AND ProcessYear='$year' ")->result();
+
+
+
+// return $decision_date[0]->DecisionDate;
+$time_decision_date = strtotime($decision_date[0]->DecisionDate);
+
+$d=strtotime("-6 Months");
+$enam_bulan_lalu =  date("Y-m-d h:i:sa", $d) ;
+$time_enam_bulan_lalu = strtotime($enam_bulan_lalu);
+
+
+// $selisih_bulan = date('Y/m/d',$time1);        
+if ($time_enam_bulan_lalu>$time_decision_date) {
+    # lebih dari 6 bulan
+
+print_r("decision_date   -->".$decision_date[0]->DecisionDate." -->lebih dari 6 bulan"."<br>");
+//===update pert = $x dan is_generate=1 di systemCCOS dan update status_kartu di Systemcardvendor
+
+
+$cek1 = $this->db->query("UPDATE SystemCardVendor SET Status_Kartu='DECISION DATE LEBI DARI 6 BULAN' WHERE No_Identitas='".$card_vendor[$i]->No_Identitas."' AND ProcessMonth='$month' AND ProcessYear='$year'");
+
+
+$cek2 = $this->db->query("UPDATE SystemCCOS SET Part='$x',Is_generate=1 WHERE No_Identitas='".$card_vendor[$i]->No_Identitas."' AND ProcessMonth='$month' AND ProcessYear='$year'");
+
+
+
+print_r($cek1.'<br>');
+print_r($cek2.'<br>');
+// print_r($cek1.'<br>'.$cek2.'<br><br>');
+
+// $arrayreturn = array('CEK' =>$cek ,'Status_Kartu' =>'Lebih 6 Bulan' , );
+
+//     return $arrayreturn;
+} else {
+    # kurang dari 6 bulan
+print_r("decision_date  -->".$decision_date[0]->DecisionDate."---kurang dari 6 bulan"."<br>");
+
+
+
+$cek3 = $this->db->query("UPDATE SystemCardVendor SET Status_Kartu='DECISION DATE KURANG DARI 6 BULAN' WHERE No_Identitas='".$card_vendor[$i]->No_Identitas."' AND ProcessMonth='$month' AND ProcessYear='$year'");
+
+
+$cek4 = $this->db->query("UPDATE SystemCCOS SET Part='$x',Is_generate=1 WHERE No_Identitas='".$card_vendor[$i]->No_Identitas."' AND ProcessMonth='$month' AND ProcessYear='$year'");
+
+
+
+// print_r($cek1.'<br>'.$cek2.'<br><br>');
+print_r($cek3.'<br>');
+print_r($cek4.'<br>');
+
+// $cek = $this->db->query("UPDATE SystemCardVendor SET Status_Kartu='Kurang 6 Bulan' WHERE No_Identitas='$No_Identitas' AND ProcessMonth='$month' AND ProcessYear='$year'");
+
+
+
+// $arrayreturn = array('CEK' =>$cek ,'Status_Kartu' =>'Kurang 6 Bulan' , );
+
+//     return $arrayreturn;
+}
+        /*
+        */
+//=====================ADA DI CCOS===============================
+}else{
+
+print_r("<br>"."loop ke - ".$i."-".$card_vendor[$i]->No_Identitas."<br>");
+print_r("<br>"."part ke - ".$x."<br>");
+print_r("TIDAK ADA di CCOS <br><br>");  
+//=====================TIDAK ADA DI CCOS===============================
+$cek5 = $this->db->query("UPDATE SystemCardVendor SET Status_Kartu='TIDAK ADA DI CCOS' WHERE No_Identitas='".$card_vendor[$i]->No_Identitas."' AND ProcessMonth='$month' AND ProcessYear='$year'");
+
+
+$cek6 = $this->db->query("UPDATE SystemCCOS SET Part='$x',Is_generate=1 WHERE No_Identitas='".$card_vendor[$i]->No_Identitas."' AND ProcessMonth='$month' AND ProcessYear='$year'");
+
+
+
+// print_r($cek1.'<br>'.$cek2.'<br><br>');
+print_r($cek5.'<br>');
+print_r($cek6.'<br>');
+
+
+/*
+
+// print_r($card_vendor[$i]->No_Identitas);    
+  echo $i."---".$card_vendor[$i]->No_Identitas." Tidak ada Kartu di CCOS";
+  print '<br>';
+  echo "update is generate=1 status Part ke- ".$x;
+  print '<br>';
+  print '<br>';
+*/  
+
+//=====================TIDAK ADA DI CCOS===============================
+}
+
+}//looping update
+
+        } //looping part
+
+
+    }
+
+    public  function generate($month,$year){
 
 // print_r($month);
 // print_r('<br>');
@@ -637,7 +864,7 @@ $card_vendor = $this->db->query("
 
  WHERE   a.processMonth='$month' AND a.ProcessYear='$year'
 
-	")->result();
+    ")->result();
 
 //incomming / CCOS
 $system_ccos = $this->db->query("
@@ -648,7 +875,7 @@ $system_ccos = $this->db->query("
  WHERE   a.processMonth='$month' AND a.ProcessYear='$year'
 
     ")->result();
-
+// No_Identitas_ccos
 // print_r($card_vendor_system[0]->No_Identitas);die();
 // $No_Identitas_system = array("3172024507880002", "3171026511920001", "3276050705810012");
 
@@ -659,17 +886,38 @@ foreach ($system_ccos as $system) {
 }
 
 
-// print_r($No_Identitas_system);die();
-// print_r($tanggal_jadi_kartu);die();
+// print_r($No_Identitas_ccos);die();
+//105.258
+/*
+// $total_row_ccos = count($No_Identitas_ccos);
+$total_row_ccos = 105258;
+$row_part_ccos =  ceil($total_row_ccos/25000);
 
+
+// print_r($system_ccos);die();
+print_r($total_row_ccos);
+print_r('<br>');
+print_r($row_part_ccos);die();
+//ambil row <=5000
+for($i=){
+    
+
+
+}
+*/
+
+// $length_No_Identitas_ccos = count($No_Identitas_ccos);
+// print_r($length_No_Identitas_ccos);die();
 
 $length = count($card_vendor);
+
+// print_r($length);die();
 for ($i = 0; $i < $length; $i++) {
     
   // print $card_vendor[$i]->No_Identitas;
   // print '<br>';
 
-
+//nex dev 
 
 
 
@@ -756,24 +1004,24 @@ print_r($No_Identitas);die();
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('system_upload/update_action'),
-		'ID' => set_value('ID', $row->ID),
-		'BatchID' => set_value('BatchID', $row->BatchID),
-		'UploadDate' => set_value('UploadDate', $row->UploadDate),
-		'UploadBy' => set_value('UploadBy', $row->UploadBy),
-		'UploadRemark' => set_value('UploadRemark', $row->UploadRemark),
-		'ApplicationSource' => set_value('ApplicationSource', $row->ApplicationSource),
-		'ProcessMonth' => set_value('ProcessMonth', $row->ProcessMonth),
-		'ProcessYear' => set_value('ProcessYear', $row->ProcessYear),
-		'FilePath' => set_value('FilePath', $row->FilePath),
-		'VirtualPath' => set_value('VirtualPath', $row->VirtualPath),
-		'FileSize' => set_value('FileSize', $row->FileSize),
-		'ReportPath' => set_value('ReportPath', $row->ReportPath),
-		'RowDataCount' => set_value('RowDataCount', $row->RowDataCount),
-		'RowDataSucceed' => set_value('RowDataSucceed', $row->RowDataSucceed),
-		'RowDataFailed' => set_value('RowDataFailed', $row->RowDataFailed),
-		'ApprovalID' => set_value('ApprovalID', $row->ApprovalID),
-		'StatusUpload' => set_value('StatusUpload', $row->StatusUpload),
-	    );
+        'ID' => set_value('ID', $row->ID),
+        'BatchID' => set_value('BatchID', $row->BatchID),
+        'UploadDate' => set_value('UploadDate', $row->UploadDate),
+        'UploadBy' => set_value('UploadBy', $row->UploadBy),
+        'UploadRemark' => set_value('UploadRemark', $row->UploadRemark),
+        'ApplicationSource' => set_value('ApplicationSource', $row->ApplicationSource),
+        'ProcessMonth' => set_value('ProcessMonth', $row->ProcessMonth),
+        'ProcessYear' => set_value('ProcessYear', $row->ProcessYear),
+        'FilePath' => set_value('FilePath', $row->FilePath),
+        'VirtualPath' => set_value('VirtualPath', $row->VirtualPath),
+        'FileSize' => set_value('FileSize', $row->FileSize),
+        'ReportPath' => set_value('ReportPath', $row->ReportPath),
+        'RowDataCount' => set_value('RowDataCount', $row->RowDataCount),
+        'RowDataSucceed' => set_value('RowDataSucceed', $row->RowDataSucceed),
+        'RowDataFailed' => set_value('RowDataFailed', $row->RowDataFailed),
+        'ApprovalID' => set_value('ApprovalID', $row->ApprovalID),
+        'StatusUpload' => set_value('StatusUpload', $row->StatusUpload),
+        );
             $this->template->load('template','system_upload_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
@@ -789,17 +1037,9 @@ print_r($No_Identitas);die();
             $this->update($this->input->post('ID', TRUE));
         } else {
             $data = array(
-		'BatchID' => $this->input->post('BatchID',TRUE),
-		'UploadDate' => $this->input->post('UploadDate',TRUE),
-		'UploadBy' => $this->input->post('UploadBy',TRUE),
-		'UploadRemark' => $this->input->post('UploadRemark',TRUE),
-		'ApplicationSource' => $this->input->post('ApplicationSource',TRUE),
-		'ProcessMonth' => $this->input->post('ProcessMonth',TRUE),
-		'ProcessYear' => $this->input->post('ProcessYear',TRUE),
-		'FilePath' => $this->input->post('FilePath',TRUE),
-		'VirtualPath' => $this->input->post('VirtualPath',TRUE),
-		'FileSize' => $this->input->post('FileSize',TRUE),
-		'ReportPath' => $this->input->post('ReportPath',TRUE),
+        'BatchID' => $this->input->post('BatchID',TRUE),
+        'UploadDate' => $this->input->post('UploadDate',TRUE),
+        'UploadBy' => $this->input->post('UploadBy'
 		'RowDataCount' => $this->input->post('RowDataCount',TRUE),
 		'RowDataSucceed' => $this->input->post('RowDataSucceed',TRUE),
 		'RowDataFailed' => $this->input->post('RowDataFailed',TRUE),
