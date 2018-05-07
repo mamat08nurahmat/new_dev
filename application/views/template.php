@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Belajarphp.net | SMS gatway</title>
+        <title>NEW DEV | SLNTOOLS</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.5 -->
@@ -28,6 +28,30 @@
             <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+<style>
+/*  .box
+  {
+   width:800px;
+   margin:0 auto;
+  }
+  .active_tab1
+  {
+   background-color:#fff;
+   color:#333;
+   font-weight: 600;
+  }
+  .inactive_tab1
+  {
+   background-color: #f5f5f5;
+   color: #333;
+   cursor: not-allowed;
+  }
+  .has-error
+  {
+   border-color:#cc0000;
+   background-color:#ffff99;
+  }
+*/  </style>        
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -190,7 +214,7 @@
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 2.3.0
                 </div>
-                <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
+                <strong>Copyright &copy; 2018 <a href="http://slntools.com">slntools.com</a>.</strong> All rights reserved.
             </footer>
 
             <!-- Add the sidebar's background. This div must be placed
@@ -227,5 +251,288 @@
                 });
             });
         </script>
+
+        <!-- Emlployee.js -->
+        <script src="<?php echo base_url() ?>template/dist/js/employee.js"></script>  
+
+        <!-- Agency.js -->
+        <!-- <script type="text/javascript" src="<?php echo base_url() ?>template/dist/js/agency.js"></script>   -->
+<script type="text/javascript">
+    
+
+    
+//   $(document).ready(function(){
+// var url="<?php echo base_url() ?>";
+
+
+// console.log(url);
+
+// // console.log('ready');
+// // $('#btn').click(function(){
+// $("#PostalCode").keyup(function(e){
+//  // if (e.keyCode == 13) {
+//  // console.log($('#PostalCode').val());
+// // }
+//           $.ajax({
+//       url:'<?=base_url()?>index.php/Agency/get_ajax_PostalCode',
+//             method : "GET",
+//             data   : { cari: $('#PostalCode').val() }
+//              // data   : 'data123.json'
+//           }).done(function(hasil){
+//             // console.log(hasil);
+//             $('#result').html(hasil);
+//           });
+
+
+// });
+
+
+//   });
+
+    
+
+
+
+
+// let kode_pos = document.getElementById("kode_pos");
+
+// //let kode_pos_value = document.getElementById("kode_pos").val();
+
+// // kode_pos.addEventListener("keyup", function(){
+
+// // console.log(kode_pos_value);
+
+// // });
+
+// kode_pos.keyup(function(){
+
+// console.log('xxxxxxxxx');
+
+// });
+// $("#kode_pos").keyup(function(){
+//     // $("input").css("background-color", "pink");
+//     console.log('keyuppppppp');
+// });
+
+  $(document).ready(function(){
+
+
+// console.log('ready');
+// $('#btn').click(function(){
+$("#kode_pos").keyup(function(){
+
+ // console.log('keyup');
+
+          $.ajax({
+      url:'<?=base_url()?>index.php/Agency/get_ajax',
+            method : "GET",
+            data   : { cari: $('#kode_pos').val() }
+             // data   : 'data123.json'
+          }).done(function(hasil){
+            $('#result').html(hasil);
+          });
+
+
+});
+
+
+  });
+
+</script>
+
+
+
+<!-- AGENCYSALESCENTER -->
+<script type="text/javascript">
+
+function generate_kode(){
+
+//console.log('generate klik');
+
+//=====================================
+//============
+//$.('#code').value('123');    
+ var area_id = $('#AreaID').val();  
+// //console.log(area_id);
+ 
+                    // AJAX request
+                    $.ajax({
+                       url:'<?=base_url()?>index.php/agencysalescenter/getSalesCenterCode',
+                          // url:'<?=base_url()?>index.php/sales_center/getKota1',
+                        method: 'post',
+                        data: {area_id:area_id},
+                        dataType: 'json',
+                        success: function(response){
+
+ console.log(response);
+$('#SalesCenterCode').val(response);
+//                             $.each(response,function(index,data){
+// console.log(index);
+// console.log('xxxxxxxxxxxxx');
+// console.log(data);
+                
+//                             });     
+/*
+$('#kode_new').val(area);
+                            // Remove options
+                            $('#kota').find('option').not(':first').remove(); //select ke 3
+              //              $('#area_grup').find('option').not(':first').remove(); //select ke 2
+
+                            // Add options
+                            $.each(response,function(index,data){
+                                $('#kota').append('<option value="'+data['CityID']+'">'+data['CityName']+'</option>');
+                
+                            });
+                        
+*/
+                        }
+                    });
+
+
+
+//============  
+
+//=====================================      
+
+
+}
+
+
+    
+$(document).ready(function(){
+
+
+
+/*
+$('#area').change(function(){
+
+//alert('changeeee');
+let area_id = $(this).val();
+
+
+$.ajax({
+
+url:'<?=site_url()?>/sales_center/getKota',
+method:'post',
+data:{area_id:area_id},
+dataType:'json',
+success: function(response){
+
+//console.log(response);
+
+
+//ADD OPTION
+$.each(response,function(index,data){
+
+$('#kota').append('<option value="'+data['CityID']+'" >'+data['CityName']+'<option>');
+
+});
+
+}
+
+});
+
+});
+*/
+
+
+///==kode pos
+// $('#btn').click(function(){
+$('#PostalCode').keyup(function(){
+// console.log('generate klik');
+          $.ajax({
+      url:'<?=base_url()?>index.php/agency/get_ajax',
+            method : "GET",
+            data   : { cari: $('#PostalCode').val() }
+             // data   : 'data123.json'
+          }).done(function(hasil){
+            $('#result').html(hasil);
+          });
+
+
+});
+
+///----------------------------------------
+                // Area change Select
+                $('#AreaID').change(function(){
+
+                    var area = $(this).val();
+//console.log(area);                       
+                    // AJAX request
+                    $.ajax({
+                       url:'<?=base_url()?>index.php/agencysalescenter/getCity',
+                          // url:'<?=base_url()?>index.php/sales_center/getKota1',
+                        method: 'post',
+                        data: {area:area},
+                        dataType: 'json',
+                        success: function(response){
+/*
+console.log(response);          
+$('#kode_new').val(area);
+*/
+                            // Remove options
+                            $('#CityID').find('option').not(':first').remove(); //select ke 3
+              //              $('#area_grup').find('option').not(':first').remove(); //select ke 2
+
+                            // Add options
+                            $.each(response,function(index,data){
+                                $('#CityID').append('<option value="'+data['CityID']+'">'+data['CityName']+'</option>');
+
+generate_kode();
+                
+                            });
+                        
+                        }
+                    });
+
+    
+        }); //onchange
+                  
+          
+//--------------
+/*
+
+//===on click generate
+$("#generate").click(function(){
+
+//console.log('generate klik');
+
+//=====================================
+//============
+//$.('#code').value('123');    
+ var area_id = $('#area').val();  
+// //console.log(area_id);
+ 
+                    // AJAX request
+                    $.ajax({
+                       url:'<?=base_url()?>index.php/sales_center/getSalesCenterCode',
+                          // url:'<?=base_url()?>index.php/sales_center/getKota1',
+                        method: 'post',
+                        data: {area_id:area_id},
+                        dataType: 'json',
+                        success: function(response){
+
+ console.log(response);
+$('#kode').val(response);
+
+                        }
+                    });
+
+
+
+//============  
+
+//=====================================      
+
+
+});
+*/
+//=======================
+});//ready
+
+</script>
+
+
+
     </body>
 </html>
