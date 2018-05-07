@@ -79,32 +79,73 @@ class Agency extends CI_Controller
     
     public function create_action() 
     {
-        $this->_rules();
 
-        if ($this->form_validation->run() == FALSE) {
-            $this->create();
-        } else {
+
+//             $data = array(
+//     'AgencyName' => "XXXXXXX",
+//     // 'StreetAddress' => $this->input->post('StreetAddress',TRUE), 
+//     // 'VillageAddress' => $this->input->post('VillageAddress',TRUE), //kelurahan / desa
+//     // 'SubDistrictAddress' => $this->input->post('SubDistrictAddress',TRUE), //kecamatan
+//     'PostalCode' => "1234",  //kode pos
+//     'CityAddress' => "xxxxxx", //kelurahan/kota
+//     'PhoneNumber' => "123456",
+//     // 'FaxNumber' => $this->input->post('FaxNumber',TRUE),
+//     'EmailAddress' => "abc@gmail.com",
+//     // 'Status' => $this->input->post('Status',TRUE),
+//     // 'ActiveDate' => $this->input->post('ActiveDate',TRUE),
+//     // 'EndDate' => $this->input->post('EndDate',TRUE),
+//     'IsActive' => "1",
+//     'UserType' => "xxxxxx",
+
+//     'Provinsi' => "zzzzzz",
+//     'Kabupaten'  => "zzzzzz",
+//     'Kecamatan'  => "zzzzzz",
+//     'Kelurahan'  => "zzzzzz",
+
+
+//       );
+
+// $cek =    $this->Agency_model->insert($data);
+// print_r($cek);
+// //dummy ok
+
+// print_r($_POST);die();      
+        // $this->_rules();
+
+        // if ($this->form_validation->run() == FALSE) {
+        //     $this->create();
+        // } else {
             $data = array(
     'AgencyName' => $this->input->post('AgencyName',TRUE),
-    'StreetAddress' => $this->input->post('StreetAddress',TRUE),
-    'VillageAddress' => $this->input->post('VillageAddress',TRUE),
-    'SubDistrictAddress' => $this->input->post('SubDistrictAddress',TRUE),
-    'PostalCode' => $this->input->post('PostalCode',TRUE),
-    'CityAddress' => $this->input->post('CityAddress',TRUE),
+    // 'StreetAddress' => $this->input->post('StreetAddress',TRUE), 
+    // 'VillageAddress' => $this->input->post('VillageAddress',TRUE), //kelurahan / desa
+    // 'SubDistrictAddress' => $this->input->post('SubDistrictAddress',TRUE), //kecamatan
+    'PostalCode' => $this->input->post('PostalCode',TRUE),  //kode pos
+    'CityAddress' => $this->input->post('CityAddress',TRUE), //kelurahan/kota
     'PhoneNumber' => $this->input->post('PhoneNumber',TRUE),
-    'FaxNumber' => $this->input->post('FaxNumber',TRUE),
+    // 'FaxNumber' => $this->input->post('FaxNumber',TRUE),
     'EmailAddress' => $this->input->post('EmailAddress',TRUE),
-    'Status' => $this->input->post('Status',TRUE),
-    'ActiveDate' => $this->input->post('ActiveDate',TRUE),
-    'EndDate' => $this->input->post('EndDate',TRUE),
-    'IsActive' => $this->input->post('IsActive',TRUE),
+    // 'Status' => $this->input->post('Status',TRUE),
+    // 'ActiveDate' => $this->input->post('ActiveDate',TRUE),
+    // 'EndDate' => $this->input->post('EndDate',TRUE),
+    'IsActive' => "1",
     'UserType' => $this->input->post('UserType',TRUE),
+
+    'Provinsi' => $this->input->post('Provinsi',TRUE),
+    'Kabupaten' => $this->input->post('Kabupaten',TRUE),
+    'Kecamatan' => $this->input->post('Kecamatan',TRUE),
+    'Kelurahan' => $this->input->post('Kelurahan',TRUE),
+
+
       );
 
             $this->Agency_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('agency'));
-        }
+        // }
+/*
+*/
+
     }
     
     public function update($id) 
@@ -117,18 +158,18 @@ class Agency extends CI_Controller
                 'action' => site_url('agency/update_action'),
     'AgencyID' => set_value('AgencyID', $row->AgencyID),
     'AgencyName' => set_value('AgencyName', $row->AgencyName),
-    'StreetAddress' => set_value('StreetAddress', $row->StreetAddress),
-    'VillageAddress' => set_value('VillageAddress', $row->VillageAddress),
-    'SubDistrictAddress' => set_value('SubDistrictAddress', $row->SubDistrictAddress),
+    // 'StreetAddress' => set_value('StreetAddress', $row->StreetAddress),
+    // 'VillageAddress' => set_value('VillageAddress', $row->VillageAddress),
+    // 'SubDistrictAddress' => set_value('SubDistrictAddress', $row->SubDistrictAddress),
     'PostalCode' => set_value('PostalCode', $row->PostalCode),
-    'CityAddress' => set_value('CityAddress', $row->CityAddress),
+    // 'CityAddress' => set_value('CityAddress', $row->CityAddress),
     'PhoneNumber' => set_value('PhoneNumber', $row->PhoneNumber),
-    'FaxNumber' => set_value('FaxNumber', $row->FaxNumber),
+    // 'FaxNumber' => set_value('FaxNumber', $row->FaxNumber),
     'EmailAddress' => set_value('EmailAddress', $row->EmailAddress),
-    'Status' => set_value('Status', $row->Status),
-    'ActiveDate' => set_value('ActiveDate', $row->ActiveDate),
-    'EndDate' => set_value('EndDate', $row->EndDate),
-    'IsActive' => set_value('IsActive', $row->IsActive),
+    // 'Status' => set_value('Status', $row->Status),
+    // 'ActiveDate' => set_value('ActiveDate', $row->ActiveDate),
+    // 'EndDate' => set_value('EndDate', $row->EndDate),
+    // 'IsActive' => set_value('IsActive', $row->IsActive),
     'UserType' => set_value('UserType', $row->UserType),
       );
             $this->template->load('template','agency_form', $data);
@@ -185,18 +226,18 @@ class Agency extends CI_Controller
     public function _rules() 
     {
   $this->form_validation->set_rules('AgencyName', 'agencyname', 'trim|required');
-  $this->form_validation->set_rules('StreetAddress', 'streetaddress', 'trim|required');
-  $this->form_validation->set_rules('VillageAddress', 'villageaddress', 'trim|required');
-  $this->form_validation->set_rules('SubDistrictAddress', 'subdistrictaddress', 'trim|required');
+  // $this->form_validation->set_rules('StreetAddress', 'streetaddress', 'trim|required');
+  // $this->form_validation->set_rules('VillageAddress', 'villageaddress', 'trim|required');
+  // $this->form_validation->set_rules('SubDistrictAddress', 'subdistrictaddress', 'trim|required');
   $this->form_validation->set_rules('PostalCode', 'postalcode', 'trim|required');
-  $this->form_validation->set_rules('CityAddress', 'cityaddress', 'trim|required');
+  // $this->form_validation->set_rules('CityAddress', 'cityaddress', 'trim|required');
   $this->form_validation->set_rules('PhoneNumber', 'phonenumber', 'trim|required');
   $this->form_validation->set_rules('FaxNumber', 'faxnumber', 'trim|required');
-  $this->form_validation->set_rules('EmailAddress', 'emailaddress', 'trim|required');
-  $this->form_validation->set_rules('Status', 'status', 'trim|required');
-  $this->form_validation->set_rules('ActiveDate', 'activedate', 'trim|required');
-  $this->form_validation->set_rules('EndDate', 'enddate', 'trim|required');
-  $this->form_validation->set_rules('IsActive', 'isactive', 'trim|required');
+  // $this->form_validation->set_rules('EmailAddress', 'emailaddress', 'trim|required');
+  // $this->form_validation->set_rules('Status', 'status', 'trim|required');
+  // $this->form_validation->set_rules('ActiveDate', 'activedate', 'trim|required');
+  // $this->form_validation->set_rules('EndDate', 'enddate', 'trim|required');
+  // $this->form_validation->set_rules('IsActive', 'isactive', 'trim|required');
   $this->form_validation->set_rules('UserType', 'usertype', 'trim|required');
 
   $this->form_validation->set_rules('AgencyID', 'AgencyID', 'trim');
@@ -355,19 +396,19 @@ $output.='
 
         <div class="form-group col-md-3">
           <label>Provinsi</label>
-          <input type="text" class="form-control" name="provinsi" id="provinsi" value="'.$datas->provinsi.'" readonly>
+          <input type="text" class="form-control" name="Provinsi" id="Provinsi" value="'.$datas->provinsi.'" readonly>
         </div>
   ';        
 $output.='
         <div class="form-group col-md-3">
           <label>Kabupaten / Kota</label>
-          <input type="text" class="form-control" name="kabupaten" id="kabupaten" value="'.$datas->kabupaten.'" readonly>
+          <input type="text" class="form-control" name="Kabupaten" id="Kabupaten" value="'.$datas->kabupaten.'" readonly>
         </div>
   ';        
 $output.='
         <div class="form-group col-md-3">
           <label>Kecamatan</label>
-          <input type="text" class="form-control" name="kecamatan" id="kecamatan" value="'.$datas->kecamatan.'" readonly>
+          <input type="text" class="form-control" name="Kecamatan" id="Kecamatan" value="'.$datas->kecamatan.'" readonly>
         </div>
 
   ';
@@ -381,7 +422,7 @@ $output.='
 
         <div class="form-group col-md-3">
           <label>Kelurahan / Desa</label>
-          <select class="form-control" name="keluranan" id="keluranan">
+          <select class="form-control" name="Keluranan" id="Keluranan">
 ';
 foreach($kode_pos->result() as $datas){  
 $output.='          

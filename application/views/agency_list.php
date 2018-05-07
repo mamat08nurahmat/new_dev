@@ -22,9 +22,9 @@
 		    <th>SubDistrictAddress</th>
 -->			
 		    <th>PostalCode</th>			
-		    <th>CityAddress</th>
+		    <!-- <th>CityAddress</th> -->
 		    <th>PhoneNumber</th>
-		    <th>FaxNumber</th>
+		    <!-- <th>FaxNumber</th> -->
 		    <th>EmailAddress</th>
 <!--
 		    <th>Status</th>
@@ -52,10 +52,10 @@
 -->			
 			
 		    <td><?php echo $agency->PostalCode ?></td>
-		    <td><?php echo $agency->CityAddress ?></td>
-		    <td><?php echo $agency->PhoneNumber ?></td>
-		    <td><?php echo $agency->FaxNumber ?></td>
-		    <td><?php echo $agency->EmailAddress ?></td>
+<!-- 		    <td><?php echo $agency->CityAddress ?></td>
+ -->		    <td><?php echo $agency->PhoneNumber ?></td>
+<!-- 		    <td><?php echo $agency->FaxNumber ?></td>
+ -->		    <td><?php echo $agency->EmailAddress ?></td>
 <!---
 			
 		    <td><?php echo $agency->Status ?></td>

@@ -341,6 +341,195 @@ $("#kode_pos").keyup(function(){
 </script>
 
 
+
+<!-- AGENCYSALESCENTER -->
+<script type="text/javascript">
+
+function generate_kode(){
+
+//console.log('generate klik');
+
+//=====================================
+//============
+//$.('#code').value('123');    
+ var area_id = $('#AreaID').val();  
+// //console.log(area_id);
+ 
+                    // AJAX request
+                    $.ajax({
+                       url:'<?=base_url()?>index.php/agencysalescenter/getSalesCenterCode',
+                          // url:'<?=base_url()?>index.php/sales_center/getKota1',
+                        method: 'post',
+                        data: {area_id:area_id},
+                        dataType: 'json',
+                        success: function(response){
+
+ console.log(response);
+$('#SalesCenterCode').val(response);
+//                             $.each(response,function(index,data){
+// console.log(index);
+// console.log('xxxxxxxxxxxxx');
+// console.log(data);
+                
+//                             });     
+/*
+$('#kode_new').val(area);
+                            // Remove options
+                            $('#kota').find('option').not(':first').remove(); //select ke 3
+              //              $('#area_grup').find('option').not(':first').remove(); //select ke 2
+
+                            // Add options
+                            $.each(response,function(index,data){
+                                $('#kota').append('<option value="'+data['CityID']+'">'+data['CityName']+'</option>');
+                
+                            });
+                        
+*/
+                        }
+                    });
+
+
+
+//============  
+
+//=====================================      
+
+
+}
+
+
+    
+$(document).ready(function(){
+
+
+
+/*
+$('#area').change(function(){
+
+//alert('changeeee');
+let area_id = $(this).val();
+
+
+$.ajax({
+
+url:'<?=site_url()?>/sales_center/getKota',
+method:'post',
+data:{area_id:area_id},
+dataType:'json',
+success: function(response){
+
+//console.log(response);
+
+
+//ADD OPTION
+$.each(response,function(index,data){
+
+$('#kota').append('<option value="'+data['CityID']+'" >'+data['CityName']+'<option>');
+
+});
+
+}
+
+});
+
+});
+*/
+
+
+///==kode pos
+// $('#btn').click(function(){
+$('#PostalCode').keyup(function(){
+// console.log('generate klik');
+          $.ajax({
+      url:'<?=base_url()?>index.php/agency/get_ajax',
+            method : "GET",
+            data   : { cari: $('#PostalCode').val() }
+             // data   : 'data123.json'
+          }).done(function(hasil){
+            $('#result').html(hasil);
+          });
+
+
+});
+
+///----------------------------------------
+                // Area change Select
+                $('#AreaID').change(function(){
+
+                    var area = $(this).val();
+//console.log(area);                       
+                    // AJAX request
+                    $.ajax({
+                       url:'<?=base_url()?>index.php/agencysalescenter/getCity',
+                          // url:'<?=base_url()?>index.php/sales_center/getKota1',
+                        method: 'post',
+                        data: {area:area},
+                        dataType: 'json',
+                        success: function(response){
+/*
+console.log(response);          
+$('#kode_new').val(area);
+*/
+                            // Remove options
+                            $('#CityID').find('option').not(':first').remove(); //select ke 3
+              //              $('#area_grup').find('option').not(':first').remove(); //select ke 2
+
+                            // Add options
+                            $.each(response,function(index,data){
+                                $('#CityID').append('<option value="'+data['CityID']+'">'+data['CityName']+'</option>');
+
+generate_kode();
+                
+                            });
+                        
+                        }
+                    });
+
+    
+        }); //onchange
+                  
+          
+//--------------
+/*
+
+//===on click generate
+$("#generate").click(function(){
+
+//console.log('generate klik');
+
+//=====================================
+//============
+//$.('#code').value('123');    
+ var area_id = $('#area').val();  
+// //console.log(area_id);
+ 
+                    // AJAX request
+                    $.ajax({
+                       url:'<?=base_url()?>index.php/sales_center/getSalesCenterCode',
+                          // url:'<?=base_url()?>index.php/sales_center/getKota1',
+                        method: 'post',
+                        data: {area_id:area_id},
+                        dataType: 'json',
+                        success: function(response){
+
+ console.log(response);
+$('#kode').val(response);
+
+                        }
+                    });
+
+
+
+//============  
+
+//=====================================      
+
+
+});
+*/
+//=======================
+});//ready
+
 </script>
 
 

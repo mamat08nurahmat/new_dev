@@ -1,12 +1,4 @@
-,TRUE),
-		'UploadRemark' => $this->input->post('UploadRemark',TRUE),
-		'ApplicationSource' => $this->input->post('ApplicationSource',TRUE),
-		'ProcessMonth' => $this->input->post('ProcessMonth',TRUE),
-		'ProcessYear' => $this->input->post('ProcessYear',TRUE),
-		'FilePath' => $this->input->post('FilePath',TRUE),
-		'VirtualPath' => $this->input->post('VirtualPath',TRUE),
-		'FileSize' => $this->input->post('FileSize',TRUE),
-		'ReportPath' => $this->input->post('ReportPath',TRUE),<?php
+<?php
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -302,6 +294,7 @@ $sessionID ='12345';
         $lokasi_file = 'uploads/'.$BatchID.'_'.$ApplicationSource.'.csv';
         $file_data = $this->csvimport->get_array($lokasi_file);
 
+//cek isi csv
 // print_r($file_data);die();
 
 $db_system ='System'.$ApplicationSource ;
@@ -1039,7 +1032,7 @@ print_r($No_Identitas);die();
             $data = array(
         'BatchID' => $this->input->post('BatchID',TRUE),
         'UploadDate' => $this->input->post('UploadDate',TRUE),
-        'UploadBy' => $this->input->post('UploadBy'
+        'UploadBy' => $this->input->post('UploadBy',TRUE),
 		'RowDataCount' => $this->input->post('RowDataCount',TRUE),
 		'RowDataSucceed' => $this->input->post('RowDataSucceed',TRUE),
 		'RowDataFailed' => $this->input->post('RowDataFailed',TRUE),
@@ -1294,8 +1287,167 @@ return $newformat;
  
 
 
+//======================
+
+public function view_generate_by_batch($BatchID){
+
+
+// $batch_id = $this->input->post('batch_id');
+//cek batch generate????
+//$cek_batch = $this->db->query("SELECT batch_id FROM total")->result();
+//????????????
+// $id['batch_id']= $batch_id;
+//$id['batch_id']= $batch_id;
+// $data_generate = $this->model_app->getSelectedData("upload_verivikasi",$id)->result();
+$data_generate = $this->db->query("SELECT * FROM SystemCardVendor WHERE BatchID='$BatchID'")->result();
+//print_r($data_generate);die();
+foreach($data_generate as $x){
+//$link[] =base_url("index.php/report/get_generate_id/$x->NO_KTP_PEMOHON");
+$link[] =base_url("index.php/System_upload/generate_by_ktp_batch/$x->No_Identitas/$BatchID/$x->ProcessMonth/$x->ProcessYear");
+//echo $x->NO_KTP_PEMOHON;
+}
+        $data=array(
+            'title'=>'Laporan',
+//            'active_dashboard'=>'active',
+//            'data_upload'=>$this->model_app->getAllData('upload_verivikasi'),
+              //'data_upload'=>$this->db->query("SELECT distinct batch_id FROM upload_verivikasi")->result(),
+ 'data_link'=>$link,
+ 'systemcardvendor_data'=>$data_generate,
+//              'tabel_detail'=>$output,
+        );
+
+// print_r($data);die();
+
+ // $this->template->load('template','system_upload_form_generate', $data);
+    $this->template->load('template','systemcardvendor_list_generate', $data);
+        // $this->load->view('element/v_header',$data);
+        // $this->load->view('pages/v_cari_generate1');
+        // $this->load->view('element/v_footer');
+
 
 }
+
+
+public function generate_by_ktp_batch($ktp,$BatchID,$ProcessMonth,$ProcessYear){
+
+
+// print_r($ktp."<br>".$BatchID."<br>".$ProcessMonth."<br>".$ProcessYear);
+
+
+$tes = $this->db->query("SELECT * FROM SystemCCOS WHERE ProcessYear='$ProcessYear' AND ProcessMonth='$ProcessMonth' 
+    AND No_Identitas='$ktp'");
+
+// print_r($tes->num_rows());die();
+
+if ($tes->num_rows()==0) {
+//======================TIDAK ADA DI CCOS===================== 
+    print_r("TIDAK ADA DI CCOS");
+
+$cek1 = $this->db->query("UPDATE SystemCardVendor SET Status_Kartu='TIDAK ADA KARTU DI CCOS' WHERE No_Identitas='$ktp' AND BatchID='$BatchID' AND ProcessMonth='$ProcessMonth' AND ProcessYear='$ProcessYear'");
+print_r("<br>"."status update".$cek1."<br>");
+
+//======================TIDAK ADA DI CCOS===================== 
+} else {
+//======================ADA DI CCOS===================== 
+
+    print_r("ADA DI CCOS"."<br>");
+
+    $ada_ccos = $tes->result();
+    $decision_date = $ada_ccos[0]->DecisionDate;
+
+// return $decision_date[0]->DecisionDate;
+$time_decision_date = strtotime($decision_date);
+
+$d=strtotime("-6 Months");
+$enam_bulan_lalu =  date("Y-m-d h:i:sa", $d) ;
+$time_enam_bulan_lalu = strtotime($enam_bulan_lalu);
+
+
+            // $selisih_bulan = date('Y/m/d',$time1);        
+            if ($time_enam_bulan_lalu>$time_decision_date) {//kondisi 
+//====================== LEBIH 6 BULAN ===================== 
+
+                print_r($decision_date."<br>");
+                print_r("LEBIH DARI 6 BULAN");
+
+$cek2 = $this->db->query("UPDATE SystemCardVendor SET Status_Kartu='ADA KARTU DI CCOS LEBIH DARI 6 BULAN' WHERE No_Identitas='$ktp' AND BatchID='$BatchID' AND ProcessMonth='$ProcessMonth' AND ProcessYear='$ProcessYear'");
+print_r("<br>"."status update".$cek2."<br>");
+
+
+//====================== LEBIH 6 BULAN ===================== 
+            }else{
+//====================== KURANG 6 BULAN ===================== 
+
+                print_r($decision_date."<br>");
+                print_r("KURANG DARI 6 BULAN");
+
+$cek3 = $this->db->query("UPDATE SystemCardVendor SET Status_Kartu='ADA KARTU DI CCOS KURANG DARI 6 BULAN' WHERE No_Identitas='$ktp' AND BatchID='$BatchID' AND ProcessMonth='$ProcessMonth' AND ProcessYear='$ProcessYear'");
+print_r("<br>"."status update".$cek3."<br>");
+
+//====================== KURANG 6 BULAN ===================== 
+
+            } //kondisi end if
+
+
+//======================ADA DI CCOS=====================             
+}
+
+// if ($cek1==1 || $cek2==1 || $cek3==1 ) {
+    # code...
+// echo "<script>
+// window.close();
+// </script>";
+
+// }
+
+}
+
+}
+//=====YANG ADA DI SystemCardVendor TIDAK ADA SI SystemCCOS==
+/*
+SELECT columns
+FROM TableA
+LEFT OUTER JOIN TableB
+ON A.columnName = B.columnName
+WHERE B.columnName IS NULL
+*/    
+// $cek1 = $this->db->query("
+// SELECT * FROM SystemCardVendor a 
+// LEFT OUTER JOIN SystemCCOS b ON a.No_Identitas=b.No_Identitas
+// WHERE b.No_Identitas IS NULL 
+// AND a.ProcessMonth='$ProcessMonth' AND a.ProcessYear='$Processyear' 
+// AND b.ProcessMonth='$ProcessMonth' AND b.ProcessYear='$Processyear' 
+//     ")->result();
+// //-->UPDATE Stastus_kartu='TIDAK ADA KARTU DI CCOS' di SystemCardVendor 
+// print_r($cek1);
+
+
+
+//============YANG IRISAN SystemCardVendor Dan SystemCCOS=====
+/*
+SELECT columns
+FROM TableA
+INNER JOIN TableB
+ON A.columnName = B.columnName;
+*/
+//==================ada kondisi======
+
+// if (condition) {
+
+// //-->UPDATE Stastus_kartu='ADA KARTU > 6 bulan' di SystemCardVendor
+// }else{
+
+
+
+// //-->UPDATE Stastus_kartu='ADA KARTU <6 bulan' di SystemCardVendor
+// }
+
+
+
+
+
+
+//============
 
 /* End of file System_upload.php */
 /* Location: ./application/controllers/System_upload.php */

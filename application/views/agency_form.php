@@ -8,8 +8,8 @@
                       <div class='box box-primary'>
 
 
-<form id="form-data1" action="<?php echo site_url('agency/add_save')?>" method="post" enctype="multipart/form-data" autocomplate="onload"> 
 
+<form id="form-data1" action="<?php echo site_url('agency/create_action')?>" method="post" enctype="multipart/form-data" autocomplate="onload"> 
 
 
 
@@ -24,17 +24,17 @@
 
         <div class="form-group col-md-2">
           <label>Nama Agency</label>
-          <input type="text" class="form-control" name="nama_agency" id="nama_agency" placeholder="Nama Agency">
+          <input type="text" class="form-control" name="AgencyName" id="AgencyName" placeholder="AgencyName" required>
         </div>
 
         <div class="form-group col-md-2">
           <label>No Telpon</label>
-          <input type="text" class="form-control" name="no_telpon" id="no_telpon" placeholder="No Telpon">
+          <input type="text" class="form-control" name="PhoneNumber" id="PhoneNumber" placeholder="PhoneNumber" required>
         </div>
 
         <div class="form-group col-md-2">
           <label>Email</label>
-          <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+          <input type="email" class="form-control" name="EmailAddress" id="EmailAddress" placeholder="EmailAddress" required>
         </div>
 
         <div class="form-group col-md-2">
@@ -53,7 +53,7 @@
 
         <div class="form-group col-md-4">
           <label>Kode Pos</label>
-          <input type="text" class="form-control" name="kode_pos" id="kode_pos" placeholder="Kode Pos">
+          <input type="text" class="form-control" name="PostalCode" id="PostalCode" placeholder="Kode Pos">
         </div>
 
 <!--
@@ -89,7 +89,7 @@ Update
       <div class="form-row">
         <div class="form-group col-md-4">
           <label>Nama Pengurus</label>
-          <input type="text" class="form-control" name="nama_pengurus" id="nama_pengurus" placeholder="Nama Pengurus">
+          <input type="text" class="form-control" name="nama_pengurus" id="nama_pengurus" placeholder="Nama Pengurus" required>
         </div>
         <div class="form-group col-md-4">
           <label>Jabatan</label>
@@ -125,7 +125,7 @@ Update
         </div>
         <div class="form-group col-md-6">
           <label>No Identitas</label>
-          <input type="text" class="form-control" name="no_identitas" id="no_identitas" placeholder="No Identitas">
+          <input type="text" class="form-control" name="no_identitas" id="no_identitas" placeholder="No Identitas" required>
         </div>
 
       </div>

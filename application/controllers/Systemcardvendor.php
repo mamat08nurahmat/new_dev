@@ -415,6 +415,104 @@ class Systemcardvendor extends CI_Controller
         $this->load->view('systemcardvendor_doc',$data);
     }
 
+    //dev excel
+
+    public function excel_cardvendor($BatchID)
+    {
+        $this->load->helper('exportexcel');
+        $namaFile = "systemcardvendor.xls";
+        $judul = "systemcardvendor";
+        $tablehead = 0;
+        $tablebody = 1;
+        $nourut = 1;
+        //penulisan header
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header("Content-Disposition: attachment;filename=" . $namaFile . "");
+        header("Content-Transfer-Encoding: binary ");
+
+        xlsBOF();
+
+        $kolomhead = 0;
+        xlsWriteLabel($tablehead, $kolomhead++, "No");
+	xlsWriteLabel($tablehead, $kolomhead++, "BatchID");
+	xlsWriteLabel($tablehead, $kolomhead++, "Tanggal Survey");
+	xlsWriteLabel($tablehead, $kolomhead++, "Surveyor");
+	xlsWriteLabel($tablehead, $kolomhead++, "No Aplikasi");
+	xlsWriteLabel($tablehead, $kolomhead++, "Product");
+	xlsWriteLabel($tablehead, $kolomhead++, "Source Code");
+	xlsWriteLabel($tablehead, $kolomhead++, "Channel Aplikasi");
+	xlsWriteLabel($tablehead, $kolomhead++, "Coverage Area");
+	xlsWriteLabel($tablehead, $kolomhead++, "Sales Code");
+	xlsWriteLabel($tablehead, $kolomhead++, "Nama Aplikan");
+	xlsWriteLabel($tablehead, $kolomhead++, "No Identitas");
+	xlsWriteLabel($tablehead, $kolomhead++, "DOB");
+	xlsWriteLabel($tablehead, $kolomhead++, "Jenis Kelamin");
+	xlsWriteLabel($tablehead, $kolomhead++, "No HP");
+	xlsWriteLabel($tablehead, $kolomhead++, "Jenis Perusahaan");
+	xlsWriteLabel($tablehead, $kolomhead++, "Nama Perusahaan");
+	xlsWriteLabel($tablehead, $kolomhead++, "Jabatan");
+	xlsWriteLabel($tablehead, $kolomhead++, "Penghasilan");
+	xlsWriteLabel($tablehead, $kolomhead++, "Lama Bekerja");
+	xlsWriteLabel($tablehead, $kolomhead++, "Status Karyawan");
+	xlsWriteLabel($tablehead, $kolomhead++, "Alamat Kantor");
+	xlsWriteLabel($tablehead, $kolomhead++, "Kecamatan");
+	xlsWriteLabel($tablehead, $kolomhead++, "Kota");
+	xlsWriteLabel($tablehead, $kolomhead++, "No Telp Kantor");
+	xlsWriteLabel($tablehead, $kolomhead++, "ProcessMonth");
+	xlsWriteLabel($tablehead, $kolomhead++, "ProcessYear");
+	xlsWriteLabel($tablehead, $kolomhead++, "Status Kartu");
+// $BatchID
+	// foreach ($this->Systemcardvendor_model->get_all() as $data) {
+
+$data_cardvendor_by_batch=$this->db->query("SELECT * FROM SystemCardVendor WHERE BatchID='$BatchID'")->result();
+
+	foreach ($data_cardvendor_by_batch as $data) {
+            $kolombody = 0;
+
+            //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
+            xlsWriteNumber($tablebody, $kolombody++, $nourut);
+	    xlsWriteNumber($tablebody, $kolombody++, $data->BatchID);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Tanggal_Survey);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Surveyor);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->No_Aplikasi);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Product);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Source_Code);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Channel_Aplikasi);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Coverage_Area);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Sales_Code);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Nama_Aplikan);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->No_Identitas);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->DOB);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Jenis_Kelamin);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->No_HP);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Jenis_Perusahaan);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Nama_Perusahaan);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Jabatan);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Penghasilan);
+	    xlsWriteNumber($tablebody, $kolombody++, $data->Lama_Bekerja);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Status_Karyawan);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Alamat_Kantor);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Kecamatan);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Kota);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->No_Telp_Kantor);
+	    xlsWriteNumber($tablebody, $kolombody++, $data->ProcessMonth);
+	    xlsWriteNumber($tablebody, $kolombody++, $data->ProcessYear);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->Status_Kartu);
+
+	    $tablebody++;
+            $nourut++;
+        }
+
+        xlsEOF();
+        exit();
+    }
+
+
 }
 
 /* End of file Systemcardvendor.php */

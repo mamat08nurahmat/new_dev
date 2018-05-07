@@ -85,12 +85,19 @@
 
 
 			if ($system_upload->StatusUpload=='Approved' && $system_upload->ApplicationSource=='CardVendor'  ) {
-				# code...
-			echo anchor(site_url('system_upload/generate/'.$system_upload->ProcessMonth.'/'.$system_upload->ProcessYear),'Generate <i class="fa fa-pencil-gear-o"></i>',array('title'=>'Approve','class'=>'btn btn-danger btn-sm')); 
 
+			// 	# VERSI 1.
+			// echo anchor(site_url('system_upload/generate/'.$system_upload->ProcessMonth.'/'.$system_upload->ProcessYear),'Generate <i class="fa fa-pencil-gear-o"></i>',array('title'=>'Approve','class'=>'btn btn-danger btn-sm')); 
+
+
+// =====
+				# VERSI 2
+			echo anchor(site_url('system_upload/view_generate_by_batch/'.$system_upload->BatchID),'View Generate <i class="fa fa-pencil-gear-o"></i>',array('title'=>'Approve','class'=>'btn btn-danger btn-sm')); 
+
+// =====
 
 //dev next
-			echo anchor(site_url('system_upload/excel_card_vendor/'.$system_upload->BatchID),'<i class="fa fa-file-excel-o"></i>',array('title'=>'Approve','class'=>'btn btn-primary btn-sm')); 
+			// echo anchor(site_url('system_upload/excel_card_vendor/'.$system_upload->BatchID),'<i class="fa fa-file-excel-o"></i>',array('title'=>'Approve','class'=>'btn btn-primary btn-sm')); 
 
 
 			}
