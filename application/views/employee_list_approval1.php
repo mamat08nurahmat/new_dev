@@ -97,20 +97,15 @@
  -->
 		    <td style="text-align:center" width="140px">
 			<?php 
-			echo anchor(site_url('employee/read/'.$employee->EmployeeID),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-danger btn-sm')); 
+//===================================
+//VIEW APPROVAL /read 
+
+			echo anchor(site_url('employee/read_approval1/'.$employee->EmployeeID),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-danger btn-sm')); 
 			echo '  '; 
 
-//if status history selain approve
-if($employee->HiringStatus == 3 || $employee->HiringStatus == 4|| $employee->HiringStatus == 5   ){
-
-			echo anchor(site_url('employee/update_hiring/'.$employee->EmployeeID),'<i class="fa fa-pencil-square-o"></i>',array('title'=>'edit','class'=>'btn btn-danger btn-sm')); 
-			echo '  '; 
-
-}
-
-			// echo anchor(site_url('employee/delete/'.$employee->EmployeeID),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
-
-
+			// echo anchor(site_url('employee/update/'.$employee->EmployeeID),'<i class="fa fa-pencil-square-o"></i>',array('title'=>'edit','class'=>'btn btn-danger btn-sm')); 
+			// echo '  '; 
+			// echo anchor(site_url('employee/delete/'.$employee->EmployeeID),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
 			?>
 		    </td>
 	        </tr>

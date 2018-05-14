@@ -82,7 +82,7 @@
 			}
 
 
-
+//VIEW GENERATE CARDVENDOR
 
 			if ($system_upload->StatusUpload=='Approved' && $system_upload->ApplicationSource=='CardVendor'  ) {
 
@@ -92,22 +92,32 @@
 
 // =====
 				# VERSI 2
-			echo anchor(site_url('system_upload/view_generate_by_batch/'.$system_upload->BatchID),'View Generate <i class="fa fa-pencil-gear-o"></i>',array('title'=>'Approve','class'=>'btn btn-danger btn-sm')); 
+			echo anchor(site_url('system_upload/view_generate_by_batch/'.$system_upload->BatchID),'View Generate <i class="fa fa-pencil-gear-o"></i>',array('title'=>'View','class'=>'btn btn-danger btn-sm')); 
 
 // =====
-
-//dev next
-			// echo anchor(site_url('system_upload/excel_card_vendor/'.$system_upload->BatchID),'<i class="fa fa-file-excel-o"></i>',array('title'=>'Approve','class'=>'btn btn-primary btn-sm')); 
-
-
 			}
 
 
 
-			// if ($system_upload->RowDataCount==$system_upload->RowDataSucceed && $system_upload->StatusUpload=='Approved'  ) {
-			// 	# code...
-			// echo anchor(site_url('system_upload/generate/'.$system_upload->ProcessMonth.'/'.$system_upload->ProcessYear),'Clen Upload <i class="fa fa-pencil-gear-o"></i>',array('title'=>'Approve','class'=>'btn btn-danger btn-sm')); 
+//VIEW SYSTEMCCOS BY BATCH
+
+			if ($system_upload->StatusUpload=='Approved' && $system_upload->ApplicationSource=='CCOS'  ) {
+
+			echo anchor(site_url('systemccos/by_batch/'.$system_upload->BatchID),'View CCOS <i class="fa fa-pencil-gear-o"></i>',array('title'=>'View CCOS','class'=>'btn btn-danger btn-sm')); 
+
+			}
+
+
+//next dev
+//VIEW SYSTEMCCOS BY BATCH
+
+			// if ($system_upload->StatusUpload=='Approved' && $system_upload->ApplicationSource=='CardLink'  ) {
+
+			// echo anchor(site_url('systemcardlink/by_batch/'.$system_upload->BatchID),'View CardLink <i class="fa fa-pencil-gear-o"></i>',array('title'=>'View CardLink','class'=>'btn btn-danger btn-sm')); 
+
 			// }
+
+
 
 			echo '  '; 
 

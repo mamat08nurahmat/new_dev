@@ -541,7 +541,17 @@ $db_system = 'System'.$ApplicationSource;
 //return jumlah data masuk
 $RowDataSucceed =   $this->db->insert_batch($db_system, $data); 
 
+//jika $RowDataSucceed == $RowDataCount
+/*
 
+if(){
+    
+}else{
+    
+}
+
+
+*/
 //================UPDATE TABEL System_Upload===================
 
 $row = $this->System_upload_model->get_by_id($BatchID);

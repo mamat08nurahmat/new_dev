@@ -1,3 +1,4 @@
+<!--HEAD-->
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,30 +29,6 @@
             <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-<style>
-/*  .box
-  {
-   width:800px;
-   margin:0 auto;
-  }
-  .active_tab1
-  {
-   background-color:#fff;
-   color:#333;
-   font-weight: 600;
-  }
-  .inactive_tab1
-  {
-   background-color: #f5f5f5;
-   color: #333;
-   cursor: not-allowed;
-  }
-  .has-error
-  {
-   border-color:#cc0000;
-   background-color:#ffff99;
-  }
-*/  </style>        
 
 <!--tambahkan custom css disini-->
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
@@ -168,9 +145,13 @@ button:hover {
   background-color: #4CAF50;
 }
 </style>
+<!-- custom -->
 
 
-    </head>
+	</head>		
+<!--/HEAD-->
+
+<!---UP---->
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
 
@@ -319,15 +300,313 @@ button:hover {
                         <li class="active">Data tables</li>
                     </ol>
                 </section>
+		
+<!---/UP--->
+<!-- Main content -->
+        <section class='content'>
+          <div class='row'>
+            <div class='col-xs-12'>
+              <div class='box'>
+                <div class='box-header'>
+                
+                  <h3 class='box-title'>EMPLOYEE</h3>
+                      <div class='box box-primary'>
+					  
+<!--FORM-->
+<!--  <h1>Registrasi Form:</h1> -->
+<form id="regForm" action="<?=site_url('employee/add_save_dev')?>" method="POST" enctype="multipart/form-data">
 
 
-                <?php
-                echo $contents;
-                ?>
+  <!-- One "tab" for each step in the form: -->
 
 
 
-            </div><!-- /.content-wrapper -->
+<!-- PERSONAL DATA -->
+  <div class="tab"><h1> Personal Data:</h1>
+    <p><input name="nama_lengkap" id="nama_lengkap" value="ABCD" placeholder="Nama Lengkap..." oninput="this.className = ''" ></p>
+    <p><input value="ABCD" name="nama_panggil" id="nama_panggil" placeholder="Nama Panggil..." oninput="this.className = ''" ></p>
+    <p><input name="no_ktp" id="no_ktp" value="<?=$no_ktp?>" readonly></p>
+    <p><input value="1234567" name="no_npwp" id="no_npwp" placeholder="No NPWP..." oninput="this.className = ''" ></p>    
+    <p><input value="jakarta" name="tempat_lahir" id="tempat_lahir" placeholder="Tempat Lahir..." oninput="this.className = ''" ></p>
+    <p>Tanggal Lahir</p>
+    <p><input type='text' value="1234567" name="tanggal_lahir" id="tanggal_lahir"  oninput="this.className = ''" ></p>
+    <p><input  value="123" type="number" name="tinggi_badan" id="tinggi_badan" placeholder="Tinggi badan..." oninput="this.className = ''" ></p>
+    <p><input type="number" name="berat_badan" id="berat_badan" value="123" placeholder="Berat Badan..." oninput="this.className = ''" ></p>    
+
+    <p>
+    <select name="jenis_kelamin" id="jenis_kelamin" >
+    <option value="M">LAKI-LAKI</option>
+    <option value="">-JENIS KELAMIN-</option>
+    <option value="F">PEREMPUAN</option>
+    </select>
+    </p>  
+
+ 
+    <p>
+    <select name="status" id="status" oninput="this.className = ''" >
+    <option value="lajang">LAJANG</option>
+    <option value="">- STATUS-</option>
+    <option value="menikah">MENIKAH</option>
+    <option value="bercerai">BERCERAI</option>
+    </select>
+    </p>  
+    
+    <p>
+    <select name="status" id="status" onchange="this.className = ''" >
+    <option value="islam">ISLAM</option>
+    <option value="">-PILIH AGAMA-</option>
+    <option value="kristen">KRISTEN</option>
+    <option value="budha">BUDHA</option>
+    <option value="hindu">HINDU</option>
+    <option value="khongucu">KHONGUCU</option>
+    </select>
+    </p>  
+
+    <p><input  value="ABCD" name="ibu_kandung" id="ibu_kandung" placeholder="Nama Ibu Kandung..." oninput="this.className = ''" ></p>  
+    
+    <p><input value="ABCD@gmail.com" type="email" name="email" id="email" placeholder="Email..." oninput="this.className = ''" ></p>  
+    <p><input name="no_telpon" id="no_telpon" value="12345" placeholder="No No Telpon..." oninput="this.className = ''" ></p>  
+    <p><input name="no_hp1" id="no_hp1" value="11111" placeholder="No Handphone 1..." oninput="this.className = ''" ></p>  
+    <p><input name="no_hp2" id="no_hp2" value="55555" placeholder="No Handphone 2..." oninput="this.className = ''" ></p>  
+
+
+  </div>
+<!-- PERSONAL DATA -->
+
+
+<!-- UPLOAD -->
+  <div class="tab"><h1>UPLOAD:</h1>
+    <div class="control-group" align = "center" >
+    <img src="<?php echo base_url('uploads/orang-1.png') ?>" id="uploadPreview" style="width: 150px; height:160px;border:1px solid;" />
+  </br>
+  <p>PHOTO</p>
+        <input id="uploadImage" type="file" name="photo"  onchange="PreviewImage();" align="center"  />
+  </br>
+    <p>SCAN KTP</p>
+        <input type="file" name="scan_ktp" id="scan_ktp">
+  </br>
+    <p>FILE KOMITMEN DO AND DON'T</p>
+        <input type="file" name="file_komit" id="file_komit">
+
+    </div>
+      
+  </div>
+<!-- UPLOAD -->
+
+<!-- ALAMAT TINGGAL -->
+  <div class="tab"><h1>Alamat Tinggal:</h1>
+    <p><textarea name="alamat_tinggal_1" id="alamat_tinggal_1" rows="6">xxxxxxxxxxxxx</textarea></p>
+    <p><input value="17413" placeholder="Kode POS..." oninput="this.className = ''" name="kode_pos_1" id="kode_pos_1" ></p>
+
+<div id="result_kode_pos_1"></div>
+
+    
+<!-- 
+    <p><input placeholder="Provinsi..." oninput="this.className = ''" name="provinsi_1" id="provinsi_1" ></p>
+    <p><input placeholder="Kabupaten/Kota..." oninput="this.className = ''" name="kabupaten_1" id="kabupaten_1" ></p>
+    <p><input placeholder="Kecamatan..." oninput="this.className = ''" name="kecamatan_1" id="kecamatan_1" ></p>
+    <p><input placeholder="Kelurahan/Desa..." oninput="this.className = ''" name="kelurahan_1" id="kelurahan_1" ></p>
+ -->
+
+    <p><input  value="20" placeholder="Lama Tinggal(Tahun)..." oninput="this.className = ''" name="lama_tinggal_1" id="lama_tinggal_1" ></p>    
+    <p>
+    <select name="status_tinggal" id="status" oninput="this.className = ''" >
+    <option value="orang_tua">ORANG TUA</option>
+    <option value="">-PILIH TINGGAL-</option>
+    <option value="sendiri">SENDIRI</option>
+    <option value="sewa">SEWA</option>
+    </select>
+    </p>
+    
+    <p>
+    <select name="kendaraan" id="kendaraan" oninput="this.className = ''" >
+    <option value="mobil">MOBIL</option>
+    <option value="">-PILIH KENDARAAN-</option>
+    <option value="motor">MOTOR</option>
+    <option value="kendaraan_umum">KENDARAAN UMUM</option>
+    </select>
+    </p>
+    
+  </div>
+<!-- ALAMAT TINGGAL -->
+
+
+<!-- ALAMAT KTP -->
+  <div class="tab"><h1>Alamat KTP:</h1>
+
+<!--  -->
+<p> 
+Alamat Tinggal sesuai KTP ? : 
+<input type="checkbox" id="myCheck"  onclick="myFunction()">
+</p>
+
+<!-- <p id="text" style="display:none">Checkbox is CHECKED!</p> -->
+
+<!--  -->
+    <p><textarea name="alamat_tinggal_2" id="alamat_tinggal_2" rows="6"></textarea></p>
+    <p><input placeholder="Kode POS..." oninput="this.className = ''" name="kode_pos_2" id="kode_pos_2" ></p>
+
+<div id="result_kode_pos_2"></div>
+    <!-- 
+    <p><input placeholder="Provinsi..." oninput="this.className = ''" name="provinsi_2" id="provinsi_2" ></p>
+    <p><input placeholder="Kabupaten/Kota..." oninput="this.className = ''" name="kabupaten_2" id="kabupaten_2" ></p>
+    <p><input placeholder="Kecamatan..." oninput="this.className = ''" name="kecamatan_2" id="kecamatan_2" ></p>
+    <p><input placeholder="Kelurahan/Desa..." oninput="this.className = ''" name="kelurahan_2" id="kelurahan_2" ></p>
+    --> 
+    <p><input placeholder="Lama Tinggal(Tahun)..." oninput="this.className = ''" name="lama_tinggal_2" id="lama_tinggal_2" ></p>    
+   
+  </div>
+
+<!-- ALAMAT KTP -->
+
+
+
+<!-- PENGALAMAN KERJA -->
+
+  <div class="tab"><h1>Pengalam Kerja:</h1>
+
+
+<table class="table table-striped" id="dynamic_field_2">
+    <thead>
+      <tr>
+        <th>PERUSAHAAN</th>
+        <th>POSISI/JABATAN</th>
+        <th>TANGGAL MASUK</th>
+        <th>TANGGAL RESIGN</th>
+        <th>KETERANGAN</th>
+        <th>ACT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input value="ABCD" type="text" class="form-control name_list" name="perusahaan[]"/></td>
+        <td><input value="ABCD" type="text" class="form-control name_list" name="posisi[]"/></td>
+        <td><input value="1234567" type="text" class="form-control name_list" name="tanggal_masuk[]"/></td>
+        <td><input type="text" value="1234567" class="form-control name_list" name="tanggal_resign[]"/></td>
+        <td><input type="text" value="123124" class="form-control name_list" name="keterangan[]"/></td>
+        
+        <td><button type="button" name="add_2" id="add_2" class="btn btn-success">+</button></td>
+      </tr>
+      
+    </tbody>
+  </table>    
+
+  </div>
+<!-- PENGALAMAN KERJA -->
+  
+
+
+<!-- PENDIDIKAN FORMAL -->
+
+  <div class="tab"><h1>Pendidikan Formal:</h1>
+
+ <p>IJAZAH TERAKHIR</p>
+        <input type="file" name="ijazah" id="ijazah">
+<br>  
+<table class="table table-striped" id="dynamic_field">
+    <thead>
+      <tr>
+        <th>JENJANG PENDIDIKAN</th>
+        <th>NAMA SEKOLAH</th>
+        <th>KOTA</th>
+        <th>PROGRAM STUDY</th>
+        <th>NEM/IPK</th>
+        <th>TAHUN IJAZAH</th><th>ACT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input value="ABCD" type="text" class="form-control name_list" name="jenjang_pendidikan[]"/></td>
+        <td><input value="ABCD" type="text" class="form-control name_list" name="nama_sekolah[]"/></td>
+        <td><input value="ABCD" type="text" class="form-control name_list" name="kota[]"/></td>
+        <td><input value="ABCD" type="text" class="form-control name_list" name="program_studi[]"/></td>
+        <td><input value="ABCD" type="text" class="form-control name_list" name="ipk[]"/></td>
+        <td><input value="ABCD" type="text" class="form-control name_list" name="tahun_ijazah[]"/></td> 
+        
+        <td><button type="button" name="add" id="add" class="btn btn-success">+</button></td>
+      </tr>
+      
+    </tbody>
+  </table>  
+
+  </div>
+<!-- PENDIDIKAN FORMAL -->
+  
+
+<!-- EMERGENCY CONTACT -->
+  <div class="tab"><h1>Emergency Contact:</h1>
+    <p><input value="ABCD" placeholder="Nama Emergency" oninput="this.className = ''" name="nama_emergency" id="nama_emergency"></p>
+    <p><label>Alamat Emergency</label></p>
+    <p>
+    <textarea name="alamat_emergency" id="alamat_emergency" row="6">xxxxxxxxxxxx</textarea></p>
+    <p>
+    <select name="hubungan_emergency" id="hubungan_emergency" oninput="this.className = ''" >
+    <option value="adik">ADIK</option>
+
+    <option value="">-PILIH HUBUNGAN-</option>
+    <option value="kakak">KAKAK</option>
+    <option value="ibu">IBU</option>
+    <option value="ayah">AYAH</option>
+    <option value="bibi">BIBI</option>
+    <option value="sepupu">SEPUPU</option>
+    <option value="kakek">KAKEK</option>
+    <option value="nenek">NENEK</option>
+    </select>
+    </p>
+    <p><input value="090909" placeholder="No Handphone Emergency" oninput="this.className = ''" name="no_hp_emergency" id="no_hp_emergency">
+    </p>
+<div id="warning" style="display: none;>
+  
+    <p"><label style="color: red;">NOMER SUDAH ADA</label></p>
+</div>
+
+  </div>
+<!-- EMERGENCY CONTACT -->
+
+
+  
+
+  
+
+
+
+<!--     <div class="tab"><h1>Subbmit:</h1>
+  <p></p>
+    <p><input type="submit" value="submit" name="submit" ></p>
+  </div>
+ -->  
+  
+  <div style="overflow:auto;">
+    <div style="float:right;">
+      <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+      <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+    </div>
+  </div>
+  <!-- Circles which indicates the steps of the form: -->
+  <div style="text-align:center;margin-top:40px;">
+    <span class="step"></span>
+    <span class="step"></span>
+     
+    <span class="step"></span>  
+    <span class="step"></span>
+    <span class="step"></span>
+    <span class="step"></span>
+    <span class="step"></span>
+  </div>
+</form>
+
+<!--/FORM-->
+	
+	
+	
+    </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </section><!-- /.content -->
+		
+<!---DOWN---->	
+ </div><!-- /.content-wrapper -->
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 2.3.0
@@ -356,300 +635,8 @@ button:hover {
         <!-- AdminLTE for demo purposes -->
         <script src="<?php echo base_url() ?>template/dist/js/demo.js"></script>
         <!-- page script -->
-        <script>
-            $(function () {
-                $("#example1").DataTable();
-                $('#example2').DataTable({
-                    "paging": true,
-                    "lengthChange": false,
-                    "searching": false,
-                    "ordering": true,
-                    "info": true,
-                    "autoWidth": false
-                });
-            });
-        </script>
 
-        <!-- Emlployee.js -->
-        <script src="<?php echo base_url() ?>template/dist/js/employee.js"></script>  
-
-        <!-- Agency.js -->
-        <!-- <script type="text/javascript" src="<?php echo base_url() ?>template/dist/js/agency.js"></script>   -->
-<script type="text/javascript">
-    
-
-    
-//   $(document).ready(function(){
-// var url="<?php echo base_url() ?>";
-
-
-// console.log(url);
-
-// // console.log('ready');
-// // $('#btn').click(function(){
-// $("#PostalCode").keyup(function(e){
-//  // if (e.keyCode == 13) {
-//  // console.log($('#PostalCode').val());
-// // }
-//           $.ajax({
-//       url:'<?=base_url()?>index.php/Agency/get_ajax_PostalCode',
-//             method : "GET",
-//             data   : { cari: $('#PostalCode').val() }
-//              // data   : 'data123.json'
-//           }).done(function(hasil){
-//             // console.log(hasil);
-//             $('#result').html(hasil);
-//           });
-
-
-// });
-
-
-//   });
-
-    
-
-
-
-
-// let kode_pos = document.getElementById("kode_pos");
-
-// //let kode_pos_value = document.getElementById("kode_pos").val();
-
-// // kode_pos.addEventListener("keyup", function(){
-
-// // console.log(kode_pos_value);
-
-// // });
-
-// kode_pos.keyup(function(){
-
-// console.log('xxxxxxxxx');
-
-// });
-// $("#kode_pos").keyup(function(){
-//     // $("input").css("background-color", "pink");
-//     console.log('keyuppppppp');
-// });
-
-  $(document).ready(function(){
-
-
-// console.log('ready');
-// $('#btn').click(function(){
-$("#kode_pos").keyup(function(){
-
- // console.log('keyup');
-
-          $.ajax({
-      url:'<?=base_url()?>index.php/Agency/get_ajax',
-            method : "GET",
-            data   : { cari: $('#kode_pos').val() }
-             // data   : 'data123.json'
-          }).done(function(hasil){
-            $('#result').html(hasil);
-          });
-
-
-});
-
-
-  });
-
-</script>
-
-
-
-<!-- AGENCYSALESCENTER -->
-<script type="text/javascript">
-
-function generate_kode(){
-
-//console.log('generate klik');
-
-//=====================================
-//============
-//$.('#code').value('123');    
- var area_id = $('#AreaID').val();  
-// //console.log(area_id);
- 
-                    // AJAX request
-                    $.ajax({
-                       url:'<?=base_url()?>index.php/agencysalescenter/getSalesCenterCode',
-                          // url:'<?=base_url()?>index.php/sales_center/getKota1',
-                        method: 'post',
-                        data: {area_id:area_id},
-                        dataType: 'json',
-                        success: function(response){
-
- console.log(response);
-$('#SalesCenterCode').val(response);
-//                             $.each(response,function(index,data){
-// console.log(index);
-// console.log('xxxxxxxxxxxxx');
-// console.log(data);
-                
-//                             });     
-/*
-$('#kode_new').val(area);
-                            // Remove options
-                            $('#kota').find('option').not(':first').remove(); //select ke 3
-              //              $('#area_grup').find('option').not(':first').remove(); //select ke 2
-
-                            // Add options
-                            $.each(response,function(index,data){
-                                $('#kota').append('<option value="'+data['CityID']+'">'+data['CityName']+'</option>');
-                
-                            });
-                        
-*/
-                        }
-                    });
-
-
-
-//============  
-
-//=====================================      
-
-
-}
-
-
-    
-$(document).ready(function(){
-
-
-
-/*
-$('#area').change(function(){
-
-//alert('changeeee');
-let area_id = $(this).val();
-
-
-$.ajax({
-
-url:'<?=site_url()?>/sales_center/getKota',
-method:'post',
-data:{area_id:area_id},
-dataType:'json',
-success: function(response){
-
-//console.log(response);
-
-
-//ADD OPTION
-$.each(response,function(index,data){
-
-$('#kota').append('<option value="'+data['CityID']+'" >'+data['CityName']+'<option>');
-
-});
-
-}
-
-});
-
-});
-*/
-
-
-///==kode pos
-// $('#btn').click(function(){
-$('#PostalCode').keyup(function(){
-// console.log('generate klik');
-          $.ajax({
-      url:'<?=base_url()?>index.php/agency/get_ajax',
-            method : "GET",
-            data   : { cari: $('#PostalCode').val() }
-             // data   : 'data123.json'
-          }).done(function(hasil){
-            $('#result').html(hasil);
-          });
-
-
-});
-
-///----------------------------------------
-                // Area change Select
-                $('#AreaID').change(function(){
-
-                    var area = $(this).val();
-//console.log(area);                       
-                    // AJAX request
-                    $.ajax({
-                       url:'<?=base_url()?>index.php/agencysalescenter/getCity',
-                          // url:'<?=base_url()?>index.php/sales_center/getKota1',
-                        method: 'post',
-                        data: {area:area},
-                        dataType: 'json',
-                        success: function(response){
-/*
-console.log(response);          
-$('#kode_new').val(area);
-*/
-                            // Remove options
-                            $('#CityID').find('option').not(':first').remove(); //select ke 3
-              //              $('#area_grup').find('option').not(':first').remove(); //select ke 2
-
-                            // Add options
-                            $.each(response,function(index,data){
-                                $('#CityID').append('<option value="'+data['CityID']+'">'+data['CityName']+'</option>');
-
-generate_kode();
-                
-                            });
-                        
-                        }
-                    });
-
-    
-        }); //onchange
-                  
-          
-//--------------
-/*
-
-//===on click generate
-$("#generate").click(function(){
-
-//console.log('generate klik');
-
-//=====================================
-//============
-//$.('#code').value('123');    
- var area_id = $('#area').val();  
-// //console.log(area_id);
- 
-                    // AJAX request
-                    $.ajax({
-                       url:'<?=base_url()?>index.php/sales_center/getSalesCenterCode',
-                          // url:'<?=base_url()?>index.php/sales_center/getKota1',
-                        method: 'post',
-                        data: {area_id:area_id},
-                        dataType: 'json',
-                        success: function(response){
-
- console.log(response);
-$('#kode').val(response);
-
-                        }
-                    });
-
-
-
-//============  
-
-//=====================================      
-
-
-});
-*/
-//=======================
-});//ready
-
-</script>
-
+<!-- SCRIPT -->
 <!--tambahkan custom js disini-->
 <script>
 var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -900,7 +887,6 @@ function get_kode_pos_1(){
             data   : { cari: $('#kode_pos_1').val() }
              // data   : 'data123.json'
           }).done(function(hasil){
-            console.log(hasil);
             $('#result_kode_pos_1').html(hasil);
           });
 
@@ -1036,7 +1022,25 @@ console.log('no sama');
 
 </script>
 <!--  -->
+<!-- SCRIPT -->
+        <script>
+            $(function () {
+                $("#example1").DataTable();
+                $('#example2').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false
+                });
+            });
+        </script>
 
 
     </body>
 </html>
+	
+<!---/DOWN---->		
+		
+		

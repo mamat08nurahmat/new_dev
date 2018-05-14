@@ -22,21 +22,122 @@ class Employee_model extends CI_Model
         // return $this->db->get($this->table)->result();
 
 $query=$this->db->query("
-SELECT TOP 1000 a.*,b.AgencyName,c.SalesCenterName  FROM Employee a
+SELECT  a.*,b.AgencyName,c.SalesCenterName  FROM Employee a
 LEFT JOIN Agency b ON a.AgencyID=b.AgencyID
 LEFT JOIN AgencySalesCenter c ON a.SalesCenterID=c.SalesCenterID
+-- LEFT JOIN hiring_history d ON a.EmployeeID=d.EmployeeID
 
 WHERE IsDiscontinued=0 ");        
 return $query->result();
 
     }
 
-    // get data by id
+// HiringLevel
+// 1----->RSM    
+// 2----->SGV WILAYAH    
+// 3----->SGV PUSAT
+// 999----->Approve 
+
+// HiringStatus
+// 1---->Approve
+// 2---->Waiting Approve
+// 3---->Hold
+// 4---->Cancel
+// 5---->Reject
+
+
+
+    // get all ApprovalLevel='1'
+//RSM    
+    function get_all_approval1()
+    {
+        // $this->db->order_by($this->id, $this->order);
+        // return $this->db->get($this->table)->result();
+
+$query=$this->db->query("
+SELECT  a.*,b.AgencyName,c.SalesCenterName  FROM Employee a
+LEFT JOIN Agency b ON a.AgencyID=b.AgencyID
+LEFT JOIN AgencySalesCenter c ON a.SalesCenterID=c.SalesCenterID
+
+WHERE IsDiscontinued=0 
+
+AND HiringApprovalID='0' 
+AND HiringLevel='1'
+AND ApprovalID='0'
+AND ApprovalLevel='2'
+AND ApprovalStatus='0'
+
+");        
+return $query->result();
+
+    }
+
+
+    // get all ApprovalLevel='1'
+//SGV WILAYAH    
+    function get_all_approval2()
+    {
+        // $this->db->order_by($this->id, $this->order);
+        // return $this->db->get($this->table)->result();
+
+$query=$this->db->query("
+SELECT  a.*,b.AgencyName,c.SalesCenterName  FROM Employee a
+LEFT JOIN Agency b ON a.AgencyID=b.AgencyID
+LEFT JOIN AgencySalesCenter c ON a.SalesCenterID=c.SalesCenterID
+
+WHERE IsDiscontinued=0 
+
+-- AND HiringApprovalID='0' 
+AND HiringLevel='2'
+-- AND ApprovalID='0'
+-- AND ApprovalLevel='2'
+AND ApprovalStatus='0'
+
+");        
+return $query->result();
+
+    }
+
+
+   // get all ApprovalLevel='3'
+    //SGV PUSAT
+    function get_all_approval3()
+    {
+        // $this->db->order_by($this->id, $this->order);
+        // return $this->db->get($this->table)->result();
+
+$query=$this->db->query("
+SELECT  a.*,b.AgencyName,c.SalesCenterName  FROM Employee a
+LEFT JOIN Agency b ON a.AgencyID=b.AgencyID
+LEFT JOIN AgencySalesCenter c ON a.SalesCenterID=c.SalesCenterID
+
+WHERE IsDiscontinued=0 
+
+-- AND HiringApprovalID='0' 
+AND HiringLevel='3'
+-- AND ApprovalID='0'
+-- AND ApprovalLevel='2'
+AND ApprovalStatus='0'
+
+");        
+return $query->result();
+
+    }
+
+    // get data by id in employee
     function get_by_id($id)
     {
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
+
+    // get data by id in employee
+    function get_by_id_hiring_history($id)
+    {
+        $this->db->where($this->id, $id);
+        return $this->db->get("hiring_history")->result();
+    }
+
     
     // get total rows
     function total_rows($q = NULL) {
@@ -167,7 +268,15 @@ return $query->result();
     function update($id, $data)
     {
         $this->db->where($this->id, $id);
-        $this->db->update($this->table, $data);
+    return    $this->db->update($this->table, $data); //??
+    }
+
+
+
+    // update data
+    function insert_hiring_history($data)
+    {
+	return   $this->db->insert("hiring_history", $data);
     }
 
     // delete data
