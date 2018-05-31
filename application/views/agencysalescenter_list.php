@@ -15,28 +15,18 @@
             <thead>
                 <tr>
                     <th width="80px">No</th>
-<!--
 		    <th>AgencyID</th>
--->					
 		    <th>AreaID</th>
 		    <th>CityID</th>
-<!--
-			
 		    <th>AsuradurID</th>
 		    <th>SourceData</th>
 		    <th>SalesCenterCode</th>
--->					
 		    <th>SalesCenterName</th>
-<!--
-			
 		    <th>StreetAddress</th>
 		    <th>VillageAddress</th>
 		    <th>SubDistrictAddress</th>
 		    <th>CityAddress</th>
--->					
 		    <th>PostalCode</th>
-<!--
-			
 		    <th>PhoneNumber</th>
 		    <th>FaxNumber</th>
 		    <th>EmailAddress</th>
@@ -44,7 +34,6 @@
 		    <th>ActiveDate</th>
 		    <th>Enddate</th>
 		    <th>ReasonEnd</th>
--->					
 		    <th>Action</th>
                 </tr>
             </thead>
@@ -56,28 +45,18 @@
                 ?>
                 <tr>
 		    <td><?php echo ++$start ?></td>
-<!--			
 		    <td><?php echo $agencysalescenter->AgencyID ?></td>
--->					
 		    <td><?php echo $agencysalescenter->AreaID ?></td>
 		    <td><?php echo $agencysalescenter->CityID ?></td>
-<!--
 		    <td><?php echo $agencysalescenter->AsuradurID ?></td>
 		    <td><?php echo $agencysalescenter->SourceData ?></td>
 		    <td><?php echo $agencysalescenter->SalesCenterCode ?></td>
--->					
-			
 		    <td><?php echo $agencysalescenter->SalesCenterName ?></td>
-<!--
 		    <td><?php echo $agencysalescenter->StreetAddress ?></td>
 		    <td><?php echo $agencysalescenter->VillageAddress ?></td>
 		    <td><?php echo $agencysalescenter->SubDistrictAddress ?></td>
 		    <td><?php echo $agencysalescenter->CityAddress ?></td>
--->					
-			
 		    <td><?php echo $agencysalescenter->PostalCode ?></td>
-<!--
-			
 		    <td><?php echo $agencysalescenter->PhoneNumber ?></td>
 		    <td><?php echo $agencysalescenter->FaxNumber ?></td>
 		    <td><?php echo $agencysalescenter->EmailAddress ?></td>
@@ -85,7 +64,6 @@
 		    <td><?php echo $agencysalescenter->ActiveDate ?></td>
 		    <td><?php echo $agencysalescenter->Enddate ?></td>
 		    <td><?php echo $agencysalescenter->ReasonEnd ?></td>
--->					
 		    <td style="text-align:center" width="140px">
 			<?php 
 			echo anchor(site_url('agencysalescenter/read/'.$agencysalescenter->SalesCenterID),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-danger btn-sm')); 

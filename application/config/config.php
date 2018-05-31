@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost:81/new_dev/';
+$config['base_url'] = 'http://localhost:81/new_dev_racode/';
 //$config['base_url'] = 'http://slntools.com/crud_generator/';
 
 /*

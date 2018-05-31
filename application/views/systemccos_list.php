@@ -17,11 +17,8 @@
                     <th width="80px">No</th>
 		    <th>BatchID</th>
 		    <th>DecisionDate</th>
-<!--
 		    <th>SourceCode</th>
--->			
 		    <th>CustomerName</th>
-<!--
 		    <th>CustomerBirthDate</th>
 		    <th>ORG</th>
 		    <th>Logo</th>
@@ -31,7 +28,6 @@
 		    <th>ApplicationType</th>
 		    <th>ProcessMonth</th>
 		    <th>ProcessYear</th>
--->						
 		    <th>No Identitas</th>
 		    <th>Action</th>
                 </tr>
@@ -44,13 +40,10 @@
                 ?>
                 <tr>
 		    <td><?php echo ++$start ?></td>
-		    <td><?php echo $systemccos->BatchID ?></td>			
+		    <td><?php echo $systemccos->BatchID ?></td>
 		    <td><?php echo $systemccos->DecisionDate ?></td>
-<!--
 		    <td><?php echo $systemccos->SourceCode ?></td>
--->						
 		    <td><?php echo $systemccos->CustomerName ?></td>
-<!--
 		    <td><?php echo $systemccos->CustomerBirthDate ?></td>
 		    <td><?php echo $systemccos->ORG ?></td>
 		    <td><?php echo $systemccos->Logo ?></td>
@@ -60,7 +53,6 @@
 		    <td><?php echo $systemccos->ApplicationType ?></td>
 		    <td><?php echo $systemccos->ProcessMonth ?></td>
 		    <td><?php echo $systemccos->ProcessYear ?></td>
--->						
 		    <td><?php echo $systemccos->No_Identitas ?></td>
 		    <td style="text-align:center" width="140px">
 			<?php 

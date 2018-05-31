@@ -1,0 +1,80 @@
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP 1000 [ApplicationSource]
+      ,[BatchID]
+      ,[RowID]
+      ,[AsOfDate]
+      ,[EmployeeID]
+  FROM [MONETS].[dbo].[PerformanceEmployee]
+  
+ -----------------------------------------------------------------------------------
+ 
+ /****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP 1000 [EmployeeID]
+      ,[OpenDate]
+      ,[CardLogo]
+      ,[CardType]
+      ,[CardCount]
+  FROM [MONETS].[dbo].[PerformancePerEmployee]
+  
+  --------------------------------------------------------------------
+  /****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP 1000 [EmployeeID]
+      ,[Month]
+      ,[Year]
+      ,[CardLogo]
+      ,[CardType]
+      ,[MonthGenerate]
+      ,[YearGenerate]
+      ,[CardCount]
+  FROM [MONETS].[dbo].[PaymentDt]
+  ---------------------------------------------------------------------------------------
+  /****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP 1000 [SalesCenterID]
+      ,[Month]
+      ,[Year]
+      ,[ApprovalID]
+      ,[ApprovalLevel]
+      ,[ApprovalStatus]
+  FROM [MONETS].[dbo].[PaymentHd]
+  --------------------------------------------------------------------
+  /****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP 1000 [EmployeeID]
+      ,[Month]
+      ,[Year]
+      ,[MonthGenerate]
+      ,[YearGenerate]
+      ,[ComponentID]
+      ,[Parameter1]
+      ,[Nominal]
+  FROM [MONETS].[dbo].[PaymentPerformanceDt]
+  ------------------------------------------------------------------------
+  /****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP 1000 [SalesCenterID]
+      ,[Month]
+      ,[Year]
+      ,[ApprovalID]
+      ,[ApprovalLevel]
+      ,[Approvalstatus]
+  FROM [MONETS].[dbo].[PaymentPerformanceHd]
+  ------------------------------------------------------
+  
+  /****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP 1000 [ParameterID]
+      ,[UserGroupID]
+      ,[EmployeeGrade]
+      ,[EmployeeStatus]
+      ,[ComponentID]
+      ,[StartDate]
+      ,[EndDate]
+      ,[TargetTypeID]
+      ,[Product1]
+      ,[Product2]
+      ,[Param1]
+      ,[Param2]
+      ,[Nominal]
+      ,[IsMultiplier]
+      ,[IsBasicSalary]
+  FROM [MONETS].[dbo].[SalaryParameter]
+  
+  ------------------------------------
+  

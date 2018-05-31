@@ -16,23 +16,19 @@
                 <tr>
                     <th width="80px">No</th>
 		    <th>AgencyName</th>
-<!--
 		    <th>StreetAddress</th>
 		    <th>VillageAddress</th>
 		    <th>SubDistrictAddress</th>
--->			
-		    <th>PostalCode</th>			
+		    <th>PostalCode</th>
 		    <th>CityAddress</th>
 		    <th>PhoneNumber</th>
 		    <th>FaxNumber</th>
 		    <th>EmailAddress</th>
-<!--
 		    <th>Status</th>
 		    <th>ActiveDate</th>
 		    <th>EndDate</th>
 		    <th>IsActive</th>
 		    <th>UserType</th>
--->			
 		    <th>Action</th>
                 </tr>
             </thead>
@@ -45,25 +41,19 @@
                 <tr>
 		    <td><?php echo ++$start ?></td>
 		    <td><?php echo $agency->AgencyName ?></td>
-<!---
 		    <td><?php echo $agency->StreetAddress ?></td>
 		    <td><?php echo $agency->VillageAddress ?></td>
 		    <td><?php echo $agency->SubDistrictAddress ?></td>
--->			
-			
 		    <td><?php echo $agency->PostalCode ?></td>
 		    <td><?php echo $agency->CityAddress ?></td>
 		    <td><?php echo $agency->PhoneNumber ?></td>
 		    <td><?php echo $agency->FaxNumber ?></td>
 		    <td><?php echo $agency->EmailAddress ?></td>
-<!---
-			
 		    <td><?php echo $agency->Status ?></td>
 		    <td><?php echo $agency->ActiveDate ?></td>
 		    <td><?php echo $agency->EndDate ?></td>
 		    <td><?php echo $agency->IsActive ?></td>
 		    <td><?php echo $agency->UserType ?></td>
--->			
 		    <td style="text-align:center" width="140px">
 			<?php 
 			echo anchor(site_url('agency/read/'.$agency->AgencyID),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-danger btn-sm')); 
