@@ -18,7 +18,7 @@ class Employee extends CI_Controller
     	public function hiring($no_ktp){
 
 
-$agency_id = 99;
+$agency_id = 3; //PPP
 // $agency_id = $_SESSION['AgencyID'];
 //print_r($agency_id);die();
 		$query = $this->db->query("SELECT * FROM Employee")->result();
@@ -27,6 +27,7 @@ $agency_id = 99;
 $query_agency = $this->db->query("SELECT AgencyID,AgencyName FROM Agency WHERE AgencyID='$agency_id'")->result();	
 $query_sales_center = $this->db->query("SELECT SalesCenterID,SalesCenterName FROM AgencySalesCenter WHERE AgencyID='$agency_id'")->result();	
 
+$app_user_group = $this->db->query('SELECT UserGroupID,UserGroupName from AppUserGroup where IsInternal=0')->result();
 	$data = array(
 
 		'title' 		=> "SALES FORCE",
@@ -35,9 +36,10 @@ $query_sales_center = $this->db->query("SELECT SalesCenterID,SalesCenterName FRO
 		'query_posisi' 	=> $query_posisi,
 		'no_ktp'	    => $no_ktp,
 		'query_agency'	    => $query_agency,
-		'query_sales_center'	    => $query_sales_center,
+    'query_sales_center'      => $query_sales_center,
+    'app_user_group'      => $app_user_group,
 	);	
-	//print_r($data);	
+	// print_r($app_user_group);die();	
  	// $this->load->view('sales_force/sales_force_add',$data);
 
         // $this->template->load('template','sales_force_add', $data);
@@ -626,7 +628,7 @@ print_r($cek1);
 
         $data = array(
             'employee_data' => $employee1
-        );
+        ); 
 
         // $this->load->view('approval1', $data);
     $this->template->load('template','employee_list_approval3', $data);

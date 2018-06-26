@@ -325,7 +325,35 @@ button:hover {
   <div class="tab"><h1> Personal Data:</h1>
     <p><input name="nama_lengkap" id="nama_lengkap" value="ABCD" placeholder="Nama Lengkap..." oninput="this.className = ''" ></p>
     <p><input value="ABCD" name="nama_panggil" id="nama_panggil" placeholder="Nama Panggil..." oninput="this.className = ''" ></p>
+
     <p><input name="no_ktp" id="no_ktp" value="<?=$no_ktp?>" readonly></p>
+
+    <p>
+    <select name="sales_center" id="sales_center" >
+    <option value="">-SALES CENTER-</option>
+<?php
+foreach ($query_sales_center as $value) {
+?>  
+    <option value="<?=$value->SalesCenterName?>"><?=$value->SalesCenterName?></option>
+<?php
+}
+?>      
+    </select>
+    </p>  
+
+    <p>
+    <select name="posisi" id="posisi" >
+    <option value="">-POSISI-</option>
+<?php
+foreach ($app_user_group as $value) {
+?>  
+    <option value="<?=$value->UserGroupID?>"><?=$value->UserGroupName?></option>
+<?php
+}
+?>      
+    </select>
+    </p>  
+
     <p><input value="1234567" name="no_npwp" id="no_npwp" placeholder="No NPWP..." oninput="this.className = ''" ></p>    
     <p><input value="jakarta" name="tempat_lahir" id="tempat_lahir" placeholder="Tempat Lahir..." oninput="this.className = ''" ></p>
     <p>Tanggal Lahir</p>
@@ -377,7 +405,7 @@ button:hover {
 <!-- UPLOAD -->
   <div class="tab"><h1>UPLOAD:</h1>
     <div class="control-group" align = "center" >
-    <img src="<?php echo base_url('uploads/orang-1.png') ?>" id="uploadPreview" style="width: 150px; height:160px;border:1px solid;" />
+    <img src="https://kirken.no/imageservice/images/1eb62d67862848869feeda2fb9fae87e/dc3ec03ba54a416bb4922d0b547bedcc.jpg" id="uploadPreview" style="width: 150px; height:160px;border:1px solid;" />
   </br>
   <p>PHOTO</p>
         <input id="uploadImage" type="file" name="photo"  onchange="PreviewImage();" align="center"  />

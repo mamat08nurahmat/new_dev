@@ -18,6 +18,309 @@ class System_upload extends CI_Controller
 
     }
 
+
+
+//dev
+
+   public function dev()
+    {
+        $system_upload = $this->System_upload_model->get_all();
+//print_r($)
+        $data = array(
+            'system_upload_data' => $system_upload
+        );
+
+        $this->template->load('template','system_upload_list_dev', $data);
+    }
+
+
+
+    public function create_dev() 
+    {
+//batch increment
+$BatchID = $this->System_upload_model->get_BatchID();
+// print_r($BatchID);die();
+// $BatchID = 8888;
+
+        $data = array(
+            'button' => 'Create',
+            'action' => site_url('system_upload/create_action_dev'),
+        'ID' => set_value('ID'),
+        'BatchID' => $BatchID,
+        'UploadDate' => date('Y-m-d'),
+        'UploadBy' => set_value('UploadBy'),
+        'UploadRemark' => set_value('UploadRemark'),
+        'ApplicationSource' => set_value('ApplicationSource'),
+        'ProcessMonth' => set_value('ProcessMonth'),
+        'ProcessYear' => set_value('ProcessYear'),
+        'FilePath' => set_value('FilePath'),
+        'VirtualPath' => set_value('VirtualPath'),
+        'FileSize' => set_value('FileSize'),
+        'ReportPath' => set_value('ReportPath'),
+        'RowDataCount' => set_value('RowDataCount'),
+        'RowDataSucceed' => set_value('RowDataSucceed'),
+        'RowDataFailed' => set_value('RowDataFailed'),
+        'ApprovalID' => set_value('ApprovalID'),
+        'StatusUpload' => set_value('StatusUpload'),
+    );
+        $this->template->load('template','system_upload_form_dev', $data);
+    }
+
+
+  public function create_action_dev() 
+    {
+
+//split csv upload
+
+// print_r($_POST);print_r('<br>');print_r($_FILES);die();
+
+//=====================
+
+$inputFile = $_FILES['FilePath']['tmp_name'];
+$BatchID=$this->input->post('BatchID',TRUE);
+$ApplicationSource=$this->input->post('ApplicationSource',TRUE);
+$outputFile = 'BatchID_'.$BatchID.'_'.$ApplicationSource.'_Part_';
+
+//jumlah row yang dibagi
+$splitSize = 100 ;
+
+$in = fopen($inputFile, 'r');
+
+// $counter = 0;
+
+$rowCount = 0;
+$fileCount = 1;
+while (!feof($in)) {
+
+    if (($rowCount % $splitSize) == 0) {
+        if ($rowCount > 0) {
+            fclose($out);
+        }
+        $out = fopen('uploads/batch/'.$outputFile . $fileCount++ . '.csv', 'w');
+   
+    }
+
+    $data = fgetcsv($in);
+    if ($data)
+        fputcsv($out, $data);
+    $rowCount++;
+
+}
+
+$total_count_part=$fileCount-1;
+
+fclose($out);
+// print_r($total_count_part);die();
+
+////do_upload return data file upload
+$data_upload = $this->_do_upload($this->input->post('BatchID',TRUE),$this->input->post('ApplicationSource',TRUE));
+
+//
+//Baca CSV file
+//hitung rows nya
+
+$fp = file($_FILES['FilePath']['tmp_name']);
+$jumlah_rows =  count($fp)-1; //tifak termasuk header
+
+//dummy dari session user id login
+$id_user_login='12345';
+
+// print_r($data_upload['file_name']);die();
+            $data = array(
+        'BatchID' =>  $this->input->post('BatchID',TRUE),
+        //'Part' =>  $this->input->post('Part',TRUE),
+        'UploadDate' => $this->input->post('UploadDate',TRUE),
+        'UploadBy' => $id_user_login,
+        'UploadRemark' => $this->input->post('UploadRemark',TRUE),
+        'ApplicationSource' => $this->input->post('ApplicationSource',TRUE),
+        'ProcessMonth' => $this->input->post('ProcessMonth',TRUE),
+        'ProcessYear' => $this->input->post('ProcessYear',TRUE),
+        'FilePath' => $data_upload['file_name'],
+        'VirtualPath' => $data_upload['client_name'],
+        'FileSize' => $data_upload['file_size'],
+        'ReportPath' => '-',
+        'RowDataCount' => $jumlah_rows,
+
+        'PartCount' => $total_count_part,
+//update data       
+        // 'RowDataSucceed' => $this->input->post('RowDataSucceed',TRUE),
+        // 'RowDataFailed' => $this->input->post('RowDataFailed',TRUE),
+        // 'ApprovalID' => $this->input->post('ApprovalID',TRUE),
+        'StatusUpload' => 'Terupload',
+        );
+
+            $this->System_upload_model->insert($data);
+            $this->session->set_flashdata('message', 'Create Record Success');
+            redirect(site_url('system_upload'));
+
+/*
+*/
+
+    }
+
+    public function approve_part($BatchID,$ApplicationSource,$Part) 
+    {
+error_reporting(E_ALL & ~E_NOTICE); //????????????????
+
+$row2 = $this->System_upload_model->get_by_id($BatchID);
+// print_r($row->RowDataCount);die();
+$ProcessMonth = $row2->ProcessMonth;
+$ProcessYear = $row2->ProcessYear;
+
+//dummy session 
+$sessionID ='12345';
+
+        // $lokasi_file = 'uploads/'.$BatchID.'_'.$ApplicationSource.'.csv';
+// $outputFile = 'BatchID_'.$BatchID.'_'.$ApplicationSource.'_Part_';
+        $lokasi_file = 'uploads/batch/BatchID_'.$BatchID.'_'.$ApplicationSource.'_Part_'.$Part.'.csv';
+        $file_data = $this->csvimport->get_array($lokasi_file);
+//karakter "" !!!!!
+//cek isi csv
+print_r($file_data);die();
+
+// $db_system ='System'.$ApplicationSource ;
+
+}
+
+
+
+function readCSV($BatchID,$ApplicationSource,$Part){
+
+       $lokasi_file = 'uploads/batch/BatchID_'.$BatchID.'_'.$ApplicationSource.'_Part_'.$Part.'.csv';
+
+    $file_handle = fopen($lokasi_file, 'r');
+    while (!feof($file_handle) ) {
+        $line_of_text[] = fgetcsv($file_handle, 1024);
+    }
+    fclose($file_handle);
+
+    // return $line_of_text;
+    print_r($line_of_text);
+
+}
+
+
+/**
+*   Converts a CSV file into an array
+*   NOTE: file does NOT have to have .csv extension
+*   
+*   $file - path to file to convert (string)
+*   $delimiter - field delimiter (string)
+*   $first_line_keys - use first line as array keys (bool)
+*   $line_lenght - set length to retrieve for each line (int)
+*/
+
+// public static function CSVToArray($file, $delimiter = ',', $first_line_keys = true, $line_length = 2048){
+public static function CSVToArray($BatchID,$ApplicationSource,$Part){
+    //next part ganti dengan jumlah PartCount yang di loop for
+//lokasi file upload yang di split
+$file = 'uploads/batch/BatchID_'.$BatchID.'_'.$ApplicationSource.'_Part_'.$Part.'.csv';
+// $file; 
+$delimiter ='|';
+$first_line_keys = true; 
+$line_length = 2048;
+
+
+    // file doesn't exist
+    if( !file_exists($file) ){
+        return false;
+    }
+
+    // open file
+    $fp = fopen($file, 'r');
+
+    
+
+    // add each line to array
+    $csv_array = array();
+    while( !feof($fp) ){
+
+        // get current line
+        $line = fgets($fp, $line_length);
+
+        // line to array
+        $data = str_getcsv($line, $delimiter);
+
+        // keys/data count mismatch
+        if( isset($keys) && count($keys) != count($data) ){
+
+            // skip to next line
+            continue;
+
+        // first line, first line should be keys
+        }else if( $first_line_keys && !isset($keys) ){
+
+            // use line data for keys
+            $keys = $data;
+
+        // first line used as keys
+        }else if($first_line_keys){
+
+            // add as associative array
+            $csv_array[] = array_combine($keys, $data);
+
+        // first line NOT used for keys
+        }else{
+
+            // add as numeric array
+            $csv_array[] = $data;
+
+        }
+
+    }
+
+    // close file
+    fclose($fp);
+
+    // nothing found
+    if(!$csv_array){
+        return array();
+    }
+
+    // return csv array
+    // return $csv_array;
+
+print_r($csv_array);
+
+} // CSVToArray()
+
+
+/**
+* @link http://gist.github.com/385876
+*/
+// function csv_to_array($filename='', $delimiter=',')
+// {
+
+function csv_to_array($BatchID,$ApplicationSource,$Part){
+
+$filename = 'uploads/batch/BatchID_'.$BatchID.'_'.$ApplicationSource.'_Part_'.$Part.'.csv';
+// $file; 
+$delimiter ='|';
+
+
+    if(!file_exists($filename) || !is_readable($filename))
+        return FALSE;
+
+    $header = NULL;
+    $data = array();
+    if (($handle = fopen($filename, 'r')) !== FALSE)
+    {
+        while (($row = fgetcsv($handle, 1000, $delimiter)) !== FALSE)
+        {
+            if(!$header)
+                $header = $row;
+            else
+                $data[] = array_combine($header, $row);
+        }
+        fclose($handle);
+    }
+
+    // return $data;
+
+    print_r($data);    
+}
+
+//===================    
     public function index()
     {
         $system_upload = $this->System_upload_model->get_all();
@@ -88,6 +391,7 @@ $BatchID = $this->System_upload_model->get_BatchID();
             'action' => site_url('system_upload/create_action'),
         'ID' => set_value('ID'),
         'BatchID' => $BatchID,
+        'Part' => '1',
         'UploadDate' => date('Y-m-d'),
         'UploadBy' => set_value('UploadBy'),
         'UploadRemark' => set_value('UploadRemark'),
@@ -174,7 +478,7 @@ $BatchID = $this->System_upload_model->get_BatchID();
 
 
 ////do_upload return data file upload
-$data_upload = $this->_do_upload($this->input->post('BatchID',TRUE),$this->input->post('ApplicationSource',TRUE));
+$data_upload = $this->_do_upload($this->input->post('BatchID',TRUE),$this->input->post('Part',TRUE),$this->input->post('ApplicationSource',TRUE));
 
 //
 //Baca CSV file
@@ -189,6 +493,7 @@ $id_user_login='12345';
 // print_r($data_upload['file_name']);die();
             $data = array(
         'BatchID' =>  $this->input->post('BatchID',TRUE),
+        'PartCount' =>  $this->input->post('Part',TRUE),
         'UploadDate' => $this->input->post('UploadDate',TRUE),
         'UploadBy' => $id_user_login,
         'UploadRemark' => $this->input->post('UploadRemark',TRUE),
@@ -215,8 +520,8 @@ $id_user_login='12345';
 
     }
 
-
-    private function _do_upload($batch,$ApplicationSource)
+//=======????
+    private function _do_upload($batch,$part,$ApplicationSource)
     {
         $config['upload_path']          = 'uploads/';
         $config['allowed_types']        = 'csv';
@@ -227,7 +532,7 @@ $id_user_login='12345';
         $config['max_height']           = 1000; // set max height allowed
         $config['file_name']            = round(microtime(true) * 1000); //just milisecond timestamp fot unique name
 */      
-        $config['file_name']            = $batch.'_'.$ApplicationSource; //ambil batchID Upload
+        $config['file_name']            = $batch.'_'.$ApplicationSource.'_'.$part; //ambil batchID Upload
 
         $this->load->library('upload', $config);
 
@@ -240,6 +545,37 @@ $id_user_login='12345';
             exit();
         }
         return $this->upload->data();
+/*
+// split upload csv
+$inputFile = file($_FILES['FilePath']['tmp_name']);
+$BatchID='999';
+$outputFile = 'BatchID_'.$BatchID.'_Part_';
+
+$splitSize = 10000 ;
+
+$in = fopen($inputFile, 'r');
+
+$rowCount = 0;
+$fileCount = 1;
+while (!feof($in)) {
+
+    if (($rowCount % $splitSize) == 0) {
+        if ($rowCount > 0) {
+            fclose($out);
+        }
+        $out = fopen($outputFile . $fileCount++ . '.csv', 'w');
+    }
+
+    $data = fgetcsv($in);
+    if ($data)
+        fputcsv($out, $data);
+    $rowCount++;
+
+}
+
+fclose($out);
+*/
+
     }
 
 
@@ -260,15 +596,16 @@ print_r($batch_delete);die();
     }
 
 
-    public function approve($BatchID,$ApplicationSource) 
+    public function approve($ID,$ApplicationSource) 
     {
 error_reporting(E_ALL & ~E_NOTICE); //????????????????
 
-$row2 = $this->System_upload_model->get_by_id($BatchID);
+$row2 = $this->System_upload_model->get_by_id($ID);
 // print_r($row->RowDataCount);die();
 $ProcessMonth = $row2->ProcessMonth;
 $ProcessYear = $row2->ProcessYear;
-
+$BatchID = $row2->BatchID;
+$Part = $row2->PartCount;
 //dummy session 
 $sessionID ='12345';
 // stdClass Object
@@ -291,7 +628,7 @@ $sessionID ='12345';
 //     [ApprovalID] => 
 //     [StatusUpload] => Terupload
 // )
-        $lokasi_file = 'uploads/'.$BatchID.'_'.$ApplicationSource.'.csv';
+        $lokasi_file = 'uploads/'.$BatchID.'_'.$ApplicationSource.'_'.$Part.'.csv';
         $file_data = $this->csvimport->get_array($lokasi_file);
 
 //cek isi csv
@@ -300,11 +637,12 @@ $sessionID ='12345';
 $db_system ='System'.$ApplicationSource ;
 
 //cek batch sudah ada
-$batch_ada = $this->db->query("SELECT distinct BatchID  FROM $db_system WHERE BatchID = $BatchID ")->num_rows();
+///////$batch_ada = $this->db->query("SELECT distinct BatchID  FROM $db_system WHERE BatchID = $BatchID ")->num_rows();
 
 // print_r($batch_ada);die();
 
 //cek batch ada?
+/*
 if ($batch_ada==1) {
 
 //batch sudah ada------
@@ -314,7 +652,20 @@ if ($batch_ada==1) {
 //================
 } else {
 //================
-$no=1;
+*/
+$max_rowID = $this->db->query("select MAX(RowID) as RowID from SystemCardLink  where BatchID='$BatchID' ")->result();
+
+if($max_rowID[0]->RowID<1){
+$no=1;	
+//echo $no;	
+}else{
+$no=$max_rowID[0]->RowID+1; 	
+//echo $no;	
+}
+
+//print_r('xxxxxxxxxxxxxxxxx');die();
+//$no=1;
+//cek max rowid systemCardLink where Batch
 foreach($file_data as $row){
 
 // $date1 = strtotime($row["Decision Date"]);
@@ -488,7 +839,7 @@ $newformat1 = date('Y/m/d',$time1);
 $time2 = strtotime($row["DOB"]);
 $newformat2 = date('Y/m/d',$time2);        
 
-$row2 = $this->System_upload_model->get_by_id($BatchID);
+$row2 = $this->System_upload_model->get_by_id($ID);
 // print_r($row->RowDataCount);die();
 $ProcessMonth = $row2->ProcessMonth;
 $ProcessYear = $row2->ProcessYear;
@@ -554,7 +905,7 @@ if(){
 */
 //================UPDATE TABEL System_Upload===================
 
-$row = $this->System_upload_model->get_by_id($BatchID);
+$row = $this->System_upload_model->get_by_id($ID);
 // print_r($row->RowDataCount);die();
 $RowDataCount = $row->RowDataCount;
 $RowDataFailed = $RowDataSucceed-$RowDataCount;
@@ -567,7 +918,7 @@ $data_update = array(
     'StatusUpload' => 'Approved', 
 
 );
-$key = array('BatchID' =>$BatchID , );
+$key = array('ID' =>$ID , );
 $cek_update = $this->db->update('System_Upload',$data_update,$key);
 
 
@@ -577,8 +928,8 @@ $cek_update = $this->db->update('System_Upload',$data_update,$key);
     echo "<script>alert('DATA DIAPPROVE');</script>";
 
     redirect('system_upload'); 
-
-}//if batch tidak ada di $db_system ='System'.$ApplicationSource ;
+//!!!!!!
+///}//if batch tidak ada di $db_system ='System'.$ApplicationSource ;
 //==========================================
 /*
 

@@ -11,10 +11,7 @@
 
             <table class='table table-bordered'>
 	    <tr><td>BatchID <?php echo form_error('BatchID') ?></td>
-            <td><input type="text" class="form-control" name="BatchID" id="BatchID" placeholder="BatchID" value="<?php echo $BatchID; ?>" />
-        </td>
-	    <tr><td>Part<?php echo form_error('Part') ?></td>
-            <td><input type="text" class="form-control" name="Part" id="Part" placeholder="Part" value="<?php echo $Part; ?>" />
+            <td><input type="text" class="form-control" name="BatchID" id="BatchID" placeholder="BatchID" value="<?php echo $BatchID; ?>" readonly/>
         </td>
 	    <tr><td>UploadDate <?php echo form_error('UploadDate') ?></td>
             <td><input type="text" class="form-control" name="UploadDate" id="UploadDate" placeholder="UploadDate" value="<?php echo $UploadDate; ?>" readonly/>
