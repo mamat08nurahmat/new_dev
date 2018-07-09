@@ -22,12 +22,36 @@ class Systemcardlink_model extends CI_Model
         return $this->db->get($this->table)->result();
     }
 
+    // get all by batch
+    function get_all_by_batch($BatchID)
+    {
+        $this->db->where('BatchID', $BatchID);
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
+    }
+
+
+	
+    // get all by month year
+    function get_all_by_m_y($M,$Y)
+    {
+        $this->db->where('ProcessMonth', $M);
+        $this->db->where('ProcessYear', $Y);
+//        $this->db->order_by($this->id, $this->order);
+        return $this->db->get('System_Upload')->result();
+    }
+	
+	
     // get data by id
     function get_by_id($id)
     {
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
+
+
+	
+	
     
     // get total rows
     function total_rows($q = NULL) {

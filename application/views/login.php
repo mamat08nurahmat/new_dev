@@ -1,100 +1,169 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminCRUD | Log in</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/eksternal/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/eksternal/ionicons.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/dist/css/AdminLTE.min.css">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/iCheck/square/blue.css">
+<html lang="en" >
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body class="hold-transition login-page">
-    <div class="login-box">
-      <div class="login-logo">
-        <a href="<?php echo base_url(); ?>assets/index2.html"><b>Admin</b>CRUD</a>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <title>Login Form</title>
+  
+  
+<!---
+      <link rel="stylesheet" href="css/style.css">
+-->  
 
-      <!-- /.login-logo -->
-      <div class="login-box-body">
-        <p class="login-box-msg">
-          Log in to start your session
-        </p>
+<style>
+/**
+ * 01/28/2016
+ * This pen is years old, and watching at the code after all
+ * those years made me fall from my chair, so I:
+ * - changed all IDs to classes
+ * - converted all units to pixels and em units
+ * - changed all global elements to classes or children of
+ *   .login
+ * - cleaned the syntax to be more consistent
+ * - added a lot of spaces that I so hard tried to avoid
+ *   a few years ago
+ *   (because it's cool to not use them)
+ * - and probably something else that I can't remember anymore
+ *
+ * I sticked to the same philosophy, meaning:
+ * - the design is almost the same
+ * - only pure HTML and CSS
+ * - no frameworks, preprocessors or resets
+ */
 
-        <form action="<?php echo base_url('index.php/Auth/login'); ?>" method="post">
-          <div class="form-group has-feedback">
-            <input type="text" class="form-control" placeholder="Username" name="username">
-            <span class="glyphicon glyphicon-user form-control-feedback"></span>
-          </div>
-          <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="Password" name="password">
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-          </div>
-          <div class="row">
-            <!-- <div class="col-xs-8">
-              <div class="checkbox icheck">
-                <label>
-                  <input type="checkbox"> Remember Me
-                </label>
-              </div>
-            </div> -->
-            <div class="col-xs-offset-8 col-xs-4">
-              <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
-            </div>
-          </div>
-        </form>
+/* 'Open Sans' font from Google Fonts */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
-        <!-- <div class="social-auth-links text-center">
-          <p>- OR -</p>
-          <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
-            Facebook</a>
-          <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-            Google+</a>
-        </div> -->
-        <!-- /.social-auth-links -->
+body {
+  background: #456;
+  font-family: 'Open Sans', sans-serif;
+}
 
-        <!-- <a href="#">I forgot my password</a><br>
-        <a href="register.html" class="text-center">Register a new membership</a> -->
+.login {
+  width: 400px;
+  margin: 16px auto;
+  font-size: 16px;
+}
 
-      </div>
-      <!-- /.login-box-body -->
-      <?php
-        echo show_err_msg($this->session->flashdata('error_msg'));
-      ?>
-    </div>
-    
+/* Reset top and bottom margins from certain elements */
+.login-header,
+.login p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
 
-    <!-- /.login-box -->
+/* The triangle form is achieved by a CSS hack */
+.login-triangle {
+  width: 0;
+  margin-right: auto;
+  margin-left: auto;
+  border: 12px solid transparent;
+  border-bottom-color: #28d;
+}
 
-    <!-- jQuery 2.2.3 -->
-    <script src="<?php echo base_url(); ?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
-    <!-- Bootstrap 3.3.6 -->
-    <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap.min.js"></script>
-    <!-- iCheck -->
-    <!-- <script src="<?php echo base_url(); ?>assets/plugins/iCheck/icheck.min.js"></script> -->
-    <!-- <script>
-      $(function () {
-        $('input').iCheck({
-          checkboxClass: 'icheckbox_square-blue',
-          radioClass: 'iradio_square-blue',
-          increaseArea: '20%' // optional
-        });
-      });
-    </script> -->
-  </body>
+.login-header {
+  background: #28d;
+  padding: 20px;
+  font-size: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.login-header-error {
+  background: #d22;
+  padding: 20px;
+  font-size: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+
+
+.login-container {
+  background: #ebebeb;
+  padding: 12px;
+}
+
+/* Every row inside .login-container is defined with p tags */
+.login p {
+  padding: 12px;
+}
+
+.login input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  padding: 16px;
+  outline: 0;
+  font-family: inherit;
+  font-size: 0.95em;
+}
+
+.login input[type="email"],
+.login input[type="password"] {
+  background: #fff;
+  border-color: #bbb;
+  color: #555;
+}
+
+/* Text fields' focus effect */
+.login input[type="email"]:focus,
+.login input[type="password"]:focus {
+  border-color: #888;
+}
+
+.login input[type="submit"] {
+  background: #28d;
+  border-color: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.login input[type="submit"]:hover {
+  background: #17c;
+}
+
+/* Buttons' focus effect */
+.login input[type="submit"]:focus {
+  border-color: #05a;
+}
+</style>	  
+  
+</head>
+
+<body>
+
+  <div class="login">
+  <div class="login-triangle"></div>
+  
+  <?php
+            $message = $this->session->flashdata('notif');
+            if($message){
+//            echo '<p class="alert alert-danger text-center">'.$message .'</p>';
+  echo'<h2 class="login-header-error">'.$message.'</h2>';
+
+            }else{
+  echo'<h2 class="login-header">Login</h2>';
+				
+			}
+			
+			?>
+  <form class="login-container" method="POST" action="<?=site_url('auth/cek_login')?>" >
+    <p><input name="email" type="email" placeholder="Email"></p>
+    <p><input name="password" type="password" placeholder="Password"></p>
+    <p><input type="submit" value="Log in"></p>
+  </form>
+</div>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+  
+
+</body>
+
 </html>

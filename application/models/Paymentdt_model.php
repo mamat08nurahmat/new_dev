@@ -64,6 +64,13 @@ class Paymentdt_model extends CI_Model
         $this->db->insert($this->table, $data);
     }
 
+    // insert data batch
+    function insert_batch($data_generates)
+    {
+        $this->db->insert_batch($this->table, $data_generates);
+    }
+	
+	
     // update data
     function update($id, $data)
     {

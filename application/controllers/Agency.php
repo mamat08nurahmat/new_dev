@@ -10,13 +10,29 @@ class Agency extends CI_Controller
     function __construct()
     {
         parent::__construct();
+		
+        if($this->session->userdata('login_status') != TRUE ){
+            $this->session->set_flashdata('notif','Maaf, Anda tidak diperbolehkan masuk tanpa login !');
+            redirect('auth');
+        };		
+		
         $this->load->model('Agency_model');
         $this->load->library('form_validation');
     }
 
     public function index()
     {
+//		      print_r($this->session->userdata('UserGroupID'));
+if($this->session->userdata('UserGroupID')==1){
+//	print_r("Admin");
         $agency = $this->Agency_model->get_all();
+	
+}else{
+//	print_r("USER");
+        $agency = $this->Agency_model->get_by_group();
+	
+}
+	//		  die();
 
         $data = array(
             'agency_data' => $agency

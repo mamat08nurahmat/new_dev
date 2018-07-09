@@ -10,6 +10,7 @@ class Systemcardlink extends CI_Controller
     function __construct()
     {
         parent::__construct();
+        $this->load->model('System_Upload_model');
         $this->load->model('Systemcardlink_model');
         $this->load->library('form_validation');
     }
@@ -523,6 +524,7 @@ print_r($this->db->insert('PerformanceUnMatch',$data_unmatch));
 
 
     //=====
+/*
     public function index()
     {
         // $systemcardlink = $this->Systemcardlink_model->get_all();
@@ -534,7 +536,68 @@ print_r($this->db->insert('PerformanceUnMatch',$data_unmatch));
 
         $this->template->load('template','systemcardlink_list', $data);
     }
+*/	
 
+    public function index()
+    {
+		
+//        $system_upload = $this->System_upload_model->get_all_cardlink();
+	$system_upload = $this->db->query("SELECT * FROM System_Upload Where ApplicationSource='SystemCardlink'")->result();
+//print_r($)
+        $data = array(
+            'system_upload_data' => $system_upload
+        );
+
+        $this->template->load('template','system_upload_list', $data);
+    }
+
+
+
+//get by batchID	
+    public function by_batch($BatchID)
+    {
+        // $systemcardlink = $this->Systemcardlink_model->get_all();
+         $systemcardlink = $this->Systemcardlink_model->get_all_by_batch($BatchID);
+//        $systemcardlink = $this->db->query("SELECT  * FROM Systemcardlink WHERE BatchID='$BatchID' ")->result();
+
+        $data = array(
+            'systemcardlink_data' => $systemcardlink
+        );
+
+        $this->template->load('template','systemcardlink_list', $data);
+    }
+
+	
+//get by month year
+    public function by_m_y($M,$Y)
+    {
+        // $systemcardlink = $this->Systemcardlink_model->get_all();
+    $BatchID = $this->Systemcardlink_model->get_all_by_m_y($M,$Y);
+	$BatchID = $BatchID[0]->BatchID;		 
+//print_r($BatchID);die();		 
+         $systemcardlink = $this->Systemcardlink_model->get_all_by_batch($BatchID);
+
+$M=$this->uri->segment(3);
+$Y=$this->uri->segment(4);
+		 
+$link_excel='systemcardlink/excel/'.$M.'/'.$Y;
+		 
+        $data = array(
+            'systemcardlink_data' => $systemcardlink,
+	//		'M' => $M,
+	//		'Y' => $Y
+			'link_excel' => $link_excel
+        );
+
+        $this->template->load('template','systemcardlink_list', $data);
+/*
+*/		
+//		$this->by_batch($BatchID);
+    }
+
+
+	
+	
     public function read($id) 
     {
         $row = $this->Systemcardlink_model->get_by_id($id);
@@ -695,8 +758,18 @@ print_r($this->db->insert('PerformanceUnMatch',$data_unmatch));
     $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
-    public function excel()
+    public function excel($M,$Y)
     {
+		
+//by month year uri segment
+//$m = $this->uri->segment(2);
+//print_r($m);die();
+
+//get batchid		
+    $BatchID = $this->Systemcardlink_model->get_all_by_m_y($M,$Y);
+	$BatchID = $BatchID[0]->BatchID;	
+//print_r($BatchID);die();		
+
         $this->load->helper('exportexcel');
         $namaFile = "systemcardlink.xls";
         $judul = "systemcardlink";
@@ -729,7 +802,7 @@ print_r($this->db->insert('PerformanceUnMatch',$data_unmatch));
     xlsWriteLabel($tablehead, $kolomhead++, "BlockCard");
     xlsWriteLabel($tablehead, $kolomhead++, "ApplicationType");
 
-    foreach ($this->Systemcardlink_model->get_all() as $data) {
+    foreach ($this->Systemcardlink_model->get_all_by_batch($BatchID) as $data) {
             $kolombody = 0;
 
             //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric

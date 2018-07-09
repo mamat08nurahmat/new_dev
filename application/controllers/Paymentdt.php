@@ -13,7 +13,94 @@ class Paymentdt extends CI_Controller
         $this->load->model('Paymentdt_model');
         $this->load->library('form_validation');
     }
+//================
+    public function generate($BatchID) 
+    {
+		
+		$generates = $this->db->query("
+SELECT 
+c.EmployeeID,
+b.ProcessMonth as Month,b.ProcessYear as Year,  
+a.Parameter8 as CardLogo,a.Parameter15 as CardType,
+b.ProcessMonth as MonthGenerate,b.ProcessYear as YearGenerate,
+COUNT(*) as CardCount,
+a.Parameter6 as EmployeeNewCode
 
+		FROM PerformanceDetail a
+		LEFT JOIN System_upload b ON a.BatchID=b.BatchID
+		LEFT JOIN Employee c ON a.Parameter6=c.EmployeeNewCode
+		 WHERE a.BatchID='$BatchID'
+		 GROUP BY
+c.EmployeeID,		 
+b.ProcessMonth ,b.ProcessYear ,  
+a.Parameter6 ,a.Parameter8 ,a.Parameter15,
+b.ProcessMonth ,b.ProcessYear		 
+
+		
+ ")->result();
+
+print_r($generates);die();		
+foreach($generates as $generate){
+
+//$data_generates=array();
+$data_generates[]=array(
+
+		'EmployeeID' => $generate->EmployeeID,
+		'Month' => $generate->Month,
+		'Year' => $generate->Year,
+		'CardLogo' => $generate->CardLogo,
+		'CardType' => $generate->CardType,
+		'MonthGenerate' => $generate->MonthGenerate,
+		'YearGenerate' => $generate->YearGenerate,
+		'CardCount' => $generate->CardCount,
+/*
+		'BatchID' => $generate->BatchID,
+		'ApplicationSource' => $generate->ApplicationSource,
+		'AsOfDate' => $generate->AsOfDate,
+		'CustomerName' => $generate->CustomerName,
+		'CustomerBirthDate' => $generate->CustomerBirthDate,
+		'Parameter1' => $generate->Parameter1,
+		'Parameter2' => $this->input->post('Parameter2',TRUE),
+		'Parameter3' => $this->input->post('Parameter3',TRUE),
+		'Parameter4' => $this->input->post('Parameter4',TRUE),
+		'Parameter5' => $this->input->post('Parameter5',TRUE),
+		'Parameter6' => $this->input->post('Parameter6',TRUE),
+		'Parameter7' => $this->input->post('Parameter7',TRUE),
+		'Parameter8' => $this->input->post('Parameter8',TRUE),
+		'Parameter9' => $this->input->post('Parameter9',TRUE),
+		'Parameter10' => $this->input->post('Parameter10',TRUE),
+		'Parameter11' => $this->input->post('Parameter11',TRUE),
+		'Parameter12' => $this->input->post('Parameter12',TRUE),
+		'Parameter13' => $this->input->post('Parameter13',TRUE),
+		'Parameter14' => $this->input->post('Parameter14',TRUE),
+		'Parameter15' => $this->input->post('Parameter15',TRUE),
+*/		
+	    );		
+	
+}//foreach		
+
+print_r($data_generates);die();
+
+/*
+       
+            $data = array(
+		'Month' => $this->input->post('Month',TRUE),
+		'Year' => $this->input->post('Year',TRUE),
+		'CardLogo' => $this->input->post('CardLogo',TRUE),
+		'CardType' => $this->input->post('CardType',TRUE),
+		'MonthGenerate' => $this->input->post('MonthGenerate',TRUE),
+		'YearGenerate' => $this->input->post('YearGenerate',TRUE),
+		'CardCount' => $this->input->post('CardCount',TRUE),
+	    );
+*/		
+
+            $this->Paymentdt_model->insert_batch($data_generates);
+            $this->session->set_flashdata('message', 'Create Record Success');
+            redirect(site_url('paymentdt'));
+        
+    }
+
+//================
     public function index()
     {
         $paymentdt = $this->Paymentdt_model->get_all();

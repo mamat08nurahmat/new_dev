@@ -25,6 +25,32 @@ class Performanceunmatch_model extends CI_Model
 WHERE IsGenerateCorrection=0')->result();
     }
 
+	
+	    // get all by batch
+    function get_all_by_batch($BatchID)
+    {
+   	
+//        $this->db->order_by($this->id, $this->order);
+//        return $this->db->get($this->table)->result();
+        return $this->db->query("SELECT * FROM PerformanceUnMatch 
+WHERE IsGenerateCorrection=0 AND BatchID='$BatchID'")->result();
+    }
+
+
+	
+	    // get all by Month Year
+    function get_all_by_m_y($M,$Y)
+    {
+   	
+//        $this->db->order_by($this->id, $this->order);
+//        return $this->db->get($this->table)->result();
+        return $this->db->query("SELECT * FROM PerformanceUnMatch 
+WHERE IsGenerateCorrection=0 AND Month='$M' AND Year='$Y' ")->result();
+    }
+
+
+	
+	
     // get data by id
     function get_by_id($id)
     {

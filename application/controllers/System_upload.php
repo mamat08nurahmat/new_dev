@@ -632,7 +632,7 @@ $sessionID ='12345';
         $file_data = $this->csvimport->get_array($lokasi_file);
 
 //cek isi csv
-// print_r($file_data);die();
+ //print_r($file_data);die();
 
 $db_system ='System'.$ApplicationSource ;
 

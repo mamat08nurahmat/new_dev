@@ -11,9 +11,50 @@ class Performancedetail extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Performancedetail_model');
+        $this->load->model('Systemcardlink_model');
         $this->load->library('form_validation');
     }
+//==========================DEV GENERATE
+//get BatchID from SystemUpload    
+public function get_batchid($Month,$Year){
 
+// print_r($Month.'-'.$Year);
+$BatchID = $this->db->query("SELECT * FROM System_Upload WHERE ProcessMonth='$Month' AND ProcessYear='$Year'")->result();
+//SystemUpload_dev
+print_r($BatchID);
+//view batch
+
+    }
+
+//get BatchID AND RowID from SystemCardlink    
+public function generate($BatchID){
+// public function get_batchid_and_rowid($BatchID){
+
+// print_r($Month.'-'.$Year); 
+$BatchID_AND_RowID = $this->db->query("SELECT BatchID,count(RowID)as jumlah_row FROM Systemcardlink WHERE BatchID='$BatchID'
+GROUP BY BatchID")->result();
+//Systemcardlink_dev??
+
+
+//view batch generate
+
+        $data = array(
+            'BatchID' => $BatchID_AND_RowID[0]->BatchID,
+            'jumlah_row' => $BatchID_AND_RowID[0]->jumlah_row,
+        );
+
+// print_r($data);die();
+
+
+//        $this->template->load('template','systemcardlink_list', $data);
+        $this->load->view('performancedetail_generate_batch', $data);
+  
+
+
+
+    }
+
+//===========================
     public function index()
     {
         $performancedetail = $this->Performancedetail_model->get_all();
@@ -24,7 +65,45 @@ class Performancedetail extends CI_Controller
 
         $this->template->load('template','performancedetail_list', $data);
     }
+//get by batch
+    public function by_batch($BatchID)
+    {
+//        $performancedetail = $this->db->query("SELECT  * FROM PerformanceDetail WHERE BatchID='$BatchID' ")->result();
+        $performancedetail = $this->Performancedetail_model->get_all_by_batch($BatchID);
 
+        $data = array(
+            'performancedetail_data' => $performancedetail
+        );
+
+        $this->template->load('template','performancedetail_list', $data);
+    }	
+
+//get by month year
+    public function by_m_y($M,$Y)
+    {
+//        $performancedetail = $this->db->query("SELECT  * FROM PerformanceDetail WHERE BatchID='$BatchID' ")->result();
+
+$BatchID = $this->db->query("SELECT BatchID FROM System_Upload WHERE ProcessMonth='$M' AND ProcessYear='$Y' ")->result();
+$BatchID = $BatchID[0]->BatchID;
+//print_r($BatchID[0]->BatchID);die();
+
+        $performancedetail = $this->Performancedetail_model->get_all_by_batch($BatchID);
+
+$M=$this->uri->segment(3);
+$Y=$this->uri->segment(4);
+		 
+$link_excel='performancedetail/excel/'.$M.'/'.$Y;		
+		
+        $data = array(
+            'performancedetail_data' => $performancedetail,
+						'link_excel' => $link_excel
+        );
+
+//        $this->template->load('template','performancedetail_list_by_m_y', $data);
+         $this->template->load('template','performancedetail_list_by_m_y', $data);
+    }	
+
+	
     public function read($id) 
     {
         $row = $this->Performancedetail_model->get_by_id($id);
@@ -239,8 +318,14 @@ class Performancedetail extends CI_Controller
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
-    public function excel()
+    public function excel($M,$Y)
     {
+		
+		
+		//get batchid		
+    $BatchID = $this->Systemcardlink_model->get_all_by_m_y($M,$Y);
+	$BatchID = $BatchID[0]->BatchID;	
+		
         $this->load->helper('exportexcel');
         $namaFile = "performancedetail.xls";
         $judul = "performancedetail";
@@ -283,7 +368,7 @@ class Performancedetail extends CI_Controller
 	xlsWriteLabel($tablehead, $kolomhead++, "Parameter15");
 
 //	foreach ($this->Performancedetail_model->get_all() as $data) {
-	foreach ($this->db->query('SELECT * FROM Performancedetail')->result() as $data) {
+	foreach ($this->Systemcardlink_model->get_all_by_batch($BatchID) as $data) {
             $kolombody = 0;
 
             //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric

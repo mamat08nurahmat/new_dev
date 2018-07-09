@@ -42,6 +42,38 @@ LEFT JOIN Agency e ON d.AgencyID=e.AgencyID
 
     }
 
+	
+//get all by batch
+    function get_all_by_batch($BatchID)
+    {
+/*
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
+*/  
+return $this->db->query("
+select 
+b.EmployeeName,
+b.EmployeeStatus,
+b.EmployeeGrade,
+c.EmployeeName as SPV,
+d.SalesCenterName,
+e.AgencyName,
+
+a.*
+    FROM PerformanceDetail a
+LEFT JOIN Employee b ON a.Parameter6=b.EmployeeNewCode
+LEFT JOIN Employee c ON b.ParentEmployeeID=c.EmployeeID
+LEFT JOIN AgencySalesCenter d ON a.Parameter5=d.SalesCenterCode
+LEFT JOIN Agency e ON d.AgencyID=e.AgencyID
+WHERE BatchID='$BatchID'
+")->result();
+
+    }
+
+
+
+	
+	
     // get data by id
     function get_by_id($id)
     {

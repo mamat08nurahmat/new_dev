@@ -6,7 +6,14 @@
               <div class='box'>
                 <div class='box-header'>
                   <h3 class='box-title'>SYSTEMCARDLINK LIST <?php echo anchor('systemcardlink/create/','Create',array('class'=>'btn btn-danger btn-sm'));?>
-		<?php echo anchor(site_url('systemcardlink/excel'), ' <i class="fa fa-file-excel-o"></i> Excel', 'class="btn btn-primary btn-sm"'); ?>
+<?php
+$M=$this->uri->segment(3);
+$Y=$this->uri->segment(4);
+
+//$export='systemcardlink/export/'.$M.'/'.$Y;
+
+?>				  
+		<?php echo anchor(site_url('systemcardlink/excel/'.$M.'/'.$Y), ' <i class="fa fa-file-excel-o"></i> Excel', 'class="btn btn-primary btn-sm"'); ?>
 		<?php echo anchor(site_url('systemcardlink/word'), '<i class="fa fa-file-word-o"></i> Word', 'class="btn btn-primary btn-sm"'); ?>
 		<?php echo anchor(site_url('systemcardlink/pdf'), '<i class="fa fa-file-pdf-o"></i> PDF', 'class="btn btn-primary btn-sm"'); ?></h3>
                 </div><!-- /.box-header -->

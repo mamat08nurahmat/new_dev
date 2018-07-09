@@ -10,6 +10,77 @@
 		<?php echo anchor(site_url('employee/word'), '<i class="fa fa-file-word-o"></i> Word', 'class="btn btn-primary btn-sm"'); ?>
 		<?php echo anchor(site_url('employee/pdf'), '<i class="fa fa-file-pdf-o"></i> PDF', 'class="btn btn-primary btn-sm"'); ?></h3>
                 </div><!-- /.box-header -->
+				
+<!---FILTER--->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" >  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Filter</button></h3>
+            </div>
+			
+
+			<div id="demo" class="collapse">
+  
+            <div class="panel-body">
+                <form id="form-filter" class="form-horizontal">
+				
+                    <div class="form-group">
+                        <label for="agency" class="col-sm-2 control-label">Agency</label>
+                        <div class="col-sm-4">
+                            <?php echo $form_agency; ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="salescenter" class="col-sm-2 control-label">Sales Center</label>
+                        <div class="col-sm-4">
+                            <?php echo $form_sales_center; ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status" class="col-sm-2 control-label">Status</label>
+                        <div class="col-sm-4">
+                            <?php echo $form_agency; ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interviewstatus" class="col-sm-2 control-label">Interview Status</label>
+                        <div class="col-sm-4">
+                            <?php echo $form_agency; ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hiringstatus" class="col-sm-2 control-label">Hiring Status</label>
+                        <div class="col-sm-4">
+                            <?php echo $form_agency; ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="approvalstatus" class="col-sm-2 control-label">Approval Status</label>
+                        <div class="col-sm-4">
+                            <?php echo $form_agency; ?>
+                        </div>
+                    </div>
+
+					
+
+					
+                    <div class="form-group">
+                        <label for="LastName" class="col-sm-2 control-label"></label>
+                        <div class="col-sm-4">
+                            <button type="button" id="btn-filter" class="btn btn-primary">Filter</button>
+                            <button type="button" id="btn-reset" class="btn btn-default">Reset</button>
+                        </div>
+                    </div>
+                </form>
+				</div>
+			</div>						
+        </div>			
+<!---FILTER--->			
+				
                 <div class='box-body'>
         <table class="table table-bordered table-striped" id="mytable">
             <thead>
@@ -89,7 +160,7 @@
 
 		    <td><?php echo $employee->EmployeeName ?></td>
 		    <td><?php echo $employee->EmployeeStatus ?></td>
-		    <td><?php echo $employee->EmployeeGrade ?></td>
+		    <td><?php echo substr($employee->EmployeeGrade,14) ?></td>
 		    <td><?php echo $employee->AgencyName ?></td>
 		    <td><?php echo $employee->SalesCenterName ?></td>
 

@@ -39,13 +39,32 @@ $BatchID_AND_RowID = $this->db->query("SELECT BatchID,RowID FROM Performanceunma
         $this->load->view('systemcardlink_generate_batch', $data);
     }
 
+//get by M Y ---> list get by batch
 
+
+public function generate_by_batch(){
+	
+	
+
+
+
+	
+	
+}
+	
+//proses unmatch by batchid rowid	
 public function proses_performancedetail($BatchID,$RowID){
     
 
-$Performanceunmatch = $this->db->query("SELECT * FROM Performanceunmatch WHERE BatchID='$BatchID' AND RowID='$RowID'")->result();
+$Performanceunmatch = $this->db->query("
+SELECT * FROM Performanceunmatch 
+WHERE BatchID='$BatchID' AND RowID='$RowID' AND IsGenerateCorrection=0
+")->result();
 
-$SystemUpload = $this->db->query("SELECT ApplicationSource,ProcessMonth,ProcessYear FROM system_upload WHERE BatchID='$BatchID'")->row() ; //??system_upload //SystemUpload_dev
+$SystemUpload = $this->db->query("
+SELECT 
+ApplicationSource,ProcessMonth,ProcessYear 
+FROM system_upload WHERE BatchID='$BatchID'")->row() ; //??system_upload //SystemUpload_dev
 
 $Systemcardlink = $this->db->query("SELECT 
 OpenDate,
@@ -64,17 +83,19 @@ ApplicationType
 //source code
 
 
-$SourceCode = $Performanceunmatch[0]->NewSourceCode ; ///dari data unmatch
+$SourceCode = $Performanceunmatch[0]->NewSourceCode ; ///NewSourceCode dari data unmatch
 $data_soure_code = $this->sourcecode($SourceCode);
 
 //print_r($data_soure_code);die();
 
 $employee_new_code =$data_soure_code['AGENT_CODE_OR_BRANCH_CODE'];
 
-$Employee1 = $this->db->query("SELECT a.*,b.*,c.* FROM Employee a
+$Employee1 = $this->db->query("
+SELECT a.*,b.*,c.* 
+FROM Employee a
 LEFT JOIN AppUserGroup b on a.UserGroupID=b.UserGroupID
 LEFT JOIN AgencySalesCenter c on a.SalesCenterID=c.SalesCenterID
- WHERE EmployeeNewCode='$employee_new_code' AND IsDiscontinued='0'") ;
+WHERE EmployeeNewCode='$employee_new_code' AND IsDiscontinued='0'") ;
 
 
 $match =$Employee1->num_rows() ;
@@ -172,9 +193,11 @@ $data_performancedetail = array(
 
 );      
 
-// print_r($data_performancedetail);die();
+ //print_r($data_performancedetail);die();
 
 $cek_insert = $this->db->insert('PerformanceDetail',$data_performancedetail);
+
+
 $data_performanceunmatch = array(
 'IsGenerateCorrection'=>TRUE,
 );
@@ -182,7 +205,6 @@ $key = array(
 'BatchID'=>$BatchID,
 'RowID'=>$RowID,
 );
-
 $cek_update = $this->db->update('PerformanceUnMatch',$data_performanceunmatch,$key);
 //update performanceunmatch
 //$this->db->query('UPDATE PerformanceUnMatch set IsGenerateCorrection=1 WHERE BatchID='$BatchID' AND RowID='$RowID'')->result();
@@ -196,20 +218,22 @@ $cek_update = $this->db->update('PerformanceUnMatch',$data_performanceunmatch,$k
 if($cek_insert==1){
 	echo'
 	<script>
-	alert("Data Approveed");
+	alert("Data Approveed UnMatch");
     window.history.back();	
 	</script>';
 }
 //unmatch???? exmp:72/1        
 //return "MATCH_BattchID_".$BatchID."_RowID_".$RowID;
-// echo "MATCH_BattchID_".$BatchID."_RowID_".$RowID;
+ echo "MATCH_BattchID_".$BatchID."_RowID_".$RowID;
+ 
+ 
 //if MATCH===============================================================
 }else{    
 //unmatck masuk tabel perfounmatchunmatch
 
 
-return "UNMATCH_BattchID_";
-// echo "UNMATCH_BattchID_".$BatchID."_RowID_".$RowID;
+//return "UNMATCH_BattchID_";
+ echo "UNMATCH_BattchID_".$BatchID."_RowID_".$RowID;
 
 
 //if UNMATCH=============================================================
@@ -320,6 +344,38 @@ if($ApplicationType=='S'){
         $this->template->load('template','performanceunmatch_list', $data);
     }
 
+	
+    public function by_batch($BatchID)
+    {
+        $performanceunmatch = $this->Performanceunmatch_model->get_all_by_batch($BatchID);
+
+        $data = array(
+            'performanceunmatch_data' => $performanceunmatch
+        );
+
+        $this->template->load('template','performanceunmatch_list', $data);
+    }
+	
+
+
+    public function by_m_y($M,$Y)
+    {
+		
+		$BatchID = $this->Performanceunmatch_model->get_all_by_m_y($M,$Y);
+		$BatchID = $BatchID[0]->BatchID;	
+//print_r($BatchID);die();		
+
+        $performanceunmatch = $this->Performanceunmatch_model->get_all_by_batch($BatchID);
+
+        $data = array(
+            'performanceunmatch_data' => $performanceunmatch
+        );
+
+        $this->template->load('template','performanceunmatch_list', $data);
+    }
+
+	
+	
     public function read($id) 
     {
         $row = $this->Performanceunmatch_model->get_by_id($id);

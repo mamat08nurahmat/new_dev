@@ -44,6 +44,26 @@ $BatchID=$query->result();
     }
 
 
+
+    // get all cardlink
+    function get_all_cardlink()
+    {
+        $this->db->where('ApplicationSource', 'SystemCardLink');		
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
+    }
+
+
+    // get all ccos
+    function get_all_ccos()
+    {
+        $this->db->where('ApplicationSource', 'SystemCCOS');		
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
+    }
+	
+	
+	
 //vendor list
     function get_all_vendor()
     {

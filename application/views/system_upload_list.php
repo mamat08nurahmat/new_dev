@@ -22,9 +22,9 @@
  -->		    
 		    <th>ApplicationSource</th>
 		    <th>FilePath</th>
-<!-- 		    <th>ProcessMonth</th>
 		    <th>ProcessYear</th>
 		    <th>VirtualPath</th>
+<!-- 		    <th>ProcessMonth</th>
 		    <th>FileSize</th>
 		    <th>ReportPath</th>
 		    <th>RowDataCount</th>
@@ -52,8 +52,9 @@
 		    <!-- <td><?php echo $system_upload->UploadRemark ?></td> -->
 		    <td><?php echo $system_upload->ApplicationSource ?></td>
 		    <td><?php echo $system_upload->FilePath ?></td>
-<!-- 		    <td><?php echo $system_upload->ProcessMonth ?></td>
 		    <td><?php echo $system_upload->ProcessYear ?></td>
+ 		    <td><?php echo $system_upload->ProcessMonth ?></td>
+<!--			
 		    <td><?php echo $system_upload->VirtualPath ?></td>
 		    <td><?php echo $system_upload->FileSize ?></td>
 		    <td><?php echo $system_upload->ReportPath ?></td>

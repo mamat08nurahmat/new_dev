@@ -14,7 +14,8 @@ class Employee_model extends CI_Model
     {
         parent::__construct();
     }
-
+	
+	
     // get all
     function get_all()
     {
@@ -285,6 +286,40 @@ return $query->result();
         $this->db->where($this->id, $id);
         $this->db->delete($this->table);
     }
+	
+//=====dropdown filter	
+	public function get_list_agency()
+	{
+		$this->db->select('*');
+		$this->db->from('Agency');
+		$this->db->order_by('AgencyID','asc');
+		$query = $this->db->get();
+		$result = $query->result();
+
+		$agency = array();
+		foreach ($result as $row) 
+		{
+			$agency[] = $row->AgencyName;
+		}
+		return $agency;
+	}	
+
+	public function get_list_sales_center()
+	{
+		$this->db->select('*');
+		$this->db->from('AgencySalesCenter');
+		$this->db->order_by('SalesCenterID','asc');
+		$query = $this->db->get();
+		$result = $query->result();
+
+		$sales_center = array();
+		foreach ($result as $row) 
+		{
+			$sales_center[] = $row->SalesCenterName;
+		}
+		return $sales_center;
+	}	
+	
 
 }
 

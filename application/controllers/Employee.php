@@ -10,6 +10,12 @@ class Employee extends CI_Controller
     function __construct()
     {
         parent::__construct();
+		
+		if($this->session->userdata('login_status') != TRUE ){
+            $this->session->set_flashdata('notif','Maaf, Anda tidak diperbolehkan masuk tanpa login !');
+            redirect('auth');
+        };	
+		
         $this->load->model('Employee_model');
         $this->load->library('form_validation');
     }
@@ -825,10 +831,36 @@ print_r("UPDATE Employee : ".$cek1."INSERT HIRING HISTORY : ".$cek2);
 
     public function index()
     {
+		//cek user login
         $employee = $this->Employee_model->get_all();
 
+		$this->load->helper('url');
+		$this->load->helper('form');
+		
+		$agences = $this->Employee_model->get_list_agency();
+
+		$opt1 = array('' => 'All Agency');
+		foreach ($agences as $agency) {
+			$opt1[$agency] = $agency;
+		}
+
+		$form_agency = form_dropdown('',$opt1,'','id="agency" class="form-control"');		
+		
+		$sales_centers = $this->Employee_model->get_list_sales_center();
+
+		$opt2 = array('' => 'All Sales Center');
+		foreach ($sales_centers as $sales_center) {
+			$opt2[$sales_center] = $sales_center;
+		}
+		
+		
+		$form_sales_center = form_dropdown('',$opt2,'','id="sales_center" class="form-control"');		
+		
         $data = array(
-            'employee_data' => $employee
+		
+            'employee_data' => $employee,
+			'form_agency' => $form_agency,
+			'form_sales_center' => $form_sales_center,
         );
 
         $this->template->load('template','employee_list', $data);
@@ -1560,6 +1592,54 @@ $data_history = array(
         
         $this->load->view('employee_doc',$data);
     }
+//----filter
+	public function index_dev()
+	{
+		$this->load->helper('url');
+		$this->load->helper('form');
+/*
+		$countries = $this->customers->get_list_countries();
+
+		$opt = array('' => 'All Country');
+		foreach ($countries as $country) {
+			$opt[$country] = $country;
+		}
+*/		
+
+//		$data['form_country'] = form_dropdown('',$opt,'','id="country" class="form-control"');
+		$data['tes'] = 'Hello';
+		$this->load->view('index_dev_view', $data);
+	}	
+	
+	
+	public function ajax_list()
+	{
+		$this->load->model('filter_model','filter');
+		
+		$list = $this->filter->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $employee) {
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $employee->EmployeeName;
+			$row[] = $employee->EmployeeNewCode;
+
+			$data[] = $row;
+		}
+
+		$output = array(
+						"draw" => $_POST['draw'],
+						"recordsTotal" => $this->filter->count_all(),
+						"recordsFiltered" => $this->filter->count_filtered(),
+						"data" => $data,
+				);
+		//output to json format
+		echo json_encode($output);
+	}
+	
+	
 
 }
 
