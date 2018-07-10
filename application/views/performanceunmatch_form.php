@@ -20,9 +20,12 @@
 	    <tr><td>Year <?php echo form_error('Year') ?></td>
             <td><input type="text" class="form-control" name="Year" id="Year" placeholder="Year" value="<?php echo $Year; ?>" />
         </td>
+<!---
 	    <tr><td>EmployeeID <?php echo form_error('EmployeeID') ?></td>
             <td><input type="text" class="form-control" name="EmployeeID" id="EmployeeID" placeholder="EmployeeID" value="<?php echo $EmployeeID; ?>" />
         </td>
+-->		
+		
 	    <tr><td>OldSourceCode <?php echo form_error('OldSourceCode') ?></td>
             <td><input type="text" class="form-control" name="OldSourceCode" id="OldSourceCode" placeholder="OldSourceCode" value="<?php echo $OldSourceCode; ?>" />
         </td>
@@ -32,25 +35,40 @@
 	    <tr><td>Remark <?php echo form_error('Remark') ?></td>
             <td><input type="text" class="form-control" name="Remark" id="Remark" placeholder="Remark" value="<?php echo $Remark; ?>" />
         </td>
+		
 	    <tr><td>ProposedDate <?php echo form_error('ProposedDate') ?></td>
-            <td><input type="text" class="form-control" name="ProposedDate" id="ProposedDate" placeholder="ProposedDate" value="<?php echo $ProposedDate; ?>" />
+            <td><input type="hidden" class="form-control" name="ProposedDate" id="ProposedDate" placeholder="ProposedDate" value="<?php echo $ProposedDate; ?>" />
         </td>
 	    <tr><td>ProposedBy <?php echo form_error('ProposedBy') ?></td>
-            <td><input type="text" class="form-control" name="ProposedBy" id="ProposedBy" placeholder="ProposedBy" value="<?php echo $ProposedBy; ?>" />
+            <td><input type="hidden" class="form-control" name="ProposedBy" id="ProposedBy" placeholder="ProposedBy" value="<?php echo $ProposedBy; ?>" />
         </td>
+<!---
 	    <tr><td>ApprovalID <?php echo form_error('ApprovalID') ?></td>
             <td><input type="text" class="form-control" name="ApprovalID" id="ApprovalID" placeholder="ApprovalID" value="<?php echo $ApprovalID; ?>" />
         </td>
 	    <tr><td>IsGenerateCorrection <?php echo form_error('IsGenerateCorrection') ?></td>
             <td><input type="text" class="form-control" name="IsGenerateCorrection" id="IsGenerateCorrection" placeholder="IsGenerateCorrection" value="<?php echo $IsGenerateCorrection; ?>" />
         </td>
+-->		
 	    <input type="hidden" name="RowID" value="<?php echo $RowID; ?>" /> 
 	    <tr><td colspan='2'><button type="submit" class="btn btn-primary"><?php echo $button ?></button> 
 	    <a href="<?php echo site_url('performanceunmatch') ?>" class="btn btn-default">Cancel</a></td></tr>
 	
     </table></form>
     </div><!-- /.box-body -->
+	
+        <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+	alert('formxxxxxxxxxxxx');				
+                //$("#mytable").dataTable();
+            });
+        </script>	
+	
+	
               </div><!-- /.box -->
             </div><!-- /.col -->
           </div><!-- /.row -->
         </section><!-- /.content -->
+		
+		

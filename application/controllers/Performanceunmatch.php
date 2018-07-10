@@ -224,7 +224,7 @@ if($cek_insert==1){
 }
 //unmatch???? exmp:72/1        
 //return "MATCH_BattchID_".$BatchID."_RowID_".$RowID;
- echo "MATCH_BattchID_".$BatchID."_RowID_".$RowID;
+ //echo "MATCH_BattchID_".$BatchID."_RowID_".$RowID;
  
  
 //if MATCH===============================================================
@@ -233,8 +233,12 @@ if($cek_insert==1){
 
 
 //return "UNMATCH_BattchID_";
- echo "UNMATCH_BattchID_".$BatchID."_RowID_".$RowID;
-
+ //echo "UNMATCH_BattchID_".$BatchID."_RowID_".$RowID;
+	echo'
+	<script>
+	alert("Data UnMatch");
+    window.history.back();	
+	</script>';
 
 //if UNMATCH=============================================================
 }
@@ -333,6 +337,35 @@ if($ApplicationType=='S'){
 }
 	
 //====================================================================================	
+//09-07-2018
+    public function filter()
+    {
+        $performanceunmatch = $this->Performanceunmatch_model->get_all();
+
+        $data = array(
+            'performanceunmatch_data' => $performanceunmatch
+        );
+
+        $this->template->load('template','performanceunmatch_list_filter', $data);
+    }
+
+
+	
+    public function get_filter()
+    {
+		//isset($_POST['month'])
+		
+/*
+        $performanceunmatch = $this->Performanceunmatch_model->get_all();
+
+        $data = array(
+            'performanceunmatch_data' => $performanceunmatch
+        );
+
+        $this->template->load('template','performanceunmatch_list_filter', $data);
+*/		
+    }	
+/*
     public function index()
     {
         $performanceunmatch = $this->Performanceunmatch_model->get_all();
@@ -343,6 +376,7 @@ if($ApplicationType=='S'){
 
         $this->template->load('template','performanceunmatch_list', $data);
     }
+*/
 
 	
     public function by_batch($BatchID)
@@ -358,20 +392,23 @@ if($ApplicationType=='S'){
 	
 
 
-    public function by_m_y($M,$Y)
+//    public function by_m_y($M=null,$Y=null)
+    public function index($M=null,$Y=null)
     {
 		
-		$BatchID = $this->Performanceunmatch_model->get_all_by_m_y($M,$Y);
+		$BatchID = $this->Performanceunmatch_model->get_all_by_m_y($M=null,$Y=null);
 		$BatchID = $BatchID[0]->BatchID;	
 //print_r($BatchID);die();		
 
         $performanceunmatch = $this->Performanceunmatch_model->get_all_by_batch($BatchID);
+//print_r($performanceunmatch);die();
 
         $data = array(
             'performanceunmatch_data' => $performanceunmatch
         );
-
-        $this->template->load('template','performanceunmatch_list', $data);
+//next dev load tablebod
+//error filter???
+        $this->template->load('template','performanceunmatch_list_filter', $data);
     }
 
 	
@@ -454,7 +491,13 @@ if($ApplicationType=='S'){
     
     public function update($id) 
     {
+		
+//echo "Today is " . date("Y/m/d H:i:s") . "<br>";
+//die();		
+		
         $row = $this->Performanceunmatch_model->get_by_id($id);
+
+$ProposedBy = $this->session->userdata('UserID');		
 
         if ($row) {
             $data = array(
@@ -465,14 +508,17 @@ if($ApplicationType=='S'){
 		'BatchID' => set_value('BatchID', $row->BatchID),
 		'Month' => set_value('Month', $row->Month),
 		'Year' => set_value('Year', $row->Year),
-		'EmployeeID' => set_value('EmployeeID', $row->EmployeeID),
+//		'EmployeeID' => set_value('EmployeeID', $row->EmployeeID), 
+//		'EmployeeID' => set_value('EmployeeID', '12345'), //dev
 		'OldSourceCode' => set_value('OldSourceCode', $row->OldSourceCode),
 		'NewSourceCode' => set_value('NewSourceCode', $row->NewSourceCode),
 		'Remark' => set_value('Remark', $row->Remark),
-		'ProposedDate' => set_value('ProposedDate', $row->ProposedDate),
-		'ProposedBy' => set_value('ProposedBy', $row->ProposedBy),
-		'ApprovalID' => set_value('ApprovalID', $row->ApprovalID),
-		'IsGenerateCorrection' => set_value('IsGenerateCorrection', $row->IsGenerateCorrection),
+		'ProposedDate' => set_value('ProposedDate', date("Y/m/d")),
+//session login
+		'ProposedBy' => set_value('ProposedBy', $ProposedBy),
+		
+		//'ApprovalID' => set_value('ApprovalID', $row->ApprovalID),
+		//'IsGenerateCorrection' => set_value('IsGenerateCorrection', $row->IsGenerateCorrection),
 	    );
             $this->template->load('template','performanceunmatch_form', $data);
         } else {
@@ -483,30 +529,34 @@ if($ApplicationType=='S'){
     
     public function update_action() 
     {
-        $this->_rules();
-
+		
+//		print_r($_POST);die();
+		//next dev ???
+        //$this->_rules();
+/*
         if ($this->form_validation->run() == FALSE) {
             $this->update($this->input->post('RowID', TRUE));
         } else {
+*/
             $data = array(
 		'ApplicationSource' => $this->input->post('ApplicationSource',TRUE),
 		'BatchID' => $this->input->post('BatchID',TRUE),
 		'Month' => $this->input->post('Month',TRUE),
 		'Year' => $this->input->post('Year',TRUE),
-		'EmployeeID' => $this->input->post('EmployeeID',TRUE),
+		//'EmployeeID' => $this->input->post('EmployeeID',TRUE),
 		'OldSourceCode' => $this->input->post('OldSourceCode',TRUE),
 		'NewSourceCode' => $this->input->post('NewSourceCode',TRUE),
 		'Remark' => $this->input->post('Remark',TRUE),
 		'ProposedDate' => $this->input->post('ProposedDate',TRUE),
 		'ProposedBy' => $this->input->post('ProposedBy',TRUE),
-		'ApprovalID' => $this->input->post('ApprovalID',TRUE),
-		'IsGenerateCorrection' => $this->input->post('IsGenerateCorrection',TRUE),
+		//'ApprovalID' => $this->input->post('ApprovalID',TRUE),
+		//'IsGenerateCorrection' => $this->input->post('IsGenerateCorrection',TRUE),
 	    );
 
             $this->Performanceunmatch_model->update($this->input->post('RowID', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('performanceunmatch'));
-        }
+//        }
     }
     
     public function delete($id) 

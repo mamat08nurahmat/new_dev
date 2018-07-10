@@ -21,8 +21,14 @@ class Performanceunmatch_model extends CI_Model
    	
 //        $this->db->order_by($this->id, $this->order);
 //        return $this->db->get($this->table)->result();
-        return $this->db->query('SELECT * FROM PerformanceUnMatch 
-WHERE IsGenerateCorrection=0')->result();
+        return $this->db->query("
+  SELECT f.*,e.*,SUBSTRING(a.OldSourceCode,3,2) as sc_code,  a.*,b.*,c.* FROM PerformanceUnMatch a
+LEFT JOIN SystemCardLink b ON a.BatchID=b.BatchID AND a.RowID=b.RowID
+LEFT JOIN CardLogo c ON b.Logo=c.Logo AND b.Org=c.Org
+LEFT JOIN AgencySalesCenter e ON SUBSTRING(a.OldSourceCode,3,2)=e.SalesCenterCode
+LEFT JOIN Agency f ON e.AgencyID=f.AgencyID
+		
+		")->result();
     }
 
 	
@@ -32,20 +38,43 @@ WHERE IsGenerateCorrection=0')->result();
    	
 //        $this->db->order_by($this->id, $this->order);
 //        return $this->db->get($this->table)->result();
-        return $this->db->query("SELECT * FROM PerformanceUnMatch 
-WHERE IsGenerateCorrection=0 AND BatchID='$BatchID'")->result();
+//        return $this->db->query("SELECT * FROM PerformanceUnMatch WHERE IsGenerateCorrection=0 AND BatchID='$BatchID'")->result();
+return $this->db->query("
+  SELECT f.*,e.*,SUBSTRING(a.OldSourceCode,3,2) as sc_code,  a.*,b.*,c.* FROM PerformanceUnMatch a
+LEFT JOIN SystemCardLink b ON a.BatchID=b.BatchID AND a.RowID=b.RowID
+LEFT JOIN CardLogo c ON b.Logo=c.Logo AND b.Org=c.Org
+LEFT JOIN AgencySalesCenter e ON SUBSTRING(a.OldSourceCode,3,2)=e.SalesCenterCode
+LEFT JOIN Agency f ON e.AgencyID=f.AgencyID
+WHERE a.IsGenerateCorrection=0		
+AND a.BatchID='$BatchID'
+")->result();
+
     }
 
 
 	
 	    // get all by Month Year
-    function get_all_by_m_y($M,$Y)
+    function get_all_by_m_y($M=null,$Y=null)
     {
    	
+if($M==null || $Y==null){
+	
+	$filter_M_Y = "";
+}	else{
+	
+	$filter_M_Y = "AND a.Month='$M' AND a.Year='$Y'";
+}
 //        $this->db->order_by($this->id, $this->order);
 //        return $this->db->get($this->table)->result();
-        return $this->db->query("SELECT * FROM PerformanceUnMatch 
-WHERE IsGenerateCorrection=0 AND Month='$M' AND Year='$Y' ")->result();
+//        return $this->db->query("SELECT * FROM PerformanceUnMatch WHERE IsGenerateCorrection=0 AND Month='$M' AND Year='$Y' ")->result();
+        return $this->db->query('
+
+  SELECT f.*,e.*,SUBSTRING(a.OldSourceCode,3,2) as sc_code,  a.*,b.*,c.* FROM PerformanceUnMatch a
+LEFT JOIN SystemCardLink b ON a.BatchID=b.BatchID AND a.RowID=b.RowID
+LEFT JOIN CardLogo c ON b.Logo=c.Logo AND b.Org=c.Org
+LEFT JOIN AgencySalesCenter e ON SUBSTRING(a.OldSourceCode,3,2)=e.SalesCenterCode
+LEFT JOIN Agency f ON e.AgencyID=f.AgencyID
+WHERE a.IsGenerateCorrection=0'.$filter_M_Y  )->result();
     }
 
 
