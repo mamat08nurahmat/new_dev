@@ -153,14 +153,16 @@
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-
+<!--
                         <li>
                             <a href="index.php?module=dashboard">
                                 <i class="fa fa-laptop"></i> <span>DASHBOARD</span>
                                 <small class="label pull-right bg-red">3</small>
                             </a>
                         </li>
+-->
                         <?php
+/*
                         $menu = $this->db->get_where('menu', array('is_parent' => 0,'is_active'=>1));
                         foreach ($menu->result() as $m) {
                             // chek ada sub menu
@@ -180,8 +182,154 @@
                             }
                             
                         }
-                        ?>
+*/						
+//MENU HOME
+								echo "<li>" . anchor('dashboard1', "<i class='fa fa-list-alt'></i> <span>" . strtoupper('home')) . "</span></li>";
+//MENU AGENCY								
+                                echo "<li class='treeview'>
+                                    ".anchor('#',  "<i class='fa fa-list-alt'></i>".strtoupper("agency").' <i class="fa fa-angle-left pull-right"></i>')."
+                                        <ul class='treeview-menu'>";
+								echo "<li>" . anchor('agency', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("agency profile")) . "</span></li>";
+								echo "<li>" . anchor('agencysalescenter', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("agency sales center")) . "</span></li>";
+                                  
+								echo"</ul>
+                                    </li>";
+//MENU SALES FORCE								
+                                echo "<li class='treeview'>
+                                    ".anchor('#',  "<i class='fa fa-list-alt'></i>".strtoupper("sales force").' <i class="fa fa-angle-left pull-right"></i>')."
+                                        <ul class='treeview-menu'>";
+										
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("profile sales force")) . "</span></li>";
 
+
+								
+//								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("interview")) . "</span></li>";
+                                  
+//interview								
+//--
+                               echo "<li class='treeview'>
+                                    ".anchor('#',  "<i class='fa fa-list-alt'></i>".strtoupper("interview").' <i class="fa fa-angle-left pull-right"></i>')."
+                                        <ul class='treeview-menu'>";
+										
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("pending interview")) . "</span></li>";
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("list interview")) . "</span></li>";
+
+								echo"</ul>
+                                    </li>";
+
+//---
+								  
+//								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("hiring")) . "</span></li>";
+								
+//hiring								
+//--
+                               echo "<li class='treeview'>
+                                    ".anchor('#',  "<i class='fa fa-list-alt'></i>".strtoupper("hiring").' <i class="fa fa-angle-left pull-right"></i>')."
+                                        <ul class='treeview-menu'>";
+										
+//								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("pending hiring wilayah")) . "</span></li>";
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("list hiring")) . "</span></li>";
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("approval hiring pusat")) . "</span></li>";
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("list hiring result")) . "</span></li>";
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("list hold hiring")) . "</span></li>";
+								
+								echo"</ul>
+                                    </li>";
+
+//---
+
+								
+//banding								
+//--
+                               echo "<li class='treeview'>
+                                    ".anchor('#',  "<i class='fa fa-list-alt'></i>".strtoupper("banding").' <i class="fa fa-angle-left pull-right"></i>')."
+                                        <ul class='treeview-menu'>";
+										
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("list deciline sales force")) . "</span></li>";
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("approval banding")) . "</span></li>";
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("list banding")) . "</span></li>";
+								
+								echo"</ul>
+                                    </li>";
+
+//---
+
+								
+//update								
+//--
+                               echo "<li class='treeview'>
+                                    ".anchor('#',  "<i class='fa fa-list-alt'></i>".strtoupper("update").' <i class="fa fa-angle-left pull-right"></i>')."
+                                        <ul class='treeview-menu'>";
+										
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("update sales")) . "</span></li>";
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("approval update")) . "</span></li>";
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("list update")) . "</span></li>";
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("restruct spv")) . "</span></li>";
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("data completion")) . "</span></li>";
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("terminate sales")) . "</span></li>";
+								
+								echo"</ul>
+                                    </li>";
+
+//---
+								
+								
+//sales code
+//--
+                               echo "<li class='treeview'>
+                                    ".anchor('#',  "<i class='fa fa-list-alt'></i>".strtoupper("sales code").' <i class="fa fa-angle-left pull-right"></i>')."
+                                        <ul class='treeview-menu'>";
+										
+								echo "<li>" . anchor('employee/pending_new_sales_code_list', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("pending new SC")) . "</span></li>";
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("list new approved SC")) . "</span></li>";
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("pending update SC")) . "</span></li>";
+								echo "<li>" . anchor('#', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("list update SC")) . "</span></li>";
+								
+								echo"</ul>
+                                    </li>";
+
+//---
+
+								
+								echo"</ul>
+                                    </li>";
+
+//MENU PROMO								
+                                echo "<li class='treeview'>
+                                    ".anchor('#',  "<i class='fa fa-list-alt'></i>".strtoupper("promo").' <i class="fa fa-angle-left pull-right"></i>')."
+                                        <ul class='treeview-menu'>";
+								echo "<li>" . anchor('agency', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("agency profile")) . "</span></li>";
+								echo "<li>" . anchor('agencysalescenter', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("agency sales center")) . "</span></li>";
+                                  
+								echo"</ul>
+                                    </li>";									
+									
+//MENU PIPELINE								
+                                echo "<li class='treeview'>
+                                    ".anchor('#',  "<i class='fa fa-list-alt'></i>".strtoupper("pipeline").' <i class="fa fa-angle-left pull-right"></i>')."
+                                        <ul class='treeview-menu'>";
+								echo "<li>" . anchor('agency', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("agency profile")) . "</span></li>";
+								echo "<li>" . anchor('agencysalescenter', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("agency sales center")) . "</span></li>";
+                                  
+								echo"</ul>
+                                    </li>";	
+//MENU PAYMENT								
+                                echo "<li class='treeview'>
+                                    ".anchor('#',  "<i class='fa fa-list-alt'></i>".strtoupper("payment").' <i class="fa fa-angle-left pull-right"></i>')."
+                                        <ul class='treeview-menu'>";
+								echo "<li>" . anchor('agency', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("agency profile")) . "</span></li>";
+								echo "<li>" . anchor('agencysalescenter', "<i class='fa fa-list-alt'></i> <span>" . strtoupper("agency sales center")) . "</span></li>";
+                                  
+								echo"</ul>
+                                    </li>";
+									
+//-----------									
+									
+//single menu                   echo "<li>" . anchor($m->link, "<i class='$m->icon'></i> <span>" . strtoupper($m->name)) . "</span></li>";
+
+									
+									
+                        ?>
                     </ul>
                 </section>
                 <!-- /.sidebar -->

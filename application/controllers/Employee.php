@@ -16,6 +16,10 @@ class Employee extends CI_Controller
 
     public function index()
     {
+		//cek sesion UserGroupID  
+		//
+		
+		$id = 
         $employee = $this->Employee_model->get_all();
 
         $data = array(
@@ -25,6 +29,75 @@ class Employee extends CI_Controller
         $this->template->load('template','employee_list', $data);
     }
 
+
+
+//sales_force
+
+
+//sales_code->pending_new_sales_code
+    public function pending_new_sales_code_list()
+    {
+		//cek sesion UserGroupID  
+		//
+		
+		//$id = 
+        $employee = $this->Employee_model->get_all_pending_new_sales_code_list();
+
+        $data = array(
+            'employee_data' => $employee
+        );
+
+        $this->template->load('template','sales_force/sales_code/pending_new_sales_code/employee_list', $data);
+    }
+
+
+	
+    public function pending_new_sales_code_update($id) 
+    {
+        $row = $this->Employee_model->get_by_id($id);
+
+        if ($row) {
+            $data = array(
+                'button' => 'Update',
+                'action' => site_url('employee/pending_new_sales_code_update_action'),
+				
+		'EmployeeName' => set_value('EmployeeName', $row->EmployeeName),
+		'EmployeeID' => set_value('EmployeeID', $row->EmployeeID),
+		'EmployeeNewCode' => set_value('EmployeeNewCode', $row->EmployeeNewCode),
+		'ActiveDate' => set_value('ActiveDate', $row->ActiveDate),
+	    );
+            $this->template->load('template','sales_force/sales_code/pending_new_sales_code/employee_form_update', $data);
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url('employee'));
+        }
+    }
+	
+	
+    public function pending_new_sales_code_update_action() 
+    {
+ ////       $this->_rules();
+
+////        if ($this->form_validation->run() == FALSE) {
+////            $this->update($this->input->post('EmployeeID', TRUE));
+////        } else {
+			
+            $data = array(		
+		'EmployeeNewCode' => $this->input->post('EmployeeNewCode',TRUE),		
+		'ApprovalStatus' => 1,
+		'ActiveDate' => $this->input->post('ActiveDate',TRUE),
+	    );
+
+            $this->Employee_model->update($this->input->post('EmployeeID', TRUE), $data);
+            $this->session->set_flashdata('message', 'Update Record Success');
+            redirect(site_url('employee/pending_new_sales_code_list'));
+/////        }
+    }
+	
+//------------------
+
+	
+	
     public function read($id) 
     {
         $row = $this->Employee_model->get_by_id($id);

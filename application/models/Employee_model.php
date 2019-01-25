@@ -20,17 +20,95 @@ class Employee_model extends CI_Model
     {
         // $this->db->order_by($this->id, $this->order);
         // return $this->db->get($this->table)->result();
+$UserGroupID=5; //5->RSH 6->RSM
 
+$AgencyID=4;
+$SalesCenterID=6;
+$AreaID=6;
+
+
+if($UserGroupID==5 || $UserGroupID==1 ){
+$Where_Agency='';
+$Where_SalesCenter='';
+$Where_Area='';
+	
+}elseif($UserGroupID==6){
+$Where_Agency='';
+$Where_SalesCenter='';
+$Where_Area="AND c.AreaID=$AreaID";
+	
+	
+}else{
+
+$Where_Agency="AND b.AgencyID=$AgencyID";
+$Where_SalesCenter="AND b.AgencyID=$SalesCenterID";
+$Where_Area="AND c.AreaID=$AreaID";	
+	
+}		
+		
+		
+
+		
 $query=$this->db->query("
-SELECT TOP 1000 a.*,b.AgencyName,c.SalesCenterName  FROM Employee a
+SELECT TOP 10 a.*,b.AgencyName,c.SalesCenterName  FROM Employee a
 LEFT JOIN Agency b ON a.AgencyID=b.AgencyID
 LEFT JOIN AgencySalesCenter c ON a.SalesCenterID=c.SalesCenterID
 
-WHERE IsDiscontinued=0 ");        
+WHERE IsDiscontinued=0 
+$Where_Agency
+$Where_SalesCenter
+$Where_Area
+");        
 return $query->result();
 
     }
 
+	
+	
+
+    // get_all_pending_new_sales_code_list
+    function get_all_pending_new_sales_code_list()
+    {
+		
+		
+
+		
+$query=$this->db->query("
+
+  SELECT 
+agc.AgencyName
+,ascr.SalesCenterName
+,e.EmployeeName
+,e.EmployeeNewCode
+,aug.UserGroupName
+,e.EmployeeStatus
+,RIGHT(e.EmployeeGrade,2) as Grade
+,e.EmployeeBirthDate 
+--------------------------------------
+
+	 ,  EmployeeID
+
+  FROM Employee e
+  LEFT JOIN Agency agc ON e.AgencyID=agc.AgencyID
+  LEFT JOIN AgencySalesCenter ascr ON e.SalesCenterID=ascr.SalesCenterID
+  LEFT JOIN AppUserGroup aug ON e.UserGroupID=aug.UserGroupID
+  
+  WHERE 
+e.InterviewStatus=1
+AND e.HiringStatus=1
+AND e.IsDiscontinued=0
+AND e.ApprovalStatus!=1
+
+
+
+");        
+return $query->result();
+
+    }
+
+	
+//pending_new_sales_code_update	
+	
     // get data by id
     function get_by_id($id)
     {
